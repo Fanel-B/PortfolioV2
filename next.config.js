@@ -1,16 +1,13 @@
-const { withContentlayer } = require('next-contentlayer');
-
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
-module.exports = withContentlayer({
+module.exports = {
   reactStrictMode: true,
-  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   eslint: {
-    dirs: ['app', 'components', 'lib', 'layouts', 'scripts'],
+    dirs: ['app', 'components', 'lib', 'data'],
   },
   experimental: {
     appDir: true,
   },
   swcMinify: true,
-});
+};

@@ -1,28 +1,28 @@
-import Link from '@/components/Link';
-import SectionContainer from '@/components/SectionContainer';
+import Link from 'next/link';
 
-// TODO: Comment out when https://github.com/vercel/next.js/issues/50566 is fixed.
-
-// export const metadata = {
-//   title: '404 - Dale Larroder',
-//   description: 'Not Found - Dale Larroder',
-// };
+export const metadata = {
+  title: '404 - Fanel Balemo',
+  description: 'Page non trouvée - Fanel Balemo',
+};
 
 export default function FourZeroFour() {
   return (
-    <SectionContainer>
-      <div className="space-x-2 pt-6 pb-8 md:space-y-5">
-        <h1 className="text-6xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 md:border-r-2 md:px-6 md:text-8xl md:leading-14">
-          404
-        </h1>
-      </div>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-white px-4 text-center dark:bg-pro-bg">
+      <h1 className="font-display text-6xl font-extrabold tracking-tight text-gray-900 dark:text-pro-text md:text-8xl">
+        404
+      </h1>
       <div className="max-w-md">
-        <p className="mb-4 text-xl font-bold leading-normal md:text-2xl">
-          Sorry we couldn't find this page.
+        <p className="mb-4 text-xl font-bold leading-normal text-gray-900 dark:text-pro-text md:text-2xl">
+          Désolé, nous n&apos;avons pas trouvé cette page.
         </p>
-        <p className="mb-8">But dont worry, you can find plenty of other things on our homepage.</p>
-        <Link href="/">Back to homepage</Link>
+        <p className="mb-8 text-gray-600 dark:text-pro-text/70">
+          Mais pas d&apos;inquiétude, vous trouverez plein d&apos;autres choses sur la page
+          d&apos;accueil.
+        </p>
+        <Link href="/" className="font-semibold text-pro-accent hover:underline">
+          Retour à l&apos;accueil
+        </Link>
       </div>
-    </SectionContainer>
+    </div>
   );
 }

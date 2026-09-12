@@ -1,4 +1,2 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://dalelarroder.com/sitemap.xml

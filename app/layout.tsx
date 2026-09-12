@@ -1,17 +1,32 @@
-import '@/css/prism.css';
 import '@/css/tailwind.css';
-import '@fontsource/mukta';
 
 import Analytics from '@/components/Analytics';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
 import LogRocket from '@/components/LogRocket';
-import LenisProvider from '@/components/Providers/LenisProvider';
 import ThemeProvider from '@/components/Providers/ThemeProvider';
+import { Akronim, DM_Sans, Righteous } from 'next/font/google';
+
+const akronim = Akronim({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-akronim',
+  display: 'swap',
+});
+const righteous = Righteous({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-righteous',
+  display: 'swap',
+});
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+});
 
 export const metadata = {
-  title: 'Dale Larroder',
-  description: 'I build things for the web.',
+  title: 'Fanel Balemo',
+  description: "J'aime comprendre les données et construire les outils qui les exploitent.",
 };
 
 interface RootLayoutProps {
@@ -20,22 +35,21 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="fr"
+      suppressHydrationWarning
+      className={`${akronim.variable} ${righteous.variable} ${dmSans.variable}`}
+    >
       <head>
         <link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon.ico" />
         <meta name="msapplication-TileColor" content="#000000" />
         <meta name="theme-color" content="#000000" />
-        <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       </head>
-      <body className="bg-white text-black antialiased dark:bg-black dark:text-white">
+      <body className="h-screen overflow-hidden bg-white font-sans text-black antialiased dark:bg-pro-bg dark:text-pro-text">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <Header />
-          <LenisProvider>
-            <main>{children}</main>
-          </LenisProvider>
-          <Footer />
+          {children}
           <LogRocket />
           <Analytics />
         </ThemeProvider>

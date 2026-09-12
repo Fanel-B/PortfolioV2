@@ -15,7 +15,7 @@ const ThemeSwitch = () => {
   return (
     <motion.button
       id="theme-btn"
-      aria-label="Toggle Dark Mode"
+      aria-label="Changer le thème sombre"
       type="button"
       className="ml-1 mr-1 h-8 w-8 rounded p-1"
       whileTap={{

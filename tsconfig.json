@@ -18,11 +18,8 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/data/*": ["data/*"],
-      "@/layouts/*": ["layouts/*"],
       "@/lib/*": ["lib/*"],
-      "@/css/*": ["css/*"],
-      "@/types/*": ["types/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
+      "@/css/*": ["css/*"]
     },
     "plugins": [
       {
@@ -30,13 +27,6 @@
       }
     ]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/**/*.tsx|ts",
-    ".contentlayer/generated",
-    ".next/types/**/*.ts"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/**/*.tsx|ts", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

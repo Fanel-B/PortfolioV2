@@ -1,29 +1,30 @@
-import Hero from '@/components/Hero';
-import Intro from '@/components/Intro';
-import { ScrollProvider } from '@/components/Providers/ScrollProvider';
-import RecentPosts from '@/components/RecentPosts';
-import SectionContainer from '@/components/SectionContainer';
-import TopTracks from '@/components/Spotify/TopTracks';
-import Works from '@/components/Work/Works';
-import { allCoreContent, sortedBlogPost } from '@/lib/utils/contentlayer';
-import { allBlogs } from 'contentlayer/generated';
-import { Suspense } from 'react';
+'use client';
+
+import Footer from '@/components/Footer';
+import FlipCard from '@/components/FlipCard/FlipCard';
+import Hero from '@/components/Hero/Hero';
+import Navbar from '@/components/Navbar/Navbar';
+import Outils from '@/components/Outils/Outils';
+import Personnalite from '@/components/Personnalite/Personnalite';
+import QuiJeSuis from '@/components/QuiJeSuis/QuiJeSuis';
+import Travail from '@/components/Travail/Travail';
+import { useState } from 'react';
 
 export default function Page() {
-  const sortedPosts = sortedBlogPost(allBlogs);
-  const posts = allCoreContent(sortedPosts);
+  const [isFlipped, setIsFlipped] = useState(false);
 
-  return (
-    <ScrollProvider>
+  const front = (
+    <div className="min-h-screen bg-white text-gray-900 dark:bg-pro-bg dark:text-pro-text">
+      <Navbar onOpenPersonality={() => setIsFlipped(true)} />
       <Hero />
-      <Intro />
-      <Works />
-      <SectionContainer>
-        <RecentPosts posts={posts} />
-        <Suspense fallback="loading..">
-          <TopTracks />
-        </Suspense>
-      </SectionContainer>
-    </ScrollProvider>
+      <QuiJeSuis onOpenPersonality={() => setIsFlipped(true)} />
+      <Outils />
+      <Travail />
+      <Footer />
+    </div>
   );
+
+  const back = <Personnalite onClose={() => setIsFlipped(false)} />;
+
+  return <FlipCard front={front} back={back} isFlipped={isFlipped} />;
 }
