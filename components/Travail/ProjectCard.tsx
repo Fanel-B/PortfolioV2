@@ -3,6 +3,7 @@
 import PlaceholderImage from '@/components/PlaceholderImage';
 import { Project } from '@/data/profile';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 
 const TYPE_LABEL: Record<Project['type'], string> = {
@@ -25,7 +26,13 @@ export default function ProjectCard({ project, index }: Props) {
       transition={{ duration: 0.5, delay: index * 0.08 }}
       className="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-pro-surface2 dark:bg-pro-surface"
     >
-      <PlaceholderImage label="Aperçu à venir" className="aspect-video w-full rounded-none" />
+      {project.image ? (
+        <div className="relative aspect-video w-full bg-white">
+          <Image src={project.image} alt={project.title} fill className="object-contain p-2" />
+        </div>
+      ) : (
+        <PlaceholderImage label="Aperçu à venir" className="aspect-video w-full rounded-none" />
+      )}
 
       <div className="flex flex-1 flex-col gap-3 p-5">
         <span className="w-fit rounded-full bg-pro-accent/10 px-3 py-1 font-accent text-xs text-pro-accent">
