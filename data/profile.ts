@@ -97,14 +97,14 @@ export const profile = {
       items: ['Agile / Scrum'],
     },
   ] as ToolCategory[],
-  // PROJETS_ICI — remplace par tes vrais projets (perso, académiques, pro)
   projects: [
     {
-      title: 'PROJETS_ICI',
-      description: 'Décris ce projet ici : le problème résolu, les choix techniques, le résultat.',
+      title: 'Biblio-Tech — Smart Library Platform',
+      description:
+        "Reconstruction complète d'un projet universitaire de bibliothèque en plateforme full-stack (Next.js, Express, PostgreSQL) : catalogue, prêts, réservations de salles, et une couche domotique simulée (capteurs, automatisations IF→THEN, sécurité des accès) pilotable en temps réel, sans aucun matériel. Recommandations et analytics calculés en SQL pur, sans ML.",
       type: 'perso',
-      githubUrl: undefined,
-      demoUrl: undefined,
+      githubUrl: 'https://github.com/Fanel-B/bibliotheque1',
+      demoUrl: 'https://bibliotheque1.vercel.app',
     },
   ] as Project[],
   personality: {
