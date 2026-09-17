@@ -106,6 +106,22 @@ export const profile = {
       githubUrl: 'https://github.com/Fanel-B/bibliotheque1',
       demoUrl: 'https://bibliotheque1.vercel.app',
     },
+    {
+      title: 'JobBot Alternance',
+      description:
+        "Assistant de recherche d'alternance propulsé par l'API Claude (Anthropic) : génère des offres réalistes, note chaque offre sur 100 selon l'adéquation avec mon profil, adapte un CV en un clic, et centralise le suivi des candidatures avec export CSV. React + Vite.",
+      type: 'perso',
+      githubUrl: 'https://github.com/Fanel-B/jobbot',
+      demoUrl: undefined,
+    },
+    {
+      title: 'Insertion professionnelle des diplômés MIAGE',
+      description:
+        "Analyse de l'insertion professionnelle des diplômés MIAGE en France à partir des données officielles du ministère (~1 million de lignes, data.esr.gouv.fr) : la ville de formation influence surtout le salaire, la filière elle-même performe mieux que la moyenne des diplômes en informatique. Python (pandas, matplotlib).",
+      type: 'perso',
+      githubUrl: 'https://github.com/Fanel-B/miage-insertion-pro',
+      demoUrl: undefined,
+    },
   ] as Project[],
   personality: {
     title: "Qui je suis vraiment et ce que j'aime faire ?",
