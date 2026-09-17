@@ -6,6 +6,7 @@ export interface Project {
   type: ProjectType;
   githubUrl?: string;
   demoUrl?: string;
+  image?: string;
 }
 
 export interface TimelineItem {
@@ -112,7 +113,7 @@ export const profile = {
         "Assistant de recherche d'alternance propulsé par l'API Claude (Anthropic) : génère des offres réalistes, note chaque offre sur 100 selon l'adéquation avec mon profil, adapte un CV en un clic, et centralise le suivi des candidatures avec export CSV. React + Vite.",
       type: 'perso',
       githubUrl: 'https://github.com/Fanel-B/jobbot',
-      demoUrl: undefined,
+      demoUrl: 'https://jobbot-orcin.vercel.app',
     },
     {
       title: 'Insertion professionnelle des diplômés MIAGE',
@@ -121,6 +122,7 @@ export const profile = {
       type: 'perso',
       githubUrl: 'https://github.com/Fanel-B/miage-insertion-pro',
       demoUrl: undefined,
+      image: '/static/images/projects/miage-insertion-pro.png',
     },
   ] as Project[],
   personality: {
