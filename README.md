@@ -260,7 +260,7 @@ Toutes facultatives. À copier depuis [`.env.example`](./.env.example) dans `.en
 
 | Variable                   | Rôle                                                                                                                                                             |
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`     | URL publique du site (aperçus de partage, sitemap). **À renseigner avant la mise en production.**                                                                |
+| `NEXT_PUBLIC_SITE_URL`     | URL publique du site (aperçus de partage, sitemap). Par défaut : `https://portfolio-v2-fanel-65.vercel.app`, définie dans `data/siteMetadata.js`.                |
 | `NEXT_PUBLIC_NASA_API_KEY` | Clé gratuite sur [api.nasa.gov](https://api.nasa.gov) pour la photo du jour. Sans elle, `DEMO_KEY` est utilisée (limitée à 30 appels par heure et par visiteur). |
 
 ---
