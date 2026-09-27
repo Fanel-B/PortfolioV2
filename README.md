@@ -222,7 +222,7 @@ La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回
 
 ### 12. Côté humain — [`Personnalite/`](./components/Personnalite)
 
-- **Hero** : la citation « En chacun de nous existe un soleil. » (Socrate), à côté d'une vraie photo du Soleil (satellite SDO de la NASA, ultraviolet 171 Å). Elle tourne très lentement (240 s par tour), avec un halo, et ses bords noirs sont effacés (`mix-blend-mode: screen` + masque radial).
+- **Hero** : la phrase « En chacun de nous existe un soleil. », à côté d'une vraie photo du Soleil (satellite SDO de la NASA, ultraviolet 171 Å). Elle tourne très lentement (240 s par tour), avec un halo, et ses bords noirs sont effacés (`mix-blend-mode: screen` + masque radial).
 - **Tableau de bord « Mon système solaire »**, en tuiles :
   - _En direct_ : l'heure de Toulouse à la seconde ;
   - _Vu d'ici_ : la **photo astronomique du jour de la NASA** (API APOD). L'image est préchargée avant l'affichage et gardée en cache pour la session ; si l'API ne répond pas, c'est la photo du Soleil qui s'affiche ;

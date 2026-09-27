@@ -73,9 +73,6 @@ export default function Personnalite({ onClose }: Props) {
               <span className="italic text-perso-accent">un soleil.</span>{' '}
               <span className="text-perso-accent">»</span>
             </h1>
-            <footer className="mt-6 font-mono text-sm uppercase tracking-[0.25em] text-perso-text/50">
-              — Socrate
-            </footer>
           </blockquote>
           <p className="mt-8 max-w-md text-lg text-perso-text/60">
             Voici le mien : ce qui m&apos;éclaire quand je ne code pas.
