@@ -7,8 +7,8 @@ import { container } from '@/lib/ui';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { ReactNode } from 'react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import { HiOutlineArrowLeft } from 'react-icons/hi';
+import { FaGithub, FaLinkedin } from '@/lib/icons';
+import { HiOutlineArrowLeft } from '@/lib/icons';
 import { LiveClock, NasaPhoto, Vinyl } from './widgets';
 
 interface Props {

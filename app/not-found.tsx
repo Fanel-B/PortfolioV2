@@ -8,7 +8,7 @@ export const metadata = {
 export default function FourZeroFour() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-[radial-gradient(ellipse_at_top,#16244A_0%,#0A0E1A_60%)] px-4 text-center">
-      <h1 className="font-display text-6xl font-extrabold tracking-tight text-pro-accent drop-shadow-[0_0_30px_rgba(142,205,248,0.45)] md:text-8xl">
+      <h1 className="font-heading text-6xl font-extrabold tracking-tight text-pro-accent drop-shadow-[0_0_30px_rgba(142,205,248,0.45)] md:text-8xl">
         404
       </h1>
       <div className="max-w-md">

@@ -2,7 +2,7 @@
 
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { Side } from './Sky/SkyBackground';
+import type { Side } from './Sky/SkyBackground';
 
 const IDLE_SIZE = 26;
 const LOCK_PADDING = 6;

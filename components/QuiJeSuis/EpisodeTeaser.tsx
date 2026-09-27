@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { HiOutlinePlay } from 'react-icons/hi';
+import { HiOutlinePlay } from '@/lib/icons';
 
 interface Props {
   onOpen: () => void;

@@ -9,11 +9,15 @@ import Outils from '@/components/Outils/Outils';
 import Personnalite from '@/components/Personnalite/Personnalite';
 import QuiJeSuis from '@/components/QuiJeSuis/QuiJeSuis';
 import ScrollProgress from '@/components/ScrollProgress';
-import SkyBackground, { Side } from '@/components/Sky/SkyBackground';
+import type { Side } from '@/components/Sky/SkyBackground';
 import TargetCursor from '@/components/TargetCursor';
 import Travail from '@/components/Travail/Travail';
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { useCallback, useState } from 'react';
+import dynamic from 'next/dynamic';
+
+// Three.js (≈ 1,3 Mo) est chargé à part, pour que la page s'affiche sans l'attendre.
+const SkyBackground = dynamic(() => import('@/components/Sky/SkyBackground'), { ssr: false });
 
 const FLIP = { duration: 0.45, ease: [0.65, 0, 0.35, 1] };
 

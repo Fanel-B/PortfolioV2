@@ -1,5 +1,5 @@
-import { IconType } from 'react-icons';
-import { HiChartBar, HiCode, HiUsers } from 'react-icons/hi';
+import { IconType } from 'react-icons/lib';
+import { HiChartBar, HiCode, HiUsers } from '@/lib/icons';
 import {
   SiAndroidstudio,
   SiBootstrap,
@@ -22,7 +22,7 @@ import {
   SiReact,
   SiTailwindcss,
   SiVisualstudiocode,
-} from 'react-icons/si';
+} from '@/lib/icons';
 
 // Associe chaque outil de data/profile.ts à son logo. Un outil absent d'ici prend l'icône générique.
 const ICONS: Record<string, IconType> = {

@@ -1,9 +1,9 @@
 'use client';
 
-import { Side } from '@/components/Sky/SkyBackground';
+import type { Side } from '@/components/Sky/SkyBackground';
 import { useActiveSection } from '@/lib/hooks/useActiveSection';
 import { motion } from 'framer-motion';
-import { IconType } from 'react-icons';
+import { IconType } from 'react-icons/lib';
 import {
   HiOutlineArrowLeft,
   HiOutlineCube,
@@ -12,7 +12,7 @@ import {
   HiOutlineLightningBolt,
   HiOutlineSun,
   HiOutlineUser,
-} from 'react-icons/hi';
+} from '@/lib/icons';
 
 const NAV_ITEMS: { id: string; label: string; icon: IconType }[] = [
   { id: 'accueil', label: 'Accueil', icon: HiOutlineHome },

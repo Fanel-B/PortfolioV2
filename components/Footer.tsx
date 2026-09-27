@@ -4,7 +4,7 @@ import CopyEmail from '@/components/CopyEmail';
 import SectionHeader from '@/components/SectionHeader';
 import { profile } from '@/data/profile';
 import { container } from '@/lib/ui';
-import { HiArrowRight } from 'react-icons/hi';
+import { HiArrowRight } from '@/lib/icons';
 
 const links = [
   { label: 'GitHub', href: profile.contact.github },

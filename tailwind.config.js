@@ -8,8 +8,6 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['var(--font-dm-sans)', ...defaultTheme.fontFamily.sans],
-        display: ['var(--font-akronim)', 'cursive'],
-        accent: ['var(--font-righteous)', ...defaultTheme.fontFamily.sans],
         heading: ['var(--font-syne)', ...defaultTheme.fontFamily.sans],
         mono: ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
       },

@@ -4,20 +4,8 @@ import Analytics from '@/components/Analytics';
 import LogRocket from '@/components/LogRocket';
 import siteMetadata from '@/data/siteMetadata';
 import { Metadata } from 'next';
-import { Akronim, DM_Sans, JetBrains_Mono, Righteous, Syne } from 'next/font/google';
+import { DM_Sans, JetBrains_Mono, Syne } from 'next/font/google';
 
-const akronim = Akronim({
-  subsets: ['latin'],
-  weight: ['400'],
-  variable: '--font-akronim',
-  display: 'swap',
-});
-const righteous = Righteous({
-  subsets: ['latin'],
-  weight: ['400'],
-  variable: '--font-righteous',
-  display: 'swap',
-});
 const syne = Syne({
   subsets: ['latin'],
   weight: ['500', '700', '800'],
@@ -92,10 +80,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html
-      lang="fr"
-      className={`${akronim.variable} ${righteous.variable} ${dmSans.variable} ${syne.variable} ${mono.variable}`}
-    >
+    <html lang="fr" className={`${dmSans.variable} ${syne.variable} ${mono.variable}`}>
       <head>
         <link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon.ico" />

@@ -5,8 +5,8 @@ import { profile } from '@/data/profile';
 import { useRotatingTypewriter } from '@/lib/hooks/useRotatingTypewriter';
 import { container } from '@/lib/ui';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import { HiArrowRight } from 'react-icons/hi';
+import { FaGithub, FaLinkedin } from '@/lib/icons';
+import { HiArrowRight } from '@/lib/icons';
 import Constellation from './Constellation';
 
 interface Props {

@@ -4,8 +4,8 @@ import { Project } from '@/data/profile';
 import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion';
 import Image from 'next/image';
 import { forwardRef, MouseEvent } from 'react';
-import { FaGithub } from 'react-icons/fa';
-import { HiOutlineExternalLink } from 'react-icons/hi';
+import { FaGithub } from '@/lib/icons';
+import { HiOutlineExternalLink } from '@/lib/icons';
 
 const TYPE_LABEL: Record<Project['type'], string> = {
   perso: 'Projet perso',

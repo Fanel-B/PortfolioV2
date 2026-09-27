@@ -3,7 +3,7 @@
 import { profile } from '@/data/profile';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ReactNode, useState } from 'react';
-import { FaCheck, FaRegEnvelope } from 'react-icons/fa';
+import { FaCheck, FaRegEnvelope } from '@/lib/icons';
 
 interface Props {
   className?: string;
