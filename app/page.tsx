@@ -59,7 +59,7 @@ export default function Page() {
             {side === 'pro' ? (
               <>
                 <Hero ready={booted} onOpenCv={openCv} />
-                <QuiJeSuis />
+                <QuiJeSuis onOpenHuman={flip} />
                 <Outils />
                 <Travail />
                 <Footer />

@@ -85,20 +85,42 @@ const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
           className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity group-hover:opacity-100"
         />
 
-        <div className={featured ? 'aspect-[16/9]' : 'aspect-[16/7]'}>
-          {project.image ? (
-            <div className="relative h-full w-full bg-white">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-contain p-3 transition-transform duration-700 group-hover:scale-105"
-              />
+        {project.image ? (
+          // Capture présentée dans une fenêtre de navigateur
+          <div className="p-3 pb-0">
+            <div className="overflow-hidden rounded-t-xl border border-b-0 border-white/10 bg-pro-surface">
+              <div className="flex items-center gap-2 border-b border-white/10 px-4 py-2.5">
+                <span className="bg-white/15 h-2.5 w-2.5 rounded-full" />
+                <span className="bg-white/15 h-2.5 w-2.5 rounded-full" />
+                <span className="bg-white/15 h-2.5 w-2.5 rounded-full" />
+                <span className="ml-3 truncate font-mono text-[11px] text-pro-text/40">
+                  {(project.demoUrl ?? project.githubUrl ?? '').replace(/^https?:\/\//, '')}
+                </span>
+              </div>
+              <div
+                className={`relative ${featured ? 'aspect-[16/9]' : 'aspect-[16/7]'} ${
+                  project.imageFit === 'contain' ? 'bg-white' : ''
+                }`}
+              >
+                <Image
+                  src={project.image}
+                  alt={`Aperçu de ${project.title}`}
+                  fill
+                  sizes="(min-width: 1024px) 60vw, 100vw"
+                  className={`transition-transform duration-700 group-hover:scale-[1.03] ${
+                    project.imageFit === 'contain'
+                      ? 'object-contain p-3'
+                      : 'object-cover object-top'
+                  }`}
+                />
+              </div>
             </div>
-          ) : (
+          </div>
+        ) : (
+          <div className={featured ? 'aspect-[16/9]' : 'aspect-[16/7]'}>
             <ProjectVisual number={number} />
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="flex flex-1 flex-col p-6 md:p-8" style={{ transform: 'translateZ(30px)' }}>
           <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-xs uppercase tracking-[0.15em]">

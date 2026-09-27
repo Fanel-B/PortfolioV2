@@ -5,11 +5,16 @@ import Reveal from '@/components/Reveal';
 import SectionHeader from '@/components/SectionHeader';
 import { profile } from '@/data/profile';
 import { container } from '@/lib/ui';
+import EpisodeTeaser from './EpisodeTeaser';
 import Timeline from './Timeline';
 
 const corner = 'absolute h-5 w-5 border-pro-accent';
 
-export default function QuiJeSuis() {
+interface Props {
+  onOpenHuman: () => void;
+}
+
+export default function QuiJeSuis({ onOpenHuman }: Props) {
   const facts = [
     ['Formation', profile.formation],
     ['Base', profile.location],
@@ -78,6 +83,11 @@ export default function QuiJeSuis() {
             <Timeline items={profile.timeline} />
           </div>
         </div>
+      </div>
+
+      {/* Fin d'Origine : la porte vers le côté humain */}
+      <div className={`${container} mt-28 md:mt-36`}>
+        <EpisodeTeaser onOpen={onOpenHuman} />
       </div>
     </section>
   );

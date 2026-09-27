@@ -9,6 +9,8 @@ export interface Project {
   githubUrl?: string;
   demoUrl?: string;
   image?: string;
+  /** 'cover' pour une capture d'écran (défaut), 'contain' pour un graphique à montrer en entier. */
+  imageFit?: 'cover' | 'contain';
 }
 
 export interface TimelineItem {
@@ -117,6 +119,7 @@ export const profile = {
       categories: ['Web'],
       githubUrl: 'https://github.com/Fanel-B/bibliotheque1',
       demoUrl: 'https://bibliotheque1.vercel.app',
+      image: '/static/images/projects/biblio-tech.jpg',
     },
     {
       title: 'JobBot Alternance',
@@ -126,6 +129,7 @@ export const profile = {
       categories: ['Web', 'IA'],
       githubUrl: 'https://github.com/Fanel-B/jobbot',
       demoUrl: 'https://jobbot-orcin.vercel.app',
+      image: '/static/images/projects/jobbot.jpg',
     },
     {
       title: 'Insertion professionnelle des diplômés MIAGE',
@@ -136,10 +140,11 @@ export const profile = {
       githubUrl: 'https://github.com/Fanel-B/miage-insertion-pro',
       demoUrl: undefined,
       image: '/static/images/projects/miage-insertion-pro.png',
+      imageFit: 'contain',
     },
   ] as Project[],
+  // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir » (voir A_FOURNIR.md)
   personality: {
-    title: "Qui je suis vraiment et ce que j'aime faire ?",
     // PHOTOS_ICI — remplace ces légendes par tes vraies photos (toi, amis, paysages)
     photos: [
       { caption: 'PHOTOS_ICI' },
@@ -161,6 +166,8 @@ export const profile = {
     travels: [
       { place: 'VOYAGES_ICI', description: 'Raconte ce voyage en quelques mots.' },
     ] as TravelItem[],
+    // APPRENDS_ICI — ce que tu apprends en ce moment (une techno, une langue, un instrument…)
+    learning: ['APPRENDS_ICI'] as string[],
   },
 };
 

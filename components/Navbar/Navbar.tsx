@@ -6,11 +6,11 @@ import { motion } from 'framer-motion';
 import { IconType } from 'react-icons';
 import {
   HiOutlineArrowLeft,
-  HiOutlineCamera,
   HiOutlineCube,
   HiOutlineDocumentText,
   HiOutlineHome,
   HiOutlineLightningBolt,
+  HiOutlineSun,
   HiOutlineUser,
 } from 'react-icons/hi';
 
@@ -57,7 +57,7 @@ export default function Navbar({ side, visible, onFlip, onOpenCv }: Props) {
         {isPerso ? (
           <>
             <span className="hidden items-center gap-2 px-4 text-sm text-perso-accent md:flex">
-              <HiOutlineCamera /> Hors-champ
+              <HiOutlineSun /> L&apos;humain
             </span>
             <button
               onClick={onFlip}
@@ -103,10 +103,10 @@ export default function Navbar({ side, visible, onFlip, onOpenCv }: Props) {
             <button
               onClick={onFlip}
               className={`${linkBase} text-perso-accent hover:text-perso-text`}
-              title="Découvrir mon côté perso"
+              title="Découvrir l'humain derrière le code"
             >
-              <HiOutlineCamera size={16} className="md:hidden lg:block" />
-              Hors-champ
+              <HiOutlineSun size={16} className="md:hidden lg:block" />
+              L&apos;humain
             </button>
           </>
         )}
