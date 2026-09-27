@@ -74,12 +74,12 @@ app/
   opengraph-image.tsx   Image d'aperçu générée pour les partages
   robots.ts, sitemap.ts
 components/
-  BootLoader.tsx        Écran de démarrage façon terminal
-  Sky/SkyBackground.tsx Ciel étoilé Three.js (+ saut en hyperespace)
+  Sky/SkyBackground.tsx Ciel étoilé Three.js
   TargetCursor.tsx      Curseur-viseur
   Navbar/               Pilule flottante (barre d'onglets en bas sur mobile)
   Hero/                 Hero + constellation « FB »
   QuiJeSuis/            01 Origine, trajectoire, carte « Épisode 02 »
+  FloatingSun.tsx       Petit soleil flottant, raccourci vers le côté humain
   Outils/               02 Arsenal (bandes de logos + catégories)
   Travail/              03 Lancements (filtres + grille bento)
   Footer.tsx            04 Transmission (contact)
@@ -147,63 +147,60 @@ Les couleurs sont définies dans [`tailwind.config.js`](./tailwind.config.js) et
 
 ## Les animations en détail
 
-### 1. Écran de démarrage — [`BootLoader.tsx`](./components/BootLoader.tsx)
-
-- Un compteur monte de `000` à `100 %` en **2,4 s**, avec une courbe qui ralentit à la fin (`1 - (1 - t)^2.2`), comme un vrai chargement.
-- Des lignes de « démarrage système » apparaissent à des seuils fixes (12 %, 30 %, 48 %…).
-- Le fond est semi-transparent : on voit les étoiles défiler en **hyperespace** derrière.
-- Un clic ou une touche passe l'animation. Elle n'est jouée qu'**une fois par session** (`sessionStorage`), et jamais si l'utilisateur a demandé à réduire les animations.
-- À la fin, l'écran disparaît en grossissant et en devenant flou (0,6 s).
-
-### 2. Ciel étoilé 3D — [`Sky/SkyBackground.tsx`](./components/Sky/SkyBackground.tsx)
+### 1. Ciel étoilé 3D — [`Sky/SkyBackground.tsx`](./components/Sky/SkyBackground.tsx)
 
 - **3 600 étoiles** réparties dans un cube de 100 unités, avec une caméra (champ de vision 75°) placée **à l'intérieur**, en `z = 20`. Résultat : les étoiles proches sont grosses et floues, les lointaines minuscules, ce qui donne une vraie profondeur.
 - Couleurs : 55 % blanches, 35 % bleu ciel, 10 % lavande. 4 % des étoiles sont bien plus brillantes que les autres.
 - **Shaders GLSL** faits main :
-  - _vertex shader_ : taille selon la distance, scintillement (`sin` du temps avec une phase propre à chaque étoile), déplacement pendant le saut en hyperespace (`mod` pour faire réapparaître les étoiles au fond) ;
+  - _vertex shader_ : taille selon la distance et scintillement (`sin` du temps avec une phase propre à chaque étoile) ;
   - _fragment shader_ : halo rond et doux, avec un cœur plus lumineux, en mélange additif.
 - **Rotation à la souris**, comme sur DevHQ : tant que la souris est décalée du centre, l'univers continue de tourner dans sa direction (vitesse lissée). Le scroll donne aussi une petite impulsion.
-- **Saut en hyperespace** : vitesse de 90 unités/s pendant le démarrage, qui décélère en douceur jusqu'à 0.
 - **Côté humain** : les étoiles glissent vers des tons ambre et rose (`uWarm`), le quadrillage s'efface et le grain de pellicule apparaît (transition de 0,7 s).
 - Sans WebGL, un simple dégradé CSS prend le relais.
 
-### 3. Curseur-viseur — [`TargetCursor.tsx`](./components/TargetCursor.tsx)
+### 2. Curseur-viseur — [`TargetCursor.tsx`](./components/TargetCursor.tsx)
 
 - Quatre coins en losange autour d'un point, qui suivent la souris avec un ressort (`stiffness 450, damping 35`).
 - Au survol d'un lien ou d'un bouton, les coins **se redressent et se verrouillent** autour de l'élément (6 px de marge), comme une cible.
 - Bleu côté pro, ambre côté humain. N'apparaît que sur les écrans avec une souris (`pointer: fine`) ; ailleurs, le curseur normal reste.
 
-### 4. Navbar — [`Navbar/Navbar.tsx`](./components/Navbar/Navbar.tsx)
+### 3. Navbar — [`Navbar/Navbar.tsx`](./components/Navbar/Navbar.tsx)
 
-- Pilule flottante qui descend à la fin du démarrage (ressort).
+- Pilule flottante qui descend à l'arrivée sur la page (ressort).
 - L'indicateur de section active **glisse** d'un lien à l'autre grâce à `layoutId` de Framer Motion.
 - La section active est calculée au scroll : c'est la dernière dont le haut a dépassé 40 % de l'écran.
 - Sur mobile, elle devient une barre d'onglets en bas de l'écran.
 
-### 5. Hero et constellation — [`Hero/`](./components/Hero)
+### 4. Hero et constellation — [`Hero/`](./components/Hero)
 
 - Le nom apparaît ligne par ligne (0,9 s, décalage de 0,1 s). « BALEMO » est en contour lumineux, avec un effet glitch au survol.
 - Les rôles s'écrivent puis s'effacent en boucle (`useRotatingTypewriter`) : 70 ms par lettre, pause de 1,6 s.
 - **Constellation FB** (SVG) : les initiales dessinées en étoiles reliées. Les lignes se tracent une à une (`pathLength`), et chaque étoile scintille et affiche une compétence au survol ou au toucher.
 
-### 6. Apparitions au scroll — [`Reveal.tsx`](./components/Reveal.tsx)
+### 5. Apparitions au scroll — [`Reveal.tsx`](./components/Reveal.tsx)
 
 - Chaque bloc monte de 30 px et apparaît en 0,6 s quand 20 % de sa surface entre à l'écran.
 - L'animation **se rejoue** quand on remonte (`once: false`), comme sur DevHQ.
 
-### 7. Trajectoire — [`QuiJeSuis/Timeline.tsx`](./components/QuiJeSuis/Timeline.tsx)
+### 6. Trajectoire — [`QuiJeSuis/Timeline.tsx`](./components/QuiJeSuis/Timeline.tsx)
 
 - Frise horizontale (verticale sur mobile). La ligne lumineuse se remplit en 1,4 s jusqu'à l'étape actuelle, qui pulse.
 - Une dernière étape en pointillés, « Alternance — votre entreprise ? », reste ouverte.
 
-### 8. Carte « Épisode 02 » — [`QuiJeSuis/EpisodeTeaser.tsx`](./components/QuiJeSuis/EpisodeTeaser.tsx)
+### 7. Carte « Épisode 02 » — [`QuiJeSuis/EpisodeTeaser.tsx`](./components/QuiJeSuis/EpisodeTeaser.tsx)
 
-La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回予告, « prochain épisode ») :
+La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回予告, « prochain épisode »). Comme dans un anime, elle arrive **à la fin** : après les projets, juste avant le contact, précédée de « // Fin de l'épisode 01 ». Elle ne coupe donc pas la lecture du côté pro.
 
 - **Lignes de vitesse** de manga qui rayonnent depuis le Soleil (`repeating-conic-gradient` en rotation lente sur 60 s, et 8 s au survol).
 - **Trame manga** en points, ombre décalée pleine, façon BD.
 - Au survol : la carte se soulève, un reflet balaie le bouton, et l'onomatopée **ドン!** (« don ! ») surgit.
 - Le Soleil tourne sur lui-même (120 s par tour) ; le kanji 人間 (« l'humain ») est en contour.
+
+### 8. Soleil flottant — [`FloatingSun.tsx`](./components/FloatingSun.tsx)
+
+- Un petit soleil (la même photo NASA) apparaît dans le coin inférieur droit une fois le hero dépassé. Il flotte doucement (4 s par oscillation) et tourne sur lui-même.
+- À sa première apparition, une bulle « Psst… il y a un humain derrière le code → » s'affiche 4,5 s, puis seulement au survol.
+- Un clic retourne la page vers le côté humain. Il se cache quand la grande carte « Épisode 02 » est à l'écran, pour ne pas faire doublon.
 
 ### 9. Arsenal — [`Outils/Outils.tsx`](./components/Outils/Outils.tsx)
 
@@ -221,11 +218,11 @@ La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回
 
 - La page pivote comme une carte : la face actuelle tourne de 0 à 90° (0,45 s), puis la nouvelle arrive de −90 à 0°.
 - Le point de vue de la rotation est placé **au milieu de l'écran**, où que l'on soit dans la page, pour que l'effet reste net même tout en bas.
-- Entre les deux, on remonte en haut de la page.
+- Entre les deux, on remonte en haut de la page. Au tout premier affichage, il n'y a pas de rotation (`AnimatePresence initial={false}`).
 
 ### 12. Côté humain — [`Personnalite/`](./components/Personnalite)
 
-- **Hero** : « Dans le noir de l'univers, il y a toujours un soleil. » à côté d'une vraie photo du Soleil (satellite SDO de la NASA, ultraviolet 171 Å). Elle tourne très lentement (240 s par tour), avec un halo, et ses bords noirs sont effacés (`mix-blend-mode: screen` + masque radial).
+- **Hero** : la citation « En chacun de nous existe un soleil. » (Socrate), à côté d'une vraie photo du Soleil (satellite SDO de la NASA, ultraviolet 171 Å). Elle tourne très lentement (240 s par tour), avec un halo, et ses bords noirs sont effacés (`mix-blend-mode: screen` + masque radial).
 - **Tableau de bord « Mon système solaire »**, en tuiles :
   - _En direct_ : l'heure de Toulouse à la seconde ;
   - _Vu d'ici_ : la **photo astronomique du jour de la NASA** (API APOD). L'image est préchargée avant l'affichage et gardée en cache pour la session ; si l'API ne répond pas, c'est la photo du Soleil qui s'affiche ;
@@ -242,7 +239,7 @@ La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回
 
 ## Accessibilité et performance
 
-- **Animations réduites** : si le système le demande (`prefers-reduced-motion`), Framer Motion coupe les mouvements (`MotionConfig reducedMotion="user"`), l'écran de démarrage est sauté, les étoiles s'arrêtent et les bandes de logos se figent.
+- **Animations réduites** : si le système le demande (`prefers-reduced-motion`), Framer Motion coupe les mouvements (`MotionConfig reducedMotion="user"`), les étoiles s'arrêtent et les bandes de logos se figent.
 - Le curseur-viseur n'est activé qu'avec une souris ; au clavier et sur mobile, rien ne change.
 - Boutons-icônes avec `aria-label`, filtres en `role="tablist"`, fenêtre du CV en `role="dialog"`.
 - Three.js : pixel ratio plafonné à 2, ressources libérées au démontage. Seules `transform` et `opacity` sont animées.

@@ -36,11 +36,7 @@ const LINKS: [string, string][] = [
   ['m', 'n'],
 ];
 
-interface Props {
-  ready: boolean;
-}
-
-export default function Constellation({ ready }: Props) {
+export default function Constellation() {
   const [active, setActive] = useState<string | null>(null);
   const activeStar = active ? STARS[active] : null;
 
@@ -71,7 +67,7 @@ export default function Constellation({ ready }: Props) {
               strokeWidth={lit ? 0.9 : 0.5}
               strokeOpacity={lit ? 0.9 : 0.35}
               initial={{ pathLength: 0 }}
-              animate={ready ? { pathLength: 1 } : { pathLength: 0 }}
+              animate={{ pathLength: 1 }}
               transition={{ duration: 0.6, delay: 0.4 + i * 0.09, ease: 'easeInOut' }}
             />
           );
@@ -81,7 +77,7 @@ export default function Constellation({ ready }: Props) {
           <motion.g
             key={id}
             initial={{ opacity: 0, scale: 0 }}
-            animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 + i * 0.06, type: 'spring', stiffness: 300, damping: 15 }}
             style={{ transformOrigin: `${star.x}px ${star.y}px` }}
             onMouseEnter={() => setActive(id)}

@@ -67,10 +67,16 @@ export default function Personnalite({ onClose }: Props) {
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-perso-accent">
             L&apos;humain · 太陽
           </p>
-          <h1 className="mt-6 font-heading text-[clamp(2.5rem,5.5vw,5rem)] font-extrabold leading-[0.95]">
-            Dans le noir de l&apos;univers, il y a toujours{' '}
-            <span className="italic text-perso-accent">un soleil.</span>
-          </h1>
+          <blockquote className="mt-6">
+            <h1 className="font-heading text-[clamp(2.5rem,5.5vw,5rem)] font-extrabold leading-[0.95]">
+              <span className="text-perso-accent">«</span> En chacun de nous existe{' '}
+              <span className="italic text-perso-accent">un soleil.</span>{' '}
+              <span className="text-perso-accent">»</span>
+            </h1>
+            <footer className="mt-6 font-mono text-sm uppercase tracking-[0.25em] text-perso-text/50">
+              — Socrate
+            </footer>
+          </blockquote>
           <p className="mt-8 max-w-md text-lg text-perso-text/60">
             Voici le mien : ce qui m&apos;éclaire quand je ne code pas.
           </p>

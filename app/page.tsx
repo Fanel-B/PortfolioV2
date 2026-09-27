@@ -1,17 +1,19 @@
 'use client';
 
-import BootLoader from '@/components/BootLoader';
 import CvModal from '@/components/CvModal';
+import FloatingSun from '@/components/FloatingSun';
 import Footer from '@/components/Footer';
 import Hero from '@/components/Hero/Hero';
 import Navbar from '@/components/Navbar/Navbar';
 import Outils from '@/components/Outils/Outils';
 import Personnalite from '@/components/Personnalite/Personnalite';
+import EpisodeTeaser from '@/components/QuiJeSuis/EpisodeTeaser';
 import QuiJeSuis from '@/components/QuiJeSuis/QuiJeSuis';
 import ScrollProgress from '@/components/ScrollProgress';
 import type { Side } from '@/components/Sky/SkyBackground';
 import TargetCursor from '@/components/TargetCursor';
 import Travail from '@/components/Travail/Travail';
+import { container } from '@/lib/ui';
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
@@ -22,13 +24,11 @@ const SkyBackground = dynamic(() => import('@/components/Sky/SkyBackground'), { 
 const FLIP = { duration: 0.45, ease: [0.65, 0, 0.35, 1] };
 
 export default function Page() {
-  const [booted, setBooted] = useState(false);
   const [side, setSide] = useState<Side>('pro');
   const [cvOpen, setCvOpen] = useState(false);
   // Point de vue de la rotation : le milieu de l'écran, où que l'on soit dans la page.
   const [flipOrigin, setFlipOrigin] = useState(400);
 
-  const onBooted = useCallback(() => setBooted(true), []);
   const openCv = useCallback(() => setCvOpen(true), []);
   const closeCv = useCallback(() => setCvOpen(false), []);
   const flip = useCallback(() => {
@@ -38,15 +38,17 @@ export default function Page() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <BootLoader visible={!booted} onDone={onBooted} />
-      <SkyBackground side={side} warp={!booted} />
+      <SkyBackground side={side} />
       <TargetCursor side={side} />
       <ScrollProgress />
-      <Navbar side={side} visible={booted} onFlip={flip} onOpenCv={openCv} />
+      <Navbar side={side} onFlip={flip} onOpenCv={openCv} />
+      {side === 'pro' && <FloatingSun onOpen={flip} />}
 
       {/* On retourne la page comme une carte : l'ancienne face pivote, puis la nouvelle arrive. */}
       <div style={{ perspective: 1800, perspectiveOrigin: `50% ${flipOrigin}px` }}>
+        {/* initial={false} : pas de rotation au premier affichage, seulement lors d'une bascule. */}
         <AnimatePresence
+          initial={false}
           mode="wait"
           onExitComplete={() => {
             window.scrollTo(0, 0);
@@ -62,10 +64,17 @@ export default function Page() {
           >
             {side === 'pro' ? (
               <>
-                <Hero ready={booted} onOpenCv={openCv} />
-                <QuiJeSuis onOpenHuman={flip} />
+                <Hero onOpenCv={openCv} />
+                <QuiJeSuis />
                 <Outils />
                 <Travail />
+                {/* Comme dans un anime : l'aperçu du prochain épisode arrive à la fin de celui-ci. */}
+                <section id="prochain-episode" className={`${container} pb-28 pt-8 md:pb-40`}>
+                  <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-pro-text/40">
+                    {"// Fin de l'épisode 01"}
+                  </p>
+                  <EpisodeTeaser onOpen={flip} />
+                </section>
                 <Footer />
               </>
             ) : (

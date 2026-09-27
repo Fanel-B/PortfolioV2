@@ -24,7 +24,6 @@ const SECTION_IDS = NAV_ITEMS.map((item) => item.id);
 
 interface Props {
   side: Side;
-  visible: boolean;
   onFlip: () => void;
   onOpenCv: () => void;
 }
@@ -32,7 +31,7 @@ interface Props {
 const linkBase =
   'relative z-10 flex flex-col items-center gap-1 rounded-full px-2 py-2 text-[10px] transition-colors md:flex-row md:gap-2 md:px-4 md:text-sm';
 
-export default function Navbar({ side, visible, onFlip, onOpenCv }: Props) {
+export default function Navbar({ side, onFlip, onOpenCv }: Props) {
   const activeId = useActiveSection(SECTION_IDS) || 'accueil';
   const isPerso = side === 'perso';
 
@@ -41,8 +40,8 @@ export default function Navbar({ side, visible, onFlip, onOpenCv }: Props) {
 
   return (
     <motion.header
-      initial={false}
-      animate={visible ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }}
+      initial={{ y: -40, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
       transition={{ type: 'spring', stiffness: 260, damping: 22 }}
       className="fixed inset-x-0 bottom-0 z-40 md:bottom-auto md:top-5 md:flex md:justify-center"
     >

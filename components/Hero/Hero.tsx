@@ -10,19 +10,18 @@ import { HiArrowRight } from '@/lib/icons';
 import Constellation from './Constellation';
 
 interface Props {
-  ready: boolean;
   onOpenCv: () => void;
 }
 
 const socialClass = 'text-pro-text/60 transition-colors hover:text-pro-accent';
 
-export default function Hero({ ready, onOpenCv }: Props) {
+export default function Hero({ onOpenCv }: Props) {
   const role = useRotatingTypewriter(profile.roles);
   const liveProjects = profile.projects.filter((p) => p.demoUrl).length;
 
   const rise = (delay: number) => ({
     initial: { opacity: 0, y: 40 },
-    animate: ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 },
+    animate: { opacity: 1, y: 0 },
     transition: { duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] },
   });
 
@@ -111,11 +110,11 @@ export default function Hero({ ready, onOpenCv }: Props) {
 
         <motion.div
           initial={{ opacity: 0 }}
-          animate={ready ? { opacity: 1 } : { opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
           className="mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none"
         >
-          <Constellation ready={ready} />
+          <Constellation />
         </motion.div>
       </div>
 

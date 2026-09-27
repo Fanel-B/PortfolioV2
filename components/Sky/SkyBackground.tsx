@@ -7,13 +7,10 @@ export type Side = 'pro' | 'perso';
 
 interface Props {
   side: Side;
-  /** Saut en hyperespace pendant l'écran de démarrage. */
-  warp: boolean;
 }
 
 const STAR_COUNT = 3600;
 const FIELD = 100; // les étoiles remplissent un cube de 100 unités autour de la caméra
-const WARP_SPEED = 90;
 
 const vertexShader = /* glsl */ `
   attribute float aSeed;
@@ -21,24 +18,18 @@ const vertexShader = /* glsl */ `
   attribute vec3 aColor;
 
   uniform float uTime;
-  uniform float uTravel;
   uniform float uScale;
   uniform float uWarm;
-  uniform float uWarp;
 
   varying vec3 vColor;
   varying float vAlpha;
 
   void main() {
-    vec3 p = position;
-    // Pendant le saut, les étoiles foncent vers la caméra puis réapparaissent au fond.
-    p.z = mod(p.z + uTravel + ${FIELD / 2}.0, ${FIELD}.0) - ${FIELD / 2}.0;
-
-    vec4 mv = modelViewMatrix * vec4(p, 1.0);
+    vec4 mv = modelViewMatrix * vec4(position, 1.0);
     gl_Position = projectionMatrix * mv;
 
     float twinkle = 0.5 + 0.5 * sin(uTime * (0.6 + aSeed * 2.4) + aSeed * 50.0);
-    gl_PointSize = aSize * (1.0 + uWarp * 1.5) * uScale / -mv.z;
+    gl_PointSize = aSize * uScale / -mv.z;
 
     vec3 warm = mix(vec3(1.0, 0.8, 0.6), vec3(0.93, 0.6, 0.75), fract(aSeed * 7.0));
     vColor = mix(aColor, warm, uWarm);
@@ -90,14 +81,13 @@ function buildStars() {
   return geometry;
 }
 
-export default function SkyBackground({ side, warp }: Props) {
+export default function SkyBackground({ side }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const state = useRef({ warm: side === 'perso' ? 1 : 0, warp });
+  const warmTarget = useRef(side === 'perso' ? 1 : 0);
 
   useEffect(() => {
-    state.current.warm = side === 'perso' ? 1 : 0;
-    state.current.warp = warp;
-  }, [side, warp]);
+    warmTarget.current = side === 'perso' ? 1 : 0;
+  }, [side]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -134,10 +124,8 @@ export default function SkyBackground({ side, warp }: Props) {
       blending: THREE.AdditiveBlending,
       uniforms: {
         uTime: { value: 0 },
-        uTravel: { value: 0 },
         uScale: { value: (window.innerHeight * pixelRatio) / 2 },
-        uWarm: { value: state.current.warm },
-        uWarp: { value: 0 },
+        uWarm: { value: warmTarget.current },
       },
     });
     const stars = new THREE.Points(geometry, material);
@@ -172,22 +160,15 @@ export default function SkyBackground({ side, warp }: Props) {
     window.addEventListener('resize', onResize);
 
     const clock = new THREE.Clock();
-    let speed = state.current.warp && !reducedMotion ? WARP_SPEED : 0;
     let frame = 0;
 
     const tick = () => {
       const dt = Math.min(clock.getDelta(), 0.1);
       const uniforms = material.uniforms;
-      const { warm, warp: warping } = state.current;
-
-      uniforms.uWarm.value += (warm - uniforms.uWarm.value) * Math.min(1, dt * 2);
+      uniforms.uWarm.value += (warmTarget.current - uniforms.uWarm.value) * Math.min(1, dt * 2);
 
       if (!reducedMotion) {
         uniforms.uTime.value = clock.elapsedTime;
-
-        speed += ((warping ? WARP_SPEED : 0) - speed) * Math.min(1, dt * 1.4);
-        uniforms.uTravel.value += speed * dt;
-        uniforms.uWarp.value = speed / WARP_SPEED;
 
         mouse.smoothX += (mouse.x - mouse.smoothX) * Math.min(1, dt * 3);
         mouse.smoothY += (mouse.y - mouse.smoothY) * Math.min(1, dt * 3);
