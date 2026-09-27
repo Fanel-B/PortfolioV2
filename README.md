@@ -54,7 +54,14 @@ bun dev                      # http://localhost:3000
 | `bun run serve` | Sert le build de production                          |
 | `bun run lint`  | Corrige ce qui peut l'être avec ESLint               |
 
-> **Astuce :** ne lance jamais `bun run build` pendant qu'un `bun dev` tourne. Les deux écrivent dans `.next/` et le serveur de dev plante. En cas de souci, arrête tout et supprime `.next/`.
+### Vitesse du mode dev
+
+En mode dev, Next.js compile chaque page **au premier affichage** : compte environ 10 à 15 s la toute première fois, puis moins de 10 s aux lancements suivants (le cache est dans `.next/`), et moins de 0,5 s pour les rechargements. La version en ligne, elle, est précompilée et s'affiche immédiatement.
+
+- Ne supprime pas `.next/` sans raison : c'est ce cache qui accélère les lancements suivants (polices, compilation).
+- Ne lance jamais `bun run build` pendant qu'un `bun dev` tourne : les deux écrivent dans `.next/` et le serveur de dev plante. En cas de souci, arrête tout, supprime `.next/` et relance.
+- Sous Windows, exclure le dossier du projet de l'analyse de Microsoft Defender accélère nettement la compilation.
+- Pour juger la vitesse réelle du site, teste la version de production : `bun run build` puis `bun run serve`.
 
 ---
 
@@ -100,10 +107,17 @@ A_FOURNIR.md            Contenu personnel encore attendu
 | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Ajouter un projet             | Un objet dans `projects` : titre, description, `categories` (Web / Data / IA), liens, `image`                                                                              |
 | Ajouter une capture de projet | Déposer l'image dans `public/static/images/projects/`, puis `image: '/static/images/projects/xxx.jpg'`. Mettre `imageFit: 'contain'` pour un graphique à montrer en entier |
-| Ajouter une compétence        | `outils` ; ajouter son logo dans [`lib/skillIcons.ts`](./lib/skillIcons.ts) (sinon, icône générique)                                                                       |
+| Ajouter une compétence        | `outils` ; pour son logo, voir « Ajouter une icône » ci-dessous (sinon, icône générique)                                                                                   |
 | Ajouter une étape de parcours | `timeline`, de la plus récente à la plus ancienne                                                                                                                          |
 | Activer le CV                 | Déposer le PDF dans `public/cv/`, puis renseigner `cvUrl`                                                                                                                  |
 | Remplir le côté humain        | `personality` : photos, passions, citations, musique, lieux, apprentissages                                                                                                |
+
+### Ajouter une icône
+
+Les icônes viennent de [react-icons](https://react-icons.github.io/react-icons/), mais le site n'importe jamais un paquet entier (`react-icons/si` pèse 3,2 Mo et ralentissait fortement le mode dev). Seules les icônes utilisées sont copiées dans [`lib/icons.ts`](./lib/icons.ts), un fichier généré.
+
+1. Dans le composant, importer l'icône normalement : `import { SiDocker } from 'react-icons/si';` (et l'ajouter dans [`lib/skillIcons.ts`](./lib/skillIcons.ts) si c'est un logo de compétence).
+2. Lancer `node scripts/gen-icons.cjs .` : le script ajoute l'icône à `lib/icons.ts` et remplace l'import par `@/lib/icons`.
 
 Les valeurs qui finissent par `_ICI` (ex. `'MUSIQUES_ICI'`) sont des emplacements vides : le site affiche « à venir » à la place. La liste de ce qui manque est dans [A_FOURNIR.md](./A_FOURNIR.md).
 
