@@ -1,116 +1,116 @@
 'use client';
 
-import ThemeSwitch from '@/components/ThemeSwitch';
+import { Side } from '@/components/Sky/SkyBackground';
 import { useActiveSection } from '@/lib/hooks/useActiveSection';
-import { useState } from 'react';
-import { HiMenu, HiX } from 'react-icons/hi';
+import { motion } from 'framer-motion';
+import { IconType } from 'react-icons';
+import {
+  HiOutlineArrowLeft,
+  HiOutlineCamera,
+  HiOutlineCube,
+  HiOutlineDocumentText,
+  HiOutlineHome,
+  HiOutlineLightningBolt,
+  HiOutlineUser,
+} from 'react-icons/hi';
 
-const SECTION_IDS = ['moi', 'outils', 'travail'];
-
-const NAV_ITEMS = [
-  { id: 'moi', label: 'MOI' },
-  { id: 'outils', label: 'MES OUTILS' },
-  { id: 'travail', label: 'MON TRAVAIL' },
+const NAV_ITEMS: { id: string; label: string; icon: IconType }[] = [
+  { id: 'accueil', label: 'Accueil', icon: HiOutlineHome },
+  { id: 'origine', label: 'Origine', icon: HiOutlineUser },
+  { id: 'arsenal', label: 'Arsenal', icon: HiOutlineCube },
+  { id: 'lancements', label: 'Lancements', icon: HiOutlineLightningBolt },
 ];
+const SECTION_IDS = NAV_ITEMS.map((item) => item.id);
 
 interface Props {
-  onOpenPersonality: () => void;
+  side: Side;
+  visible: boolean;
+  onFlip: () => void;
+  onOpenCv: () => void;
 }
 
-export default function Navbar({ onOpenPersonality }: Props) {
-  const activeId = useActiveSection(SECTION_IDS);
-  const [mobileOpen, setMobileOpen] = useState(false);
+const linkBase =
+  'relative z-10 flex flex-col items-center gap-1 rounded-full px-2 py-2 text-[10px] transition-colors md:flex-row md:gap-2 md:px-4 md:text-sm';
 
-  const scrollTo = (id: string) => {
+export default function Navbar({ side, visible, onFlip, onOpenCv }: Props) {
+  const activeId = useActiveSection(SECTION_IDS) || 'accueil';
+  const isPerso = side === 'perso';
+
+  const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    setMobileOpen(false);
-  };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-gray-200/60 bg-white/70 backdrop-blur-md dark:border-pro-surface2/60 dark:bg-pro-bg/70">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-8">
-        <button
-          onClick={() => scrollTo('moi')}
-          className="font-accent text-lg text-pro-accent"
-          aria-label="Retour en haut"
-        >
-          FB.
-        </button>
-
-        <nav className="hidden items-center gap-6 font-accent text-sm tracking-wide md:flex">
-          {NAV_ITEMS.map((item) => (
+    <motion.header
+      initial={false}
+      animate={visible ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+      className="fixed inset-x-0 bottom-0 z-40 md:bottom-auto md:top-5 md:flex md:justify-center"
+    >
+      <nav
+        aria-label="Navigation principale"
+        className={`flex items-center justify-around gap-1 border-t px-2 pb-3 pt-2 font-mono backdrop-blur-xl md:justify-center md:rounded-full md:border md:px-2 md:py-1.5 ${
+          isPerso
+            ? 'border-perso-accent/15 bg-perso-bg/75 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
+            : 'border-white/10 bg-pro-bg/70 shadow-[0_8px_32px_rgba(0,0,0,0.45)]'
+        }`}
+      >
+        {isPerso ? (
+          <>
+            <span className="hidden items-center gap-2 px-4 text-sm text-perso-accent md:flex">
+              <HiOutlineCamera /> Hors-champ
+            </span>
             <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              className={`transition-colors hover:text-pro-accent ${
-                activeId === item.id ? 'text-pro-accent' : 'text-gray-600 dark:text-pro-text/70'
-              }`}
+              onClick={onFlip}
+              className={`${linkBase} bg-perso-accent/10 text-perso-text hover:bg-perso-accent/20`}
             >
-              {item.label}
+              <HiOutlineArrowLeft size={16} />
+              Retour côté pro
             </button>
-          ))}
-          <button
-            onClick={onOpenPersonality}
-            className="text-gray-600 transition-colors hover:text-pro-accent dark:text-pro-text/70"
-          >
-            MA PERSONNALITÉ
-          </button>
-          <a
-            href="/static/cv.pdf"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full border border-pro-accent px-4 py-1.5 text-pro-accent transition-colors hover:bg-pro-accent hover:text-white"
-          >
-            CV
-          </a>
-          <ThemeSwitch />
-        </nav>
-
-        <div className="flex items-center gap-3 md:hidden">
-          <ThemeSwitch />
-          <button
-            type="button"
-            aria-label="Basculer le menu"
-            onClick={() => setMobileOpen((v) => !v)}
-            className="text-gray-900 dark:text-pro-text"
-          >
-            {mobileOpen ? <HiX size={22} /> : <HiMenu size={22} />}
-          </button>
-        </div>
-      </div>
-
-      {mobileOpen && (
-        <nav className="flex flex-col gap-1 border-t border-gray-200/60 px-4 pb-4 font-accent text-sm dark:border-pro-surface2/60 md:hidden">
-          {NAV_ITEMS.map((item) => (
+          </>
+        ) : (
+          <>
+            {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
+              const active = activeId === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => scrollTo(id)}
+                  aria-current={active ? 'true' : undefined}
+                  className={`${linkBase} ${id === 'accueil' ? 'hidden md:flex' : ''} ${
+                    active ? 'text-pro-text' : 'text-pro-text/50 hover:text-pro-text/80'
+                  }`}
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="nav-indicator"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      className="bg-pro-accent/15 absolute inset-0 -z-10 rounded-full border border-pro-accent/40 shadow-[0_0_20px_rgba(142,205,248,0.2)]"
+                    />
+                  )}
+                  <Icon size={16} className="md:hidden lg:block" />
+                  {label}
+                </button>
+              );
+            })}
+            <span className="mx-1 hidden h-5 w-px bg-white/10 md:block" />
             <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              className={`py-2 text-left ${
-                activeId === item.id ? 'text-pro-accent' : 'text-gray-600 dark:text-pro-text/70'
-              }`}
+              onClick={onOpenCv}
+              className={`${linkBase} text-pro-accent hover:text-pro-text`}
             >
-              {item.label}
+              <HiOutlineDocumentText size={16} className="md:hidden lg:block" />
+              CV
             </button>
-          ))}
-          <button
-            onClick={() => {
-              onOpenPersonality();
-              setMobileOpen(false);
-            }}
-            className="py-2 text-left text-gray-600 dark:text-pro-text/70"
-          >
-            MA PERSONNALITÉ
-          </button>
-          <a
-            href="/static/cv.pdf"
-            target="_blank"
-            rel="noreferrer"
-            className="py-2 text-left text-pro-accent"
-          >
-            CV
-          </a>
-        </nav>
-      )}
-    </header>
+            <button
+              onClick={onFlip}
+              className={`${linkBase} text-perso-accent hover:text-perso-text`}
+              title="Découvrir mon côté perso"
+            >
+              <HiOutlineCamera size={16} className="md:hidden lg:block" />
+              Hors-champ
+            </button>
+          </>
+        )}
+      </nav>
+    </motion.header>
   );
 }

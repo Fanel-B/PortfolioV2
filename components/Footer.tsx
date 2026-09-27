@@ -1,9 +1,59 @@
+'use client';
+
+import CopyEmail from '@/components/CopyEmail';
+import SectionHeader from '@/components/SectionHeader';
 import { profile } from '@/data/profile';
+import { container } from '@/lib/ui';
+import { HiArrowRight } from 'react-icons/hi';
+
+const links = [
+  { label: 'GitHub', href: profile.contact.github },
+  { label: 'LinkedIn', href: profile.contact.linkedin },
+];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-200 py-8 text-center text-sm text-gray-500 dark:border-pro-surface2 dark:text-pro-text/60">
-      © {new Date().getFullYear()} {profile.name}
+    <footer
+      id="transmission"
+      className="relative border-t border-white/10 pb-28 pt-28 md:pb-10 md:pt-40"
+    >
+      <div className={container}>
+        <SectionHeader
+          index="04"
+          kicker="Transmission"
+          title="Une alternance, un projet, une question ?"
+        />
+
+        <CopyEmail className="group mt-12 block w-full text-left">
+          <span className="block font-mono text-xs uppercase tracking-[0.25em] text-pro-text/40">
+            Cliquer pour copier mon email
+          </span>
+          <span className="mt-4 flex items-center gap-4 font-heading text-[clamp(1.1rem,3.8vw,3.75rem)] font-extrabold leading-none text-pro-text transition-colors group-hover:text-pro-accent">
+            {profile.contact.email}
+            <HiArrowRight className="hidden shrink-0 transition-transform group-hover:translate-x-3 md:block" />
+          </span>
+        </CopyEmail>
+
+        <div className="mt-24 flex flex-col gap-6 border-t border-white/10 pt-8 font-mono text-xs uppercase tracking-[0.2em] text-pro-text/40 md:flex-row md:items-center md:justify-between">
+          <span>
+            © {new Date().getFullYear()} {profile.name} · Construit sous un ciel étoilé
+          </span>
+          <ul className="flex gap-8">
+            {links.map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="transition-colors hover:text-pro-accent"
+                >
+                  {link.label} ↗
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </footer>
   );
 }

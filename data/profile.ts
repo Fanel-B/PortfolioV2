@@ -1,9 +1,11 @@
 export type ProjectType = 'perso' | 'academique' | 'pro';
+export type ProjectCategory = 'Web' | 'Data' | 'IA';
 
 export interface Project {
   title: string;
   description: string;
   type: ProjectType;
+  categories: ProjectCategory[];
   githubUrl?: string;
   demoUrl?: string;
   image?: string;
@@ -47,6 +49,9 @@ export interface TravelItem {
 export const profile = {
   name: 'Fanel Balemo',
   tagline: 'A student who codes, analyzes, and refuses to stay in one box.',
+  roles: ['Développeur Full Stack', 'Data Analyst', 'Étudiant en MIAGE'],
+  // CV_ICI — dépose le PDF dans public/cv/ puis renseigne son chemin, ex. '/cv/fanel-balemo-cv.pdf'
+  cvUrl: undefined as string | undefined,
   availability: 'Disponible pour une alternance ou un stage',
   location: 'Toulouse, France',
   formation: 'L3 MIAGE · Université de Toulouse',
@@ -60,12 +65,17 @@ export const profile = {
     "Je suis Fanel Balemo, étudiant en L3 MIAGE à l'Université de Toulouse. J'aime autant comprendre les données que construire les outils qui les exploitent. Chaque projet est pour moi une occasion d'apprendre quelque chose de nouveau.",
     'En ce moment : je prépare mon entrée dans le monde pro en visant des rôles de Développeur Full Stack ou Data Analyst.',
   ],
-  // TIMELINE_ICI — remplace ces entrées par ton vrai parcours (formations, stages, expériences)
   timeline: [
     {
-      period: 'À compléter',
-      title: 'TIMELINE_ICI',
-      description: 'Ajoute ici les grandes étapes de ton parcours, une entrée par période.',
+      period: "2026 — aujourd'hui",
+      title: 'L3 MIAGE · Université de Toulouse',
+      description:
+        'Méthodes informatiques appliquées à la gestion des entreprises : développement, bases de données, gestion de projet.',
+    },
+    {
+      period: '2023 — 2026',
+      title: 'L1 — L2',
+      description: 'Deux premières années de licence validées.',
     },
   ] as TimelineItem[],
   outils: [
@@ -104,6 +114,7 @@ export const profile = {
       description:
         "Reconstruction complète d'un projet universitaire de bibliothèque en plateforme full-stack (Next.js, Express, PostgreSQL) : catalogue, prêts, réservations de salles, et une couche domotique simulée (capteurs, automatisations IF→THEN, sécurité des accès) pilotable en temps réel, sans aucun matériel. Recommandations et analytics calculés en SQL pur, sans ML.",
       type: 'perso',
+      categories: ['Web'],
       githubUrl: 'https://github.com/Fanel-B/bibliotheque1',
       demoUrl: 'https://bibliotheque1.vercel.app',
     },
@@ -112,6 +123,7 @@ export const profile = {
       description:
         "Assistant de recherche d'alternance propulsé par l'API Claude (Anthropic) : génère des offres réalistes, note chaque offre sur 100 selon l'adéquation avec mon profil, adapte un CV en un clic, et centralise le suivi des candidatures avec export CSV. React + Vite.",
       type: 'perso',
+      categories: ['Web', 'IA'],
       githubUrl: 'https://github.com/Fanel-B/jobbot',
       demoUrl: 'https://jobbot-orcin.vercel.app',
     },
@@ -120,6 +132,7 @@ export const profile = {
       description:
         "Analyse de l'insertion professionnelle des diplômés MIAGE en France à partir des données officielles du ministère (~1 million de lignes, data.esr.gouv.fr) : la ville de formation influence surtout le salaire, la filière elle-même performe mieux que la moyenne des diplômes en informatique. Python (pandas, matplotlib).",
       type: 'perso',
+      categories: ['Data'],
       githubUrl: 'https://github.com/Fanel-B/miage-insertion-pro',
       demoUrl: undefined,
       image: '/static/images/projects/miage-insertion-pro.png',

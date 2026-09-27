@@ -1,59 +1,83 @@
 'use client';
 
 import PlaceholderImage from '@/components/PlaceholderImage';
+import Reveal from '@/components/Reveal';
+import SectionHeader from '@/components/SectionHeader';
 import { profile } from '@/data/profile';
-import { motion } from 'framer-motion';
+import { container } from '@/lib/ui';
 import Timeline from './Timeline';
 
-interface Props {
-  onOpenPersonality: () => void;
-}
+const corner = 'absolute h-5 w-5 border-pro-accent';
 
-export default function QuiJeSuis({ onOpenPersonality }: Props) {
+export default function QuiJeSuis() {
+  const facts = [
+    ['Formation', profile.formation],
+    ['Base', profile.location],
+    ['Recherche', profile.availability],
+    ['Double profil', 'Développement full stack · Analyse de données'],
+  ];
+
   return (
-    <section className="mx-auto max-w-5xl px-4 py-24 sm:px-8">
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6 }}
-        className="grid gap-10 md:grid-cols-[280px_1fr] md:items-start"
-      >
-        <PlaceholderImage label="Photo à venir" className="aspect-square w-full" />
-
-        <div>
-          <h2 className="mb-6 font-display text-3xl font-bold text-gray-900 dark:text-pro-text">
-            Qui je suis ?
-          </h2>
-          <div className="space-y-4 text-gray-600 dark:text-pro-text/80">
-            {profile.bio.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
-          <div className="mt-6 flex flex-wrap gap-4">
-            <div className="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-pro-surface2">
-              <span className="block font-accent text-xs uppercase text-gray-400">Formation</span>
-              {profile.formation}
-            </div>
-            <div className="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-pro-surface2">
-              <span className="block font-accent text-xs uppercase text-gray-400">
-                Localisation
-              </span>
-              {profile.location}
-            </div>
+    <section id="origine" className="scroll-mt-24 py-28 md:py-40">
+      <div className={`${container} grid gap-14 lg:grid-cols-12`}>
+        <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-32">
+            <SectionHeader
+              index="01"
+              kicker="Origine"
+              title={
+                <>
+                  Un pied dans le code,{' '}
+                  <span className="text-pro-accent">l&apos;autre dans les données.</span>
+                </>
+              }
+            />
           </div>
         </div>
-      </motion.div>
 
-      <Timeline items={profile.timeline} />
+        <div className="space-y-16 lg:col-span-7">
+          <Reveal className="grid gap-10 md:grid-cols-[minmax(0,240px)_1fr]">
+            {/* Photo dans un viseur, comme le curseur */}
+            <div className="relative p-3">
+              <span className={`${corner} left-0 top-0 border-l-2 border-t-2`} />
+              <span className={`${corner} right-0 top-0 border-r-2 border-t-2`} />
+              <span className={`${corner} bottom-0 left-0 border-b-2 border-l-2`} />
+              <span className={`${corner} bottom-0 right-0 border-b-2 border-r-2`} />
+              <PlaceholderImage
+                label="Photo à venir"
+                className="aspect-[4/5] w-full rounded-none"
+              />
+            </div>
 
-      <div className="mt-16 flex justify-center">
-        <button
-          onClick={onOpenPersonality}
-          className="rounded-full bg-pro-accent px-8 py-3 font-accent text-lg text-white transition-transform hover:scale-105"
-        >
-          MA PERSONNALITÉ →
-        </button>
+            <div className="space-y-5 text-lg leading-relaxed text-pro-text/75 md:text-xl">
+              {profile.bio.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <dl className="divide-y divide-white/10 border-y border-white/10">
+              {facts.map(([label, value]) => (
+                <div key={label} className="grid gap-1 py-4 sm:grid-cols-[200px_1fr]">
+                  <dt className="font-mono text-xs uppercase tracking-[0.2em] text-pro-text/40">
+                    {label}
+                  </dt>
+                  <dd className="text-pro-text">{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
+
+          <div>
+            <Reveal>
+              <p className="mb-10 font-mono text-xs uppercase tracking-[0.25em] text-pro-text/40">
+                Trajectoire
+              </p>
+            </Reveal>
+            <Timeline items={profile.timeline} />
+          </div>
+        </div>
       </div>
     </section>
   );

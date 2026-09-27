@@ -2,41 +2,37 @@
 
 import { useEffect, useState } from 'react';
 
-export function useActiveSection(ids: string[], root?: HTMLElement | null): string {
-  const [activeId, setActiveId] = useState<string>(ids[0] ?? '');
+// Renvoie l'id de la dernière section dont le haut a passé 40 % de l'écran ('' au-dessus de la première).
+// Les sections sont retrouvées à chaque scroll, pour suivre celles qui sont remontées après un changement jour/nuit.
+export function useActiveSection(ids: string[]): string {
+  const [activeId, setActiveId] = useState('');
   const idsKey = ids.join(',');
 
   useEffect(() => {
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
+    let frame = 0;
 
-    if (elements.length === 0) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-        if (visible[0]) {
-          setActiveId(visible[0].target.id);
-        }
-      },
-      {
-        root: root ?? null,
-        rootMargin: '-40% 0px -50% 0px',
-        threshold: [0, 0.25, 0.5, 0.75, 1],
+    const update = () => {
+      frame = 0;
+      const threshold = window.innerHeight * 0.4;
+      let current = '';
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= threshold) current = id;
       }
-    );
+      setActiveId(current);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
 
-    elements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idsKey, root]);
+  }, [idsKey]);
 
   return activeId;
 }
