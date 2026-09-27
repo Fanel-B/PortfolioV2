@@ -7,7 +7,6 @@
       "dependencies": {
         "@vercel/analytics": "0.1.1",
         "framer-motion": "10.12.16",
-        "logrocket": "3.0.1",
         "next": "^13.4.6",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
@@ -501,8 +500,6 @@
     "lodash.merge": ["lodash.merge@4.6.2", "", {}, "sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ=="],
 
     "log-update": ["log-update@4.0.0", "", { "dependencies": { "ansi-escapes": "^4.3.0", "cli-cursor": "^3.1.0", "slice-ansi": "^4.0.0", "wrap-ansi": "^6.2.0" } }, "sha512-9fkkDevMefjg0mmzWFBW8YkFP91OrizzkW3diF7CpG+S2EYdy4+TVfGwz1zeF8x7hCx1ovSPTOE9Ngib74qqUg=="],
-
-    "logrocket": ["logrocket@3.0.1", "", {}, "sha512-jOWG+jEzobKVxGytzZ+4KGm2kiMQMRTHab2uDWQyVZcHfEF38BlCH1yjQVY4LCmuQUwZitP9biMzJZnyUQ0dtQ=="],
 
     "loose-envify": ["loose-envify@1.4.0", "", { "dependencies": { "js-tokens": "^3.0.0 || ^4.0.0" }, "bin": { "loose-envify": "cli.js" } }, "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q=="],
 

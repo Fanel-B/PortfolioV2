@@ -15,7 +15,7 @@ interface Props {
   onClose: () => void;
 }
 
-// Les valeurs "…_ICI" de data/profile.ts sont des emplacements à remplir (voir A_FOURNIR.md).
+// Les valeurs "…_ICI" de data/profile.ts sont des emplacements encore vides.
 const isPlaceholder = (text: string) => /_ICI$/.test(text);
 
 function Tile({

@@ -143,7 +143,7 @@ export const profile = {
       imageFit: 'contain',
     },
   ] as Project[],
-  // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir » (voir A_FOURNIR.md)
+  // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir »
   personality: {
     // PHOTOS_ICI — remplace ces légendes par tes vraies photos (toi, amis, paysages)
     photos: [

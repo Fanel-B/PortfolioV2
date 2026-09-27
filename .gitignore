@@ -12,14 +12,10 @@
 # next.js
 /.next/
 /out/
-public/sitemap.xml
 .vercel
 
 # production
 /build
-*.xml
-# rss feed
-/public/feed.xml
 
 # misc
 .DS_Store
@@ -39,3 +35,6 @@ yarn-error.log*
 
 # TypeScript incremental build cache
 *.tsbuildinfo
+
+# notes personnelles (non publiées)
+/notes/

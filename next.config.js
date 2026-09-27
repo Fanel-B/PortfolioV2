@@ -6,8 +6,4 @@ module.exports = {
   eslint: {
     dirs: ['app', 'components', 'lib', 'data'],
   },
-  experimental: {
-    appDir: true,
-  },
-  swcMinify: true,
 };

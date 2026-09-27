@@ -16,7 +16,7 @@ On passe de l'un à l'autre en retournant la page comme une carte.
 | Animation   | [Framer Motion](https://www.framer.com/motion/), CSS                 |
 | 3D          | [Three.js](https://threejs.org/) + shaders GLSL                      |
 | Polices     | Syne (titres), DM Sans (texte), JetBrains Mono (détails techniques)  |
-| Hébergement | [Vercel](https://vercel.com/) (+ Vercel Analytics, LogRocket)        |
+| Hébergement | [Vercel](https://vercel.com/) (+ Vercel Analytics)                   |
 
 ---
 
@@ -93,8 +93,6 @@ lib/
   skillIcons.ts         Nom d'outil → logo
   ui.ts                 Conteneur de page commun
 css/tailwind.css        Styles globaux (quadrillage, grain, glitch, défilement)
-docs/                   Notes de travail (projets à réaliser)
-A_FOURNIR.md            Contenu personnel encore attendu
 ```
 
 ---
@@ -119,7 +117,7 @@ Les icônes viennent de [react-icons](https://react-icons.github.io/react-icons/
 1. Dans le composant, importer l'icône normalement : `import { SiDocker } from 'react-icons/si';` (et l'ajouter dans [`lib/skillIcons.ts`](./lib/skillIcons.ts) si c'est un logo de compétence).
 2. Lancer `node scripts/gen-icons.cjs .` : le script ajoute l'icône à `lib/icons.ts` et remplace l'import par `@/lib/icons`.
 
-Les valeurs qui finissent par `_ICI` (ex. `'MUSIQUES_ICI'`) sont des emplacements vides : le site affiche « à venir » à la place. La liste de ce qui manque est dans [A_FOURNIR.md](./A_FOURNIR.md).
+Les valeurs qui finissent par `_ICI` (ex. `'MUSIQUES_ICI'`) sont des emplacements vides : le site affiche « à venir » à la place.
 
 ---
 
@@ -264,7 +262,6 @@ Toutes facultatives. À copier depuis [`.env.example`](./.env.example) dans `.en
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL`     | URL publique du site (aperçus de partage, sitemap). **À renseigner avant la mise en production.**                                                                |
 | `NEXT_PUBLIC_NASA_API_KEY` | Clé gratuite sur [api.nasa.gov](https://api.nasa.gov) pour la photo du jour. Sans elle, `DEMO_KEY` est utilisée (limitée à 30 appels par heure et par visiteur). |
-| `NEXT_PUBLIC_LOGROCKET_ID` | Identifiant LogRocket (enregistrement de sessions).                                                                                                              |
 
 ---
 

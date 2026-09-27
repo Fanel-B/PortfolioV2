@@ -1,7 +1,6 @@
 import '@/css/tailwind.css';
 
 import Analytics from '@/components/Analytics';
-import LogRocket from '@/components/LogRocket';
 import siteMetadata from '@/data/siteMetadata';
 import { Metadata } from 'next';
 import { DM_Sans, JetBrains_Mono, Syne } from 'next/font/google';
@@ -93,7 +92,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body className="bg-pro-bg font-sans text-pro-text antialiased">
         {children}
-        <LogRocket />
         <Analytics />
       </body>
     </html>
