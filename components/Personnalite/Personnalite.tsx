@@ -9,8 +9,7 @@ import Image from 'next/image';
 import { ReactNode } from 'react';
 import { FaGithub, FaLinkedin } from '@/lib/icons';
 import { HiOutlineArrowLeft } from '@/lib/icons';
-import SolarSystem from './SolarSystem';
-import { LiveClock, NasaPhoto, Vinyl } from './widgets';
+import { LiveClock, NasaPhoto } from './widgets';
 
 interface Props {
   onClose: () => void;
@@ -112,9 +111,29 @@ export default function Personnalite({ onClose }: Props) {
           </h2>
         </Reveal>
 
-        <div className="mb-20">
-          <SolarSystem photos={personality.photos} />
-        </div>
+        {/* Photos côte à côte, avec leur légende */}
+        <ul className="mb-20 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+          {personality.photos.map((photo) => (
+            <li key={photo.src}>
+              <figure>
+                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-perso-surface">
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
+                {photo.caption && (
+                  <figcaption className="mt-3 text-sm text-perso-text/70">
+                    {photo.caption}
+                  </figcaption>
+                )}
+              </figure>
+            </li>
+          ))}
+        </ul>
 
         <div className="grid gap-5 md:grid-cols-6 lg:grid-cols-12">
           <Tile label="En direct" className="md:col-span-3 lg:col-span-5 lg:row-span-2">
@@ -152,7 +171,23 @@ export default function Personnalite({ onClose }: Props) {
           </Tile>
 
           <Tile label="Face B" className="md:col-span-6 lg:col-span-3 lg:row-span-2" delay={0.16}>
-            <Vinyl tracks={music} />
+            {music.length ? (
+              <ol className="space-y-3">
+                {music.map((track, i) => (
+                  <li key={track.title} className="flex gap-3">
+                    <span className="font-mono text-sm text-perso-accent">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <div>
+                      <p className="font-heading font-bold leading-tight">{track.title}</p>
+                      {track.artist && <p className="text-sm text-perso-text/50">{track.artist}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <Soon>La playlist arrive bientôt.</Soon>
+            )}
           </Tile>
 
           <Tile

@@ -187,49 +187,49 @@ export const profile = {
   // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir »
   personality: {
     avatar: '/static/images/perso/orbite-01.jpg',
-    // Photos en orbite autour du soleil. Légendes (caption) à écrire.
+    // Photos affichées côte à côte ; caption = légende courte (vide = pas de légende).
     photos: [
       {
         thumb: '/static/images/perso/orbite-01.jpg',
         src: '/static/images/perso/photo-01.jpg',
         alt: 'Fanel de nuit à Paris, sur un pont au-dessus de la Seine',
-        caption: '',
+        caption: 'Paris, la nuit',
       },
       {
         thumb: '/static/images/perso/orbite-02.jpg',
         src: '/static/images/perso/photo-02.jpg',
         alt: 'Fanel sur une promenade en bord de mer, en Espagne',
-        caption: '',
+        caption: 'Espagne',
       },
       {
         thumb: '/static/images/perso/orbite-03.jpg',
         src: '/static/images/perso/photo-03.jpg',
         alt: 'Un repas entre amis',
-        caption: '',
+        caption: 'Entre amis',
       },
       {
         thumb: '/static/images/perso/orbite-04.jpg',
         src: '/static/images/perso/photo-04.jpg',
         alt: 'Fanel et un ami en costume, à Bangui',
-        caption: '',
+        caption: 'Bangui',
       },
       {
         thumb: '/static/images/perso/orbite-05.jpg',
         src: '/static/images/perso/photo-05.jpg',
         alt: 'Entre amis au bord de la mer, en Espagne',
-        caption: '',
+        caption: 'Espagne, entre amis',
       },
       {
         thumb: '/static/images/perso/orbite-06.jpg',
         src: '/static/images/perso/photo-06.jpg',
         alt: 'Bangui, chez moi : le fleuve et les collines',
-        caption: '',
+        caption: 'Bangui, chez moi',
       },
       {
         thumb: '/static/images/perso/orbite-07.jpg',
         src: '/static/images/perso/photo-07.jpg',
         alt: 'Un mur de post-it en Espagne : « Look mom, I can fly and discover the world »',
-        caption: '',
+        caption: '« Look mom, I can fly »',
       },
     ] as PhotoItem[],
     // Ce que chaque activité t'apporte : description à ajouter plus tard

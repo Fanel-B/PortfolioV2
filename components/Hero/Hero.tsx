@@ -80,7 +80,7 @@ export default function Hero({ onOpenCv }: Props) {
             <button
               type="button"
               onClick={onOpenCv}
-              className="border-white/15 rounded-full border px-7 py-3.5 font-medium text-pro-text transition-colors hover:border-pro-accent hover:text-pro-accent"
+              className="rounded-full border border-white/15 px-7 py-3.5 font-medium text-pro-text transition-colors hover:border-pro-accent hover:text-pro-accent"
             >
               Ouvrir mon CV
             </button>

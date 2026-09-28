@@ -1,7 +1,5 @@
 'use client';
 
-import { MusicItem } from '@/data/profile';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 const TIME_ZONE = 'Europe/Paris';
@@ -106,46 +104,5 @@ export function NasaPhoto() {
         </p>
       </figcaption>
     </figure>
-  );
-}
-
-// Platine vinyle : le disque tourne, un clic passe au morceau suivant.
-export function Vinyl({ tracks }: { tracks: MusicItem[] }) {
-  const [index, setIndex] = useState(0);
-  const track = tracks.length ? tracks[index % tracks.length] : null;
-
-  return (
-    <button
-      type="button"
-      onClick={() => setIndex((i) => i + 1)}
-      disabled={tracks.length < 2}
-      className="group flex h-full w-full flex-col items-center justify-between gap-6 text-center"
-      aria-label={track ? `Morceau suivant (actuel : ${track.title})` : 'Playlist à venir'}
-    >
-      <div className="relative aspect-square w-40 animate-[spin_6s_linear_infinite] rounded-full bg-[repeating-radial-gradient(circle,#161018_0_2px,#231a26_2px_4px)] shadow-[0_10px_30px_rgba(0,0,0,0.6)] group-hover:[animation-duration:2s]">
-        <div className="absolute inset-[34%] rounded-full bg-gradient-to-br from-perso-accent to-perso-accent2" />
-        <div className="absolute inset-[48%] rounded-full bg-perso-bg" />
-        <div className="absolute inset-0 rounded-full bg-[conic-gradient(from_30deg,transparent_0deg,rgba(255,255,255,0.08)_40deg,transparent_80deg)]" />
-      </div>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={track?.title ?? 'vide'}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-        >
-          <p className="font-heading text-lg font-bold text-perso-text">
-            {track?.title ?? 'Face B'}
-          </p>
-          <p className="text-sm text-perso-text/50">{track?.artist ?? 'Playlist en préparation'}</p>
-          {tracks.length > 1 && (
-            <p className="mt-2 font-mono text-[11px] text-perso-accent/70">
-              {String((index % tracks.length) + 1).padStart(2, '0')} /{' '}
-              {String(tracks.length).padStart(2, '0')} · cliquer pour la suite
-            </p>
-          )}
-        </motion.div>
-      </AnimatePresence>
-    </button>
   );
 }

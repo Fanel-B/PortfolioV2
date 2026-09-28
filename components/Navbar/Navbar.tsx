@@ -83,7 +83,7 @@ export default function Navbar({ side, onFlip, onOpenCv }: Props) {
                     <motion.span
                       layoutId="nav-indicator"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      className="bg-pro-accent/15 absolute inset-0 -z-10 rounded-full border border-pro-accent/40 shadow-[0_0_20px_rgba(142,205,248,0.2)]"
+                      className="absolute inset-0 -z-10 rounded-full border border-pro-accent/40 bg-pro-accent/15 shadow-[0_0_20px_rgba(142,205,248,0.2)]"
                     />
                   )}
                   <Icon size={16} className="md:hidden lg:block" />
