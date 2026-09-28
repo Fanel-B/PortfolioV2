@@ -32,6 +32,15 @@ module.exports = {
           text: '#F3E9DC',
         },
       },
+      // Paliers d'opacité en plus de ceux de Tailwind (utilisés par ex. dans text-pro-text/65)
+      opacity: {
+        15: '0.15',
+        35: '0.35',
+        45: '0.45',
+        55: '0.55',
+        65: '0.65',
+        85: '0.85',
+      },
       boxShadow: {
         glow: '0 0 24px rgba(142, 205, 248, 0.35)',
         'glow-lg': '0 0 48px rgba(142, 205, 248, 0.45)',

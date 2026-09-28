@@ -27,7 +27,7 @@ function ProjectVisual({ number }: { number: number }) {
   return (
     <div className="grid-lines relative flex h-full min-h-[180px] items-center justify-center overflow-hidden bg-gradient-to-br from-pro-surface to-pro-bg">
       <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-pro-accent/20 blur-3xl" />
-      <div className="bg-pro-lavande/15 absolute -bottom-16 -left-10 h-48 w-48 rounded-full blur-3xl" />
+      <div className="absolute -bottom-16 -left-10 h-48 w-48 rounded-full bg-pro-lavande/15 blur-3xl" />
       <span className="relative font-heading text-[7rem] font-extrabold leading-none text-transparent [-webkit-text-stroke:1.5px_rgba(142,205,248,0.6)]">
         {String(number).padStart(2, '0')}
       </span>
@@ -90,9 +90,9 @@ const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
           <div className="p-3 pb-0">
             <div className="overflow-hidden rounded-t-xl border border-b-0 border-white/10 bg-pro-surface">
               <div className="flex items-center gap-2 border-b border-white/10 px-4 py-2.5">
-                <span className="bg-white/15 h-2.5 w-2.5 rounded-full" />
-                <span className="bg-white/15 h-2.5 w-2.5 rounded-full" />
-                <span className="bg-white/15 h-2.5 w-2.5 rounded-full" />
+                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
                 <span className="ml-3 truncate font-mono text-[11px] text-pro-text/40">
                   {(project.demoUrl ?? project.githubUrl ?? '').replace(/^https?:\/\//, '')}
                 </span>
@@ -140,12 +140,14 @@ const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
             {project.title}
           </h3>
           <p
-            className={`text-pro-text/65 mt-4 flex-1 ${
+            className={`mt-4 flex-1 text-pro-text/65 ${
               featured ? 'text-base md:text-lg' : 'line-clamp-4 text-sm'
             }`}
           >
             {project.description}
           </p>
+
+          <p className="mt-5 font-mono text-xs text-pro-accent/80">{project.stack.join('  ·  ')}</p>
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5">
             <ul className="flex gap-2 font-mono text-xs">

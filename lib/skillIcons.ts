@@ -1,5 +1,7 @@
 import { IconType } from 'react-icons/lib';
 import { HiChartBar, HiCode, HiUsers } from '@/lib/icons';
+import { HiDatabase } from '@/lib/icons';
+import { SiC, SiNodedotjs, SiPostgresql } from '@/lib/icons';
 import {
   SiAndroidstudio,
   SiBootstrap,
@@ -30,12 +32,16 @@ const ICONS: Record<string, IconType> = {
   JavaScript: SiJavascript,
   Java: SiJava,
   Kotlin: SiKotlin,
+  C: SiC,
   PHP: SiPhp,
   HTML: SiHtml5,
   CSS: SiCss3,
-  SQL: SiMysql,
+  SQL: HiDatabase,
+  PostgreSQL: SiPostgresql,
+  MySQL: SiMysql,
   React: SiReact,
   'Next.js': SiNextdotjs,
+  'Node.js / Express': SiNodedotjs,
   Bootstrap: SiBootstrap,
   Pandas: SiPandas,
   Matplotlib: HiChartBar,

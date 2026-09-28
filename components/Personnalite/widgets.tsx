@@ -97,7 +97,7 @@ export function NasaPhoto() {
         alt={apod?.title ?? 'Le Soleil photographié par le satellite SDO de la NASA'}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-[2s] hover:scale-105"
       />
-      <figcaption className="from-black/85 absolute inset-x-0 bottom-0 bg-gradient-to-t to-transparent p-5 pt-16">
+      <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-5 pt-20">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-perso-accent">
           {apod ? `NASA · photo du jour · ${apod.date}` : 'NASA · SDO · le Soleil'}
         </p>
@@ -138,6 +138,12 @@ export function Vinyl({ tracks }: { tracks: MusicItem[] }) {
             {track?.title ?? 'Face B'}
           </p>
           <p className="text-sm text-perso-text/50">{track?.artist ?? 'Playlist en préparation'}</p>
+          {tracks.length > 1 && (
+            <p className="mt-2 font-mono text-[11px] text-perso-accent/70">
+              {String((index % tracks.length) + 1).padStart(2, '0')} /{' '}
+              {String(tracks.length).padStart(2, '0')} · cliquer pour la suite
+            </p>
+          )}
         </motion.div>
       </AnimatePresence>
     </button>

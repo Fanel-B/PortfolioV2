@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { ReactNode } from 'react';
 import { FaGithub, FaLinkedin } from '@/lib/icons';
 import { HiOutlineArrowLeft } from '@/lib/icons';
+import SolarSystem from './SolarSystem';
 import { LiveClock, NasaPhoto, Vinyl } from './widgets';
 
 interface Props {
@@ -111,12 +112,22 @@ export default function Personnalite({ onClose }: Props) {
           </h2>
         </Reveal>
 
+        <div className="mb-20">
+          <SolarSystem photos={personality.photos} />
+        </div>
+
         <div className="grid gap-5 md:grid-cols-6 lg:grid-cols-12">
           <Tile label="En direct" className="md:col-span-3 lg:col-span-5 lg:row-span-2">
             <div className="flex h-full flex-col justify-between gap-8">
               <div className="flex items-center gap-4">
-                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-perso-accent to-perso-accent2 font-heading text-xl font-extrabold text-perso-bg">
-                  FB
+                <span className="relative h-16 w-16 overflow-hidden rounded-full border-2 border-perso-accent/60">
+                  <Image
+                    src={personality.avatar}
+                    alt="Fanel Balemo"
+                    fill
+                    sizes="64px"
+                    className="object-cover"
+                  />
                 </span>
                 <div>
                   <p className="font-heading text-xl font-bold">{profile.name}</p>
@@ -144,29 +155,9 @@ export default function Personnalite({ onClose }: Props) {
             <Vinyl tracks={music} />
           </Tile>
 
-          <Tile label="Pellicule" className="md:col-span-6 lg:col-span-7 lg:row-span-2">
-            <div className="grid grid-cols-3 gap-4 pt-2">
-              {personality.photos.map((photo, i) => (
-                <motion.figure
-                  key={i}
-                  whileHover={{ rotate: 0, scale: 1.05, zIndex: 10 }}
-                  style={{ rotate: [-4, 3, -2][i % 3] }}
-                  className="relative bg-[#F3E9DC] p-2 pb-8 shadow-[0_16px_30px_rgba(0,0,0,0.5)]"
-                >
-                  <div className="flex aspect-square items-center justify-center bg-gradient-to-br from-perso-surface to-[#2A1A2E] font-mono text-[10px] uppercase tracking-[0.2em] text-perso-text/40">
-                    Photo {String(i + 1).padStart(2, '0')}
-                  </div>
-                  <figcaption className="absolute inset-x-0 bottom-2 text-center font-mono text-[10px] text-perso-bg/60">
-                    {isPlaceholder(photo.caption) ? 'à développer…' : photo.caption}
-                  </figcaption>
-                </motion.figure>
-              ))}
-            </div>
-          </Tile>
-
           <Tile
             label="En ce moment j'apprends"
-            className="md:col-span-3 lg:col-span-5"
+            className="md:col-span-3 lg:col-span-6"
             delay={0.08}
           >
             {learning.length ? (
@@ -185,7 +176,7 @@ export default function Personnalite({ onClose }: Props) {
             )}
           </Tile>
 
-          <Tile label="Entre guillemets" className="md:col-span-3 lg:col-span-5" delay={0.16}>
+          <Tile label="Entre guillemets" className="md:col-span-3 lg:col-span-6" delay={0.16}>
             {quote ? (
               <blockquote>
                 <p className="font-heading text-xl italic leading-snug">
@@ -202,11 +193,16 @@ export default function Personnalite({ onClose }: Props) {
 
           <Tile label="Hors de l'écran" className="md:col-span-2 lg:col-span-4">
             {hobbies.length ? (
-              <ul className="space-y-3">
+              <ul className="flex flex-wrap gap-2">
                 {hobbies.map((hobby) => (
-                  <li key={hobby.title}>
+                  <li
+                    key={hobby.title}
+                    className="rounded-2xl border border-perso-accent/25 px-4 py-2"
+                  >
                     <p className="font-heading font-bold">{hobby.title}</p>
-                    <p className="text-sm text-perso-text/60">{hobby.description}</p>
+                    {hobby.description && (
+                      <p className="text-sm text-perso-text/60">{hobby.description}</p>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -242,12 +238,12 @@ export default function Personnalite({ onClose }: Props) {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
-                  className="border-perso-accent/15 flex aspect-square items-center justify-center rounded-2xl border text-perso-text/70 transition-colors hover:border-perso-accent hover:text-perso-accent"
+                  className="flex aspect-square items-center justify-center rounded-2xl border border-perso-accent/15 text-perso-text/70 transition-colors hover:border-perso-accent hover:text-perso-accent"
                 >
                   <Icon size={24} />
                 </a>
               ))}
-              <CopyEmail className="border-perso-accent/15 flex aspect-square items-center justify-center rounded-2xl border text-perso-text/70 transition-colors hover:border-perso-accent hover:text-perso-accent" />
+              <CopyEmail className="flex aspect-square items-center justify-center rounded-2xl border border-perso-accent/15 text-perso-text/70 transition-colors hover:border-perso-accent hover:text-perso-accent" />
             </div>
           </Tile>
         </div>

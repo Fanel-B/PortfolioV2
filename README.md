@@ -221,11 +221,12 @@ La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回
 ### 12. Côté humain — [`Personnalite/`](./components/Personnalite)
 
 - **Hero** : la phrase « En chacun de nous existe un soleil. », à côté d'une vraie photo du Soleil (satellite SDO de la NASA, ultraviolet 171 Å). Elle tourne très lentement (240 s par tour), avec un halo, et ses bords noirs sont effacés (`mix-blend-mode: screen` + masque radial).
-- **Tableau de bord « Mon système solaire »**, en tuiles :
-  - _En direct_ : l'heure de Toulouse à la seconde ;
+- **Système solaire de photos** ([`SolarSystem.tsx`](./components/Personnalite/SolarSystem.tsx)) : les photos tournent autour du soleil comme des planètes, sur des orbites inclinées. Chaque planète a un angle de départ différent (angle d'or) pour qu'elles ne s'alignent pas, et va plus vite près du soleil, comme dans la 3e loi de Kepler (vitesse ∝ r^−1,5). Derrière le soleil, une planète rapetisse et s'assombrit ; devant, elle grossit. Survolée, tout s'arrête ; cliquée, la photo s'ouvre dans une visionneuse (flèches du clavier, Échap), rendue hors de la page qui pivote grâce à un portail React.
+- **Tableau de bord**, en tuiles :
+  - _En direct_ : ta photo, l'heure de Toulouse à la seconde ;
   - _Vu d'ici_ : la **photo astronomique du jour de la NASA** (API APOD). L'image est préchargée avant l'affichage et gardée en cache pour la session ; si l'API ne répond pas, c'est la photo du Soleil qui s'affiche ;
-  - _Face B_ : une platine vinyle qui tourne (6 s par tour, 2 s au survol) ; un clic passe au morceau suivant ;
-  - _Pellicule_, _Hors de l'écran_, _Carnet de route_, _Entre guillemets_, _En ce moment j'apprends_, _Me trouver_.
+  - _Face B_ : une platine vinyle qui tourne (6 s par tour, 2 s au survol) ; un clic passe au morceau suivant, avec un compteur « 01 / 05 » ;
+  - _Hors de l'écran_, _Carnet de route_, _Entre guillemets_, _En ce moment j'apprends_, _Me trouver_.
 
 ### 13. Petits détails
 
