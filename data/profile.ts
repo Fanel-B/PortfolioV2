@@ -287,8 +287,8 @@ export const profile = {
         youtube: 'https://www.youtube.com/results?search_query=Tems+Free+Mind',
       },
     ] as MusicItem[],
-    // APPRENDS_ICI — ce que tu apprends en ce moment (une techno, une langue, un instrument…)
-    learning: ['APPRENDS_ICI'] as string[],
+    // Ce que tu apprends en ce moment (une techno, une langue, un instrument…)
+    learning: ['Kotlin'] as string[],
   },
 };
 

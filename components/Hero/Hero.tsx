@@ -27,11 +27,11 @@ export default function Hero({ onOpenCv }: Props) {
 
   return (
     <section id="accueil" className="relative flex min-h-screen flex-col pt-24 md:pt-32">
-      <div className={`${container} grid flex-1 items-center gap-16 lg:grid-cols-12`}>
+      <div className={`${container} grid flex-1 grid-cols-1 items-center gap-16 lg:grid-cols-12`}>
         <div className="lg:col-span-7">
           <motion.p
             {...rise(0)}
-            className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.2em] text-pro-text/50"
+            className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.2em] text-pro-text/60"
           >
             <span>
               {'// Portfolio — '}
@@ -46,7 +46,7 @@ export default function Hero({ onOpenCv }: Props) {
             </span>
           </motion.p>
 
-          <h1 className="font-heading text-[clamp(2.75rem,6.4vw,6.25rem)] font-extrabold uppercase leading-[0.85] tracking-tight">
+          <h1 className="font-heading text-[clamp(2.25rem,6.4vw,6.25rem)] font-extrabold uppercase leading-[0.85] tracking-tight">
             <motion.span {...rise(0.1)} className="block text-pro-text">
               Fanel
             </motion.span>
@@ -130,7 +130,7 @@ export default function Hero({ onOpenCv }: Props) {
             ['Base', profile.location],
           ].map(([label, value]) => (
             <div key={label}>
-              <dt className="text-pro-text/40">{label}</dt>
+              <dt className="text-pro-text/60">{label}</dt>
               <dd className="mt-1 text-pro-text">{value}</dd>
             </div>
           ))}

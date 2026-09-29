@@ -67,7 +67,7 @@ export default function Outils() {
               transition={{ duration: 0.6, delay: i * 0.08 }}
               className="group bg-pro-bg/80 p-6 transition-colors hover:bg-pro-surface/80"
             >
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-pro-text/40">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-pro-text/60">
                 {String(i + 1).padStart(2, '0')} · {category.items.length} outils
               </p>
               <h3 className="mt-3 font-heading text-xl font-bold text-pro-text transition-colors group-hover:text-pro-accent">
@@ -78,7 +78,7 @@ export default function Outils() {
                   const Icon = skillIcon(tool);
                   return (
                     <li key={tool} className="flex items-center gap-3 text-sm text-pro-text/70">
-                      <Icon size={15} className="shrink-0 text-pro-text/40" />
+                      <Icon size={15} className="shrink-0 text-pro-text/60" />
                       {tool}
                     </li>
                   );

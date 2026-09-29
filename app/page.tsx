@@ -56,7 +56,7 @@ export default function Page() {
               <Travail />
               {/* Comme dans un anime : l'aperçu du prochain épisode arrive à la fin de celui-ci. */}
               <section id="prochain-episode" className={`${container} pb-28 pt-8 md:pb-40`}>
-                <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-pro-text/40">
+                <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-pro-text/60">
                   {"// Fin de l'épisode 01"}
                 </p>
                 <EpisodeTeaser onOpen={flip} />

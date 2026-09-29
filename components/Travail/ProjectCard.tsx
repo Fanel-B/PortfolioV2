@@ -93,7 +93,7 @@ const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
                 <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
                 <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
                 <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                <span className="ml-3 truncate font-mono text-[11px] text-pro-text/40">
+                <span className="ml-3 truncate font-mono text-[11px] text-pro-text/60">
                   {(project.demoUrl ?? project.githubUrl ?? '').replace(/^https?:\/\//, '')}
                 </span>
               </div>
@@ -124,10 +124,10 @@ const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
 
         <div className="flex flex-1 flex-col p-6 md:p-8" style={{ transform: 'translateZ(30px)' }}>
           <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-xs uppercase tracking-[0.15em]">
-            <span className="text-pro-text/40">
+            <span className="text-pro-text/60">
               L-{String(number).padStart(2, '0')} · {TYPE_LABEL[project.type]}
             </span>
-            <span className={isLive ? 'text-pro-menthe' : 'text-pro-text/40'}>
+            <span className={isLive ? 'text-pro-menthe' : 'text-pro-text/60'}>
               {isLive ? '● En ligne' : '○ Code source'}
             </span>
           </div>

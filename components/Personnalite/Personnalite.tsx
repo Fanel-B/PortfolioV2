@@ -48,7 +48,7 @@ function Tile({
 }
 
 function Soon({ children }: { children: ReactNode }) {
-  return <p className="font-mono text-sm text-perso-text/40">{children}</p>;
+  return <p className="font-mono text-sm text-perso-text/60">{children}</p>;
 }
 
 export default function Personnalite({ onClose }: Props) {
@@ -61,7 +61,7 @@ export default function Personnalite({ onClose }: Props) {
     <div className="min-h-screen pb-32 text-perso-text">
       {/* Hero : le soleil dans le noir */}
       <section
-        className={`${container} grid min-h-screen items-center gap-12 pb-24 pt-28 lg:grid-cols-12 lg:pb-0`}
+        className={`${container} grid min-h-screen grid-cols-1 items-center gap-12 pb-24 pt-28 lg:grid-cols-12 lg:pb-0`}
       >
         <Reveal className="lg:col-span-6">
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-perso-accent">
@@ -94,7 +94,7 @@ export default function Personnalite({ onClose }: Props) {
             sizes="(min-width: 1024px) 560px, 90vw"
             className="object-contain"
           />
-          <figcaption className="absolute -bottom-2 right-0 font-mono text-[10px] uppercase tracking-[0.2em] text-perso-text/30">
+          <figcaption className="absolute -bottom-2 right-0 font-mono text-[10px] uppercase tracking-[0.2em] text-perso-text/60">
             Le Soleil · NASA / SDO · 171 Å
           </figcaption>
         </motion.figure>
@@ -115,7 +115,7 @@ export default function Personnalite({ onClose }: Props) {
           <PhotoMosaic groups={personality.photoGroups} />
         </div>
 
-        <div className="grid gap-5 md:grid-cols-6 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-6 lg:grid-cols-12">
           <Tile label="En direct" className="md:col-span-3 lg:col-span-6">
             <div className="flex h-full flex-col justify-between gap-8">
               <div className="flex items-center gap-4">
@@ -130,7 +130,7 @@ export default function Personnalite({ onClose }: Props) {
                 </span>
                 <div>
                   <p className="font-heading text-xl font-bold">{profile.name}</p>
-                  <p className="font-mono text-sm text-perso-text/50">@Fanel-B</p>
+                  <p className="font-mono text-sm text-perso-text/60">@Fanel-B</p>
                 </div>
               </div>
               <LiveClock />
@@ -139,7 +139,7 @@ export default function Personnalite({ onClose }: Props) {
                   <span className="h-2 w-2 animate-pulse rounded-full bg-[#9EE6CF]" />
                   {profile.availability}
                 </p>
-                <p className="text-perso-text/40">
+                <p className="text-perso-text/60">
                   SELECT motivation FROM fanel; <span className="text-perso-accent">-- ∞</span>
                 </p>
               </div>
@@ -162,7 +162,7 @@ export default function Personnalite({ onClose }: Props) {
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate font-heading text-sm font-bold">{track.title}</p>
-                      <p className="truncate text-xs text-perso-text/50">{track.artist}</p>
+                      <p className="truncate text-xs text-perso-text/60">{track.artist}</p>
                     </div>
                     <div className="flex shrink-0 gap-1">
                       {track.spotify && (

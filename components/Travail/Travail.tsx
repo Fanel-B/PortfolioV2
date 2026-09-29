@@ -60,7 +60,7 @@ export default function Travail() {
           </div>
         </div>
 
-        <motion.div layout className="grid gap-6 lg:grid-cols-12">
+        <motion.div layout className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           <AnimatePresence mode="popLayout">
             {projects.map((project, i) => (
               <ProjectCard

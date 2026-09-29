@@ -76,7 +76,7 @@ export default function Navbar({ side, onFlip, onOpenCv }: Props) {
                   onClick={() => scrollTo(id)}
                   aria-current={active ? 'true' : undefined}
                   className={`${linkBase} ${id === 'accueil' ? 'hidden md:flex' : ''} ${
-                    active ? 'text-pro-text' : 'text-pro-text/50 hover:text-pro-text/80'
+                    active ? 'text-pro-text' : 'text-pro-text/60 hover:text-pro-text/80'
                   }`}
                 >
                   {active && (

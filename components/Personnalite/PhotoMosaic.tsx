@@ -113,7 +113,7 @@ export default function PhotoMosaic({ groups }: Props) {
           sizes="(min-width: 768px) 50vw, 50vw"
           className="object-cover"
         />
-        <span className="absolute bottom-2 left-2 rounded-md bg-perso-bg/80 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-perso-accent">
+        <span className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded-md bg-perso-bg/80 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-perso-accent">
           {label}
         </span>
       </button>
@@ -176,7 +176,7 @@ export default function PhotoMosaic({ groups }: Props) {
               alt={shown.alt}
               className="relative max-h-[85vh] max-w-full rounded-xl object-contain"
             />
-            <p className="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-xs text-perso-text/50">
+            <p className="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-xs text-perso-text/60">
               {String(open + 1).padStart(2, '0')} / {String(tiles.length).padStart(2, '0')}
             </p>
             <button

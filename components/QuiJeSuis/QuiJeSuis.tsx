@@ -21,7 +21,7 @@ export default function QuiJeSuis() {
 
   return (
     <section id="origine" className="scroll-mt-24 py-28 md:py-40">
-      <div className={`${container} grid gap-14 lg:grid-cols-12`}>
+      <div className={`${container} grid grid-cols-1 gap-14 lg:grid-cols-12`}>
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-32">
             <SectionHeader
@@ -40,7 +40,7 @@ export default function QuiJeSuis() {
         <div className="space-y-16 lg:col-span-7">
           <Reveal className="grid gap-10 md:grid-cols-[minmax(0,240px)_1fr]">
             {/* Photo dans un viseur, comme le curseur */}
-            <div className="group relative p-3">
+            <div className="group relative self-start p-3">
               <span className={`${corner} left-0 top-0 border-l-2 border-t-2`} />
               <span className={`${corner} right-0 top-0 border-r-2 border-t-2`} />
               <span className={`${corner} bottom-0 left-0 border-b-2 border-l-2`} />
@@ -67,7 +67,7 @@ export default function QuiJeSuis() {
             <dl className="divide-y divide-white/10 border-y border-white/10">
               {facts.map(([label, value]) => (
                 <div key={label} className="grid gap-1 py-4 sm:grid-cols-[200px_1fr]">
-                  <dt className="font-mono text-xs uppercase tracking-[0.2em] text-pro-text/40">
+                  <dt className="font-mono text-xs uppercase tracking-[0.2em] text-pro-text/60">
                     {label}
                   </dt>
                   <dd className="text-pro-text">{value}</dd>
@@ -78,7 +78,7 @@ export default function QuiJeSuis() {
 
           <div>
             <Reveal>
-              <p className="mb-10 font-mono text-xs uppercase tracking-[0.25em] text-pro-text/40">
+              <p className="mb-10 font-mono text-xs uppercase tracking-[0.25em] text-pro-text/60">
                 Trajectoire
               </p>
             </Reveal>
@@ -87,7 +87,7 @@ export default function QuiJeSuis() {
 
           <div>
             <Reveal>
-              <p className="mb-6 font-mono text-xs uppercase tracking-[0.25em] text-pro-text/40">
+              <p className="mb-6 font-mono text-xs uppercase tracking-[0.25em] text-pro-text/60">
                 Sur le terrain
               </p>
             </Reveal>
@@ -106,7 +106,7 @@ export default function QuiJeSuis() {
                   </p>
                   <div>
                     <p className="font-heading text-lg font-bold text-pro-text">{job.role}</p>
-                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-pro-text/40">
+                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-pro-text/60">
                       {job.place}
                     </p>
                     <p className="mt-2 text-sm text-pro-text/65">{job.description}</p>

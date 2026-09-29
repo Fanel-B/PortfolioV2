@@ -72,7 +72,7 @@ export default function CvModal({ open, onClose }: Props) {
               <iframe src={profile.cvUrl} title="CV de Fanel Balemo" className="flex-1 bg-white" />
             ) : (
               <div className="flex flex-1 flex-col items-center justify-center gap-4 p-8 text-center">
-                <FaFilePdf size={48} className="text-pro-accent/60" />
+                <FaFilePdf size={48} className="text-pro-accent/80" />
                 <p className="font-heading text-xl text-pro-text">Mon CV arrive très bientôt</p>
                 <p className="max-w-sm text-sm text-pro-text/70">
                   En attendant, mon parcours et mes projets sont sur cette page, et vous pouvez me

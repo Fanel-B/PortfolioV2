@@ -25,16 +25,16 @@ export default function Footer() {
         />
 
         <CopyEmail className="group mt-12 block w-full text-left">
-          <span className="block font-mono text-xs uppercase tracking-[0.25em] text-pro-text/40">
+          <span className="block font-mono text-xs uppercase tracking-[0.25em] text-pro-text/60">
             Cliquer pour copier mon email
           </span>
-          <span className="mt-4 flex items-center gap-4 font-heading text-[clamp(1.1rem,3.8vw,3.75rem)] font-extrabold leading-none text-pro-text transition-colors group-hover:text-pro-accent">
+          <span className="mt-4 flex items-center gap-4 font-heading text-[clamp(1.1rem,3.8vw,3.75rem)] font-extrabold leading-tight text-pro-text transition-colors [overflow-wrap:anywhere] group-hover:text-pro-accent md:leading-none">
             {profile.contact.email}
             <HiArrowRight className="hidden shrink-0 transition-transform group-hover:translate-x-3 md:block" />
           </span>
         </CopyEmail>
 
-        <div className="mt-24 flex flex-col gap-6 border-t border-white/10 pt-8 font-mono text-xs uppercase tracking-[0.2em] text-pro-text/40 md:flex-row md:items-center md:justify-between">
+        <div className="mt-24 flex flex-col gap-6 border-t border-white/10 pt-8 font-mono text-xs uppercase tracking-[0.2em] text-pro-text/60 md:flex-row md:items-center md:justify-between">
           <span>
             © {new Date().getFullYear()} {profile.name} · Construit sous un ciel étoilé
           </span>

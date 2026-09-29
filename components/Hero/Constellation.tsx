@@ -125,7 +125,7 @@ export default function Constellation() {
         )}
       </svg>
 
-      <figcaption className="mt-6 flex justify-between gap-4 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.2em] text-pro-text/40">
+      <figcaption className="mt-6 flex flex-wrap justify-between gap-x-4 gap-y-1 font-mono text-[10px] uppercase tracking-[0.2em] text-pro-text/60">
         <span>Constellation FB</span>
         <span className="hidden xl:inline">43°36′N · 1°26′E</span>
         <span className="text-pro-accent/70">Survolez les étoiles</span>

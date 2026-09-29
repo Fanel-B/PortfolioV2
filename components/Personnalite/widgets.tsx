@@ -26,7 +26,7 @@ export function LiveClock() {
   return (
     <div>
       <p className="font-mono text-4xl tabular-nums text-perso-text md:text-5xl">{time}</p>
-      <p className="mt-1 font-mono text-xs uppercase tracking-[0.2em] text-perso-text/40">
+      <p className="mt-1 font-mono text-xs uppercase tracking-[0.2em] text-perso-text/60">
         Toulouse · {date}
       </p>
     </div>
