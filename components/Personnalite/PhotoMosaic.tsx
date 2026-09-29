@@ -110,7 +110,7 @@ export default function PhotoMosaic({ groups }: Props) {
           src={photo.src}
           alt={photo.alt}
           fill
-          sizes="(min-width: 768px) 400px, 50vw"
+          sizes="(min-width: 768px) 50vw, 50vw"
           className="object-cover"
         />
         <span className="absolute bottom-2 left-2 rounded-md bg-perso-bg/80 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-perso-accent">
@@ -126,7 +126,7 @@ export default function PhotoMosaic({ groups }: Props) {
     <>
       {desktop ? (
         <div
-          className="grid max-w-[1000px] gap-2"
+          className="grid gap-3"
           style={layout(
             ...(tiles.map((t) => t.photo) as [
               PhotoItem,

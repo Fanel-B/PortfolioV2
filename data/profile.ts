@@ -55,11 +55,6 @@ export interface HobbyItem {
   description?: string;
 }
 
-export interface QuoteItem {
-  text: string;
-  author?: string;
-}
-
 export interface MusicItem {
   title: string;
   artist: string;
@@ -67,11 +62,6 @@ export interface MusicItem {
   cover: string;
   spotify?: string;
   youtube?: string;
-}
-
-export interface TravelItem {
-  place: string;
-  description: string;
 }
 
 export const profile = {
@@ -130,11 +120,11 @@ export const profile = {
   outils: [
     {
       categorie: 'Langages',
-      items: ['Python', 'JavaScript', 'Java', 'Kotlin', 'C', 'PHP', 'HTML', 'CSS'],
+      items: ['Python', 'JavaScript', 'Java', 'Kotlin', 'PHP', 'HTML', 'CSS'],
     },
     {
       categorie: 'Frameworks & Librairies',
-      items: ['React', 'Next.js', 'Node.js / Express', 'Bootstrap', 'Pandas', 'Matplotlib'],
+      items: ['React', 'Next.js', 'Node.js / Express', 'Pandas', 'Matplotlib'],
     },
     {
       categorie: 'Bases de données',
@@ -254,8 +244,6 @@ export const profile = {
       { title: 'Football' },
       { title: 'Gaming' },
     ] as HobbyItem[],
-    // CITATIONS_ICI
-    quotes: [{ text: 'CITATIONS_ICI', author: undefined }] as QuoteItem[],
     music: [
       {
         title: 'Δ. Dieu ne ment jamais',
@@ -299,10 +287,6 @@ export const profile = {
         youtube: 'https://www.youtube.com/results?search_query=Tems+Free+Mind',
       },
     ] as MusicItem[],
-    // VOYAGES_ICI
-    travels: [
-      { place: 'VOYAGES_ICI', description: 'Raconte ce voyage en quelques mots.' },
-    ] as TravelItem[],
     // APPRENDS_ICI — ce que tu apprends en ce moment (une techno, une langue, un instrument…)
     learning: ['APPRENDS_ICI'] as string[],
   },

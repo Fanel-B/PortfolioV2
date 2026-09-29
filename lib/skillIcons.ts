@@ -1,10 +1,9 @@
 import { IconType } from 'react-icons/lib';
 import { HiChartBar, HiCode, HiUsers } from '@/lib/icons';
 import { HiDatabase } from '@/lib/icons';
-import { SiC, SiNodedotjs, SiPostgresql } from '@/lib/icons';
+import { SiNodedotjs, SiPostgresql } from '@/lib/icons';
 import {
   SiAndroidstudio,
-  SiBootstrap,
   SiCss3,
   SiFigma,
   SiGit,
@@ -32,7 +31,6 @@ const ICONS: Record<string, IconType> = {
   JavaScript: SiJavascript,
   Java: SiJava,
   Kotlin: SiKotlin,
-  C: SiC,
   PHP: SiPhp,
   HTML: SiHtml5,
   CSS: SiCss3,
@@ -42,7 +40,6 @@ const ICONS: Record<string, IconType> = {
   React: SiReact,
   'Next.js': SiNextdotjs,
   'Node.js / Express': SiNodedotjs,
-  Bootstrap: SiBootstrap,
   Pandas: SiPandas,
   Matplotlib: HiChartBar,
   'Power BI': SiPowerbi,

@@ -11,7 +11,7 @@ import { FaGithub, FaLinkedin } from '@/lib/icons';
 import { FaSpotify, FaYoutube } from '@/lib/icons';
 import { HiOutlineArrowLeft } from '@/lib/icons';
 import PhotoMosaic from './PhotoMosaic';
-import { LiveClock, NasaPhoto } from './widgets';
+import { LiveClock } from './widgets';
 
 interface Props {
   onClose: () => void;
@@ -54,9 +54,7 @@ function Soon({ children }: { children: ReactNode }) {
 export default function Personnalite({ onClose }: Props) {
   const { personality } = profile;
   const hobbies = personality.hobbies.filter((h) => !isPlaceholder(h.title));
-  const quote = personality.quotes.find((q) => !isPlaceholder(q.text));
   const music = personality.music.filter((m) => !isPlaceholder(m.title));
-  const travels = personality.travels.filter((t) => !isPlaceholder(t.place));
   const learning = personality.learning.filter((l) => !isPlaceholder(l));
 
   return (
@@ -118,7 +116,7 @@ export default function Personnalite({ onClose }: Props) {
         </div>
 
         <div className="grid gap-5 md:grid-cols-6 lg:grid-cols-12">
-          <Tile label="En direct" className="md:col-span-3 lg:col-span-5 lg:row-span-2">
+          <Tile label="En direct" className="md:col-span-3 lg:col-span-6">
             <div className="flex h-full flex-col justify-between gap-8">
               <div className="flex items-center gap-4">
                 <span className="relative h-16 w-16 overflow-hidden rounded-full border-2 border-perso-accent/60">
@@ -148,11 +146,7 @@ export default function Personnalite({ onClose }: Props) {
             </div>
           </Tile>
 
-          <Tile label="Vu d'ici" className="md:col-span-3 lg:col-span-3 lg:row-span-2" delay={0.08}>
-            <NasaPhoto />
-          </Tile>
-
-          <Tile label="Face B" className="md:col-span-6 lg:col-span-4 lg:row-span-2" delay={0.16}>
+          <Tile label="Face B" className="md:col-span-3 lg:col-span-6" delay={0.08}>
             {music.length ? (
               <ol className="space-y-3">
                 {music.map((track) => (
@@ -202,11 +196,7 @@ export default function Personnalite({ onClose }: Props) {
             )}
           </Tile>
 
-          <Tile
-            label="En ce moment j'apprends"
-            className="md:col-span-3 lg:col-span-6"
-            delay={0.08}
-          >
+          <Tile label="En ce moment j'apprends" className="md:col-span-2 lg:col-span-4">
             {learning.length ? (
               <ul className="flex flex-wrap gap-2">
                 {learning.map((item) => (
@@ -223,22 +213,7 @@ export default function Personnalite({ onClose }: Props) {
             )}
           </Tile>
 
-          <Tile label="Entre guillemets" className="md:col-span-3 lg:col-span-6" delay={0.16}>
-            {quote ? (
-              <blockquote>
-                <p className="font-heading text-xl italic leading-snug">
-                  &ldquo;{quote.text}&rdquo;
-                </p>
-                {quote.author && (
-                  <p className="mt-3 font-mono text-sm text-perso-accent">— {quote.author}</p>
-                )}
-              </blockquote>
-            ) : (
-              <Soon>Une citation arrive bientôt.</Soon>
-            )}
-          </Tile>
-
-          <Tile label="Hors de l'écran" className="md:col-span-2 lg:col-span-4">
+          <Tile label="Hors de l'écran" className="md:col-span-2 lg:col-span-4" delay={0.08}>
             {hobbies.length ? (
               <ul className="flex flex-wrap gap-2">
                 {hobbies.map((hobby) => (
@@ -255,21 +230,6 @@ export default function Personnalite({ onClose }: Props) {
               </ul>
             ) : (
               <Soon>Passions en cours de développement…</Soon>
-            )}
-          </Tile>
-
-          <Tile label="Carnet de route" className="md:col-span-2 lg:col-span-4" delay={0.08}>
-            {travels.length ? (
-              <ul className="space-y-3">
-                {travels.map((travel) => (
-                  <li key={travel.place}>
-                    <p className="font-heading font-bold">{travel.place}</p>
-                    <p className="text-sm text-perso-text/60">{travel.description}</p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <Soon>Carte en préparation.</Soon>
             )}
           </Tile>
 

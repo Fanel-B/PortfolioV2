@@ -220,9 +220,8 @@ La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回
 - **Mosaïque de photos** ([`PhotoMosaic.tsx`](./components/Personnalite/PhotoMosaic.tsx)) : les 5 photos s'emboîtent comme des pièces de Tetris dans un bloc compact (tes deux portraits encadrent tes amis et Bangui). Les largeurs de colonnes et hauteurs de rangées sont calculées à partir du format de chaque photo, pour qu'il n'y ait ni trou ni recadrage visible. Chaque photo porte le nom de sa catégorie (« L'astre principal », « Mes satellites », « La planète mère ») ; un clic l'ouvre en grand.
 - **Tableau de bord**, en tuiles :
   - _En direct_ : ta photo, l'heure de Toulouse à la seconde ;
-  - _Vu d'ici_ : la **photo astronomique du jour de la NASA** (API APOD). L'image est préchargée avant l'affichage et gardée en cache pour la session ; si l'API ne répond pas, c'est la photo du Soleil qui s'affiche ;
   - _Face B_ : les morceaux du moment, avec la pochette de l'album et des boutons Spotify et YouTube ;
-  - _Hors de l'écran_, _Carnet de route_, _Entre guillemets_, _En ce moment j'apprends_, _Me trouver_.
+  - _En ce moment j'apprends_, _Hors de l'écran_, _Me trouver_.
 
 ### 13. Petits détails
 
@@ -255,10 +254,9 @@ La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回
 
 Toutes facultatives. À copier depuis [`.env.example`](./.env.example) dans `.env.local` (en local) ou dans les réglages du projet Vercel.
 
-| Variable                   | Rôle                                                                                                                                                             |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`     | URL publique du site (aperçus de partage, sitemap). Par défaut : `https://portfolio-v2-fanel-65.vercel.app`, définie dans `data/siteMetadata.js`.                |
-| `NEXT_PUBLIC_NASA_API_KEY` | Clé gratuite sur [api.nasa.gov](https://api.nasa.gov) pour la photo du jour. Sans elle, `DEMO_KEY` est utilisée (limitée à 30 appels par heure et par visiteur). |
+| Variable               | Rôle                                                                                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | URL publique du site (aperçus de partage, sitemap). Par défaut : `https://portfolio-v2-fanel-65.vercel.app`, définie dans `data/siteMetadata.js`. |
 
 ---
 
@@ -285,6 +283,5 @@ git checkout main && git merge develop && git push origin main
 ## Crédits
 
 - Image du Soleil : [NASA / SDO et les équipes AIA](https://sdo.gsfc.nasa.gov/) (domaine public).
-- Photo du jour : [NASA Astronomy Picture of the Day](https://apod.nasa.gov/).
 - Inspirations : [DevHQ](https://github.com/arshbibhaw/DevHQ-Personal-Portfolio-Website) (ciel étoilé, navbar), [Lucas Lima](https://lucas-lima.xyz/) (tableau de bord en tuiles).
 - Projet basé à l'origine sur le template open source de [Dale Larroder](https://www.dalelarroder.com), utilisé et personnalisé sous [licence MIT](./LICENSE).
