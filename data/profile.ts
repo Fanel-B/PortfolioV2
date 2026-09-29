@@ -34,13 +34,19 @@ export interface ToolCategory {
 }
 
 export interface PhotoItem {
-  /** Vignette carrée affichée sur l'orbite. */
-  thumb: string;
-  /** Photo entière, affichée au clic. */
   src: string;
   alt: string;
-  /** Légende courte ; vide tant qu'elle n'est pas écrite. */
-  caption: string;
+  /** Dimensions réelles, pour afficher la photo entière sans la recadrer. */
+  width: number;
+  height: number;
+}
+
+export interface PhotoGroup {
+  /** Petit libellé au-dessus du titre, ex. « Moi ». */
+  kicker: string;
+  /** Titre de la catégorie, sur le thème de l'espace. */
+  title: string;
+  photos: PhotoItem[];
 }
 
 export interface HobbyItem {
@@ -56,7 +62,11 @@ export interface QuoteItem {
 
 export interface MusicItem {
   title: string;
-  artist?: string;
+  artist: string;
+  album: string;
+  cover: string;
+  spotify?: string;
+  youtube?: string;
 }
 
 export interface TravelItem {
@@ -186,52 +196,57 @@ export const profile = {
   ] as Project[],
   // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir »
   personality: {
-    avatar: '/static/images/perso/orbite-01.jpg',
-    // Photos affichées côte à côte ; caption = légende courte (vide = pas de légende).
-    photos: [
+    avatar: '/static/images/perso/avatar.jpg',
+    photoGroups: [
       {
-        thumb: '/static/images/perso/orbite-01.jpg',
-        src: '/static/images/perso/photo-01.jpg',
-        alt: 'Fanel de nuit à Paris, sur un pont au-dessus de la Seine',
-        caption: 'Paris, la nuit',
+        kicker: 'Moi',
+        title: "L'astre principal",
+        photos: [
+          {
+            src: '/static/images/perso/moi-01.jpg',
+            alt: 'Fanel de nuit à Paris, sur un pont au-dessus de la Seine',
+            width: 1200,
+            height: 1600,
+          },
+          {
+            src: '/static/images/perso/moi-02.jpg',
+            alt: 'Fanel sur une promenade en bord de mer, en Espagne',
+            width: 1200,
+            height: 1600,
+          },
+        ],
       },
       {
-        thumb: '/static/images/perso/orbite-02.jpg',
-        src: '/static/images/perso/photo-02.jpg',
-        alt: 'Fanel sur une promenade en bord de mer, en Espagne',
-        caption: 'Espagne',
+        kicker: 'Mes amis',
+        title: 'Mes satellites',
+        photos: [
+          {
+            src: '/static/images/perso/amis-01.jpg',
+            alt: 'Un repas entre amis',
+            width: 1600,
+            height: 900,
+          },
+          {
+            src: '/static/images/perso/amis-02.jpg',
+            alt: 'Fanel et un ami en costume, à Bangui',
+            width: 810,
+            height: 1080,
+          },
+        ],
       },
       {
-        thumb: '/static/images/perso/orbite-03.jpg',
-        src: '/static/images/perso/photo-03.jpg',
-        alt: 'Un repas entre amis',
-        caption: 'Entre amis',
+        kicker: 'Bangui, mon chez moi',
+        title: 'La planète mère',
+        photos: [
+          {
+            src: '/static/images/perso/bangui.jpg',
+            alt: 'Bangui : le fleuve Oubangui, des pirogues et les collines',
+            width: 1600,
+            height: 1200,
+          },
+        ],
       },
-      {
-        thumb: '/static/images/perso/orbite-04.jpg',
-        src: '/static/images/perso/photo-04.jpg',
-        alt: 'Fanel et un ami en costume, à Bangui',
-        caption: 'Bangui',
-      },
-      {
-        thumb: '/static/images/perso/orbite-05.jpg',
-        src: '/static/images/perso/photo-05.jpg',
-        alt: 'Entre amis au bord de la mer, en Espagne',
-        caption: 'Espagne, entre amis',
-      },
-      {
-        thumb: '/static/images/perso/orbite-06.jpg',
-        src: '/static/images/perso/photo-06.jpg',
-        alt: 'Bangui, chez moi : le fleuve et les collines',
-        caption: 'Bangui, chez moi',
-      },
-      {
-        thumb: '/static/images/perso/orbite-07.jpg',
-        src: '/static/images/perso/photo-07.jpg',
-        alt: 'Un mur de post-it en Espagne : « Look mom, I can fly and discover the world »',
-        caption: '« Look mom, I can fly »',
-      },
-    ] as PhotoItem[],
+    ] as PhotoGroup[],
     // Ce que chaque activité t'apporte : description à ajouter plus tard
     hobbies: [
       { title: 'Lecture' },
@@ -242,11 +257,47 @@ export const profile = {
     // CITATIONS_ICI
     quotes: [{ text: 'CITATIONS_ICI', author: undefined }] as QuoteItem[],
     music: [
-      { title: 'Dieu ne ment jamais', artist: 'Damso' },
-      { title: 'Through the Wire', artist: 'Kanye West' },
-      { title: 'Devil in a New Dress', artist: 'Kanye West' },
-      { title: 'Praise God', artist: 'Kanye West' },
-      { title: 'Free Mind', artist: 'Tems' },
+      {
+        title: 'Δ. Dieu ne ment jamais',
+        artist: 'Damso',
+        album: 'Ipséité',
+        cover: '/static/images/music/damso-ipseite.jpg',
+        spotify: 'https://open.spotify.com/track/6YWjskKykdPsBuiTBOg1VK',
+        youtube: 'https://www.youtube.com/watch?v=-WXpT4Ej2No',
+      },
+      {
+        title: 'Through the Wire',
+        artist: 'Kanye West',
+        album: 'The College Dropout',
+        cover: '/static/images/music/kanye-college-dropout.jpg',
+        spotify: 'https://open.spotify.com/track/4mmkhcEm1Ljy1U9nwtsxUo',
+        youtube: 'https://www.youtube.com/watch?v=AE8y25CcE6s',
+      },
+      {
+        title: 'Devil in a New Dress',
+        artist: 'Kanye West',
+        album: 'My Beautiful Dark Twisted Fantasy',
+        cover: '/static/images/music/kanye-mbdtf.jpg',
+        spotify: 'https://open.spotify.com/track/1UGD3lW3tDmgZfAVDh6w7r',
+        youtube: 'https://www.youtube.com/watch?v=sk3rpYkiHe8',
+      },
+      {
+        title: 'Praise God',
+        artist: 'Kanye West',
+        album: 'Donda',
+        cover: '/static/images/music/kanye-donda.jpg',
+        spotify: 'https://open.spotify.com/track/0WSEq9Ko4kFPt8yo3ICd6T',
+        youtube: 'https://www.youtube.com/watch?v=9sJZOGxRxwM',
+      },
+      {
+        title: 'Free Mind',
+        artist: 'Tems',
+        album: 'For Broken Ears',
+        cover: '/static/images/music/tems-for-broken-ears.jpg',
+        spotify: 'https://open.spotify.com/track/2mzM4Y0Rnx2BDZqRnhQ5Q6',
+        // Pas de vidéo officielle : lien vers la recherche YouTube
+        youtube: 'https://www.youtube.com/results?search_query=Tems+Free+Mind',
+      },
     ] as MusicItem[],
     // VOYAGES_ICI
     travels: [

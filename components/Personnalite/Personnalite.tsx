@@ -8,7 +8,9 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import { FaGithub, FaLinkedin } from '@/lib/icons';
+import { FaSpotify, FaYoutube } from '@/lib/icons';
 import { HiOutlineArrowLeft } from '@/lib/icons';
+import PhotoGroups from './PhotoGroups';
 import { LiveClock, NasaPhoto } from './widgets';
 
 interface Props {
@@ -111,29 +113,9 @@ export default function Personnalite({ onClose }: Props) {
           </h2>
         </Reveal>
 
-        {/* Photos côte à côte, avec leur légende */}
-        <ul className="mb-20 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
-          {personality.photos.map((photo) => (
-            <li key={photo.src}>
-              <figure>
-                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-perso-surface">
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-                    className="object-cover"
-                  />
-                </div>
-                {photo.caption && (
-                  <figcaption className="mt-3 text-sm text-perso-text/70">
-                    {photo.caption}
-                  </figcaption>
-                )}
-              </figure>
-            </li>
-          ))}
-        </ul>
+        <div className="mb-24">
+          <PhotoGroups groups={personality.photoGroups} />
+        </div>
 
         <div className="grid gap-5 md:grid-cols-6 lg:grid-cols-12">
           <Tile label="En direct" className="md:col-span-3 lg:col-span-5 lg:row-span-2">
@@ -166,21 +148,51 @@ export default function Personnalite({ onClose }: Props) {
             </div>
           </Tile>
 
-          <Tile label="Vu d'ici" className="md:col-span-3 lg:col-span-4 lg:row-span-2" delay={0.08}>
+          <Tile label="Vu d'ici" className="md:col-span-3 lg:col-span-3 lg:row-span-2" delay={0.08}>
             <NasaPhoto />
           </Tile>
 
-          <Tile label="Face B" className="md:col-span-6 lg:col-span-3 lg:row-span-2" delay={0.16}>
+          <Tile label="Face B" className="md:col-span-6 lg:col-span-4 lg:row-span-2" delay={0.16}>
             {music.length ? (
               <ol className="space-y-3">
-                {music.map((track, i) => (
-                  <li key={track.title} className="flex gap-3">
-                    <span className="font-mono text-sm text-perso-accent">
-                      {String(i + 1).padStart(2, '0')}
+                {music.map((track) => (
+                  <li key={track.title} className="flex items-center gap-3">
+                    <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md">
+                      <Image
+                        src={track.cover}
+                        alt={`Pochette de l'album ${track.album}`}
+                        fill
+                        sizes="48px"
+                        className="object-cover"
+                      />
                     </span>
-                    <div>
-                      <p className="font-heading font-bold leading-tight">{track.title}</p>
-                      {track.artist && <p className="text-sm text-perso-text/50">{track.artist}</p>}
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-heading text-sm font-bold">{track.title}</p>
+                      <p className="truncate text-xs text-perso-text/50">{track.artist}</p>
+                    </div>
+                    <div className="flex shrink-0 gap-1">
+                      {track.spotify && (
+                        <a
+                          href={track.spotify}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Écouter ${track.title} sur Spotify`}
+                          className="rounded-full p-1.5 text-perso-text/60 transition-colors hover:text-[#1DB954]"
+                        >
+                          <FaSpotify size={18} />
+                        </a>
+                      )}
+                      {track.youtube && (
+                        <a
+                          href={track.youtube}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Écouter ${track.title} sur YouTube`}
+                          className="rounded-full p-1.5 text-perso-text/60 transition-colors hover:text-[#FF0033]"
+                        >
+                          <FaYoutube size={18} />
+                        </a>
+                      )}
                     </div>
                   </li>
                 ))}

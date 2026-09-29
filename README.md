@@ -221,11 +221,11 @@ La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回
 ### 12. Côté humain — [`Personnalite/`](./components/Personnalite)
 
 - **Hero** : la phrase « En chacun de nous existe un soleil. », à côté d'une vraie photo du Soleil (satellite SDO de la NASA, ultraviolet 171 Å). Elle tourne très lentement (240 s par tour), avec un halo, et ses bords noirs sont effacés (`mix-blend-mode: screen` + masque radial).
-- **Photos** : une grille simple, côte à côte, chacune avec une légende courte (`personality.photos` dans `data/profile.ts`).
+- **Photos par catégorie** ([`PhotoGroups.tsx`](./components/Personnalite/PhotoGroups.tsx)) : « L'astre principal » (moi), « Mes satellites » (mes amis), « La planète mère » (Bangui). Dans une rangée, chaque photo prend une largeur proportionnelle à son format : toutes ont la même hauteur et aucune n'est recadrée. Un clic ouvre la photo en grand (flèches du clavier, Échap).
 - **Tableau de bord**, en tuiles :
   - _En direct_ : ta photo, l'heure de Toulouse à la seconde ;
   - _Vu d'ici_ : la **photo astronomique du jour de la NASA** (API APOD). L'image est préchargée avant l'affichage et gardée en cache pour la session ; si l'API ne répond pas, c'est la photo du Soleil qui s'affiche ;
-  - _Face B_ : la liste des morceaux du moment ;
+  - _Face B_ : les morceaux du moment, avec la pochette de l'album et des boutons Spotify et YouTube ;
   - _Hors de l'écran_, _Carnet de route_, _Entre guillemets_, _En ce moment j'apprends_, _Me trouver_.
 
 ### 13. Petits détails
