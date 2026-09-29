@@ -280,6 +280,19 @@ git checkout main && git merge develop && git push origin main
 
 ---
 
+## Historique
+
+| Période            | Version | Étapes                                                                                                                                     |
+| ------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 13 sept. 2026      | **V1**  | Refonte d'un template Next.js 13 + Tailwind : pages Hero, Qui je suis, Outils, Travail, et une face « Personnalité » en flip 3D.           |
+| 17 sept. 2026      | V1      | Ajout des projets Biblio-Tech, JobBot Alternance et de l'analyse d'insertion pro MIAGE.                                                    |
+| 27 sept. 2026      | **V2**  | Nouvelle direction artistique : ciel étoilé Three.js, curseur-viseur, sections Origine / Arsenal / Lancements / Transmission, côté humain. |
+| 28 – 29 sept. 2026 | V2      | CV, photos, expériences, playlist ; optimisation de la fluidité, du contraste et de l'affichage sur tous les écrans.                       |
+
+Le détail de chaque étape est dans l'historique Git.
+
+---
+
 ## Crédits
 
 - Image du Soleil : [NASA / SDO et les équipes AIA](https://sdo.gsfc.nasa.gov/) (domaine public).
