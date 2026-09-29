@@ -60,7 +60,7 @@ export default function FloatingSun({ onOpen }: Props) {
             className="group relative block"
           >
             <span
-              className={`absolute bottom-1/2 right-full mr-3 w-max max-w-[60vw] translate-y-1/2 rounded-2xl border border-perso-accent/30 bg-perso-bg/90 px-4 py-2 text-left font-mono text-xs text-perso-text shadow-[0_8px_24px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 ${
+              className={`absolute bottom-1/2 right-full mr-3 w-max max-w-[60vw] translate-y-1/2 rounded-2xl border border-perso-accent/30 bg-perso-bg/90 px-4 py-2 text-left font-mono text-xs text-perso-text shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 ${
                 greeting
                   ? 'translate-x-0 opacity-100'
                   : 'pointer-events-none translate-x-2 opacity-0'
@@ -76,11 +76,11 @@ export default function FloatingSun({ onOpen }: Props) {
             >
               <span className="absolute inset-0 rounded-full bg-perso-accent/50 blur-xl transition-transform duration-500 group-hover:scale-150" />
               <Image
-                src="/static/images/perso/soleil-sdo.jpg"
+                src="/static/images/perso/soleil.webp"
                 alt=""
                 fill
                 sizes="72px"
-                className="animate-[spin_60s_linear_infinite] rounded-full object-cover mix-blend-screen [mask-image:radial-gradient(circle,black_55%,transparent_71%)]"
+                className="object-contain"
               />
             </motion.span>
           </button>

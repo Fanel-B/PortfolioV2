@@ -25,7 +25,7 @@ export default function EpisodeTeaser({ onOpen }: Props) {
       {/* Lignes de vitesse qui rayonnent depuis le soleil */}
       <div
         aria-hidden
-        className="absolute left-[80%] top-1/2 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 animate-[spin_60s_linear_infinite] bg-[repeating-conic-gradient(from_0deg,rgba(242,184,128,0.28)_0deg_1.2deg,transparent_1.2deg_6deg)] [mask-image:radial-gradient(circle,transparent_7%,black_22%)] group-hover:[animation-duration:8s]"
+        className="absolute left-[80%] top-1/2 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 animate-[spin_8s_linear_infinite] bg-[repeating-conic-gradient(from_0deg,rgba(242,184,128,0.28)_0deg_1.2deg,transparent_1.2deg_6deg)] [animation-play-state:paused] [mask-image:radial-gradient(circle,transparent_7%,black_22%)] group-hover:[animation-play-state:running] "
       />
       {/* Trame manga */}
       <div
@@ -56,11 +56,11 @@ export default function EpisodeTeaser({ onOpen }: Props) {
         <div className="relative mx-auto h-44 w-44 md:mr-12 md:h-56 md:w-56">
           <div className="absolute inset-0 rounded-full bg-perso-accent/40 blur-3xl transition-transform duration-500 group-hover:scale-125" />
           <Image
-            src="/static/images/perso/soleil-sdo.jpg"
+            src="/static/images/perso/soleil.webp"
             alt=""
             fill
             sizes="224px"
-            className="animate-[spin_120s_linear_infinite] rounded-full object-cover mix-blend-screen [mask-image:radial-gradient(circle,black_55%,transparent_70%)]"
+            className="object-contain"
           />
           <span
             aria-hidden

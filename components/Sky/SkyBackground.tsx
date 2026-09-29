@@ -97,11 +97,15 @@ export default function SkyBackground({ side }: Props) {
 
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: false,
+        powerPreference: 'high-performance',
+      });
     } catch {
       return; // Pas de WebGL : le dégradé CSS suffit.
     }
-    const pixelRatio = Math.min(window.devicePixelRatio, 2);
+    const pixelRatio = Math.min(window.devicePixelRatio, 1.5);
     renderer.setPixelRatio(pixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     container.appendChild(renderer.domElement);
@@ -214,7 +218,7 @@ export default function SkyBackground({ side }: Props) {
       <div ref={containerRef} className="absolute inset-0" />
       <div
         className={`grain absolute inset-0 transition-opacity duration-700 ${
-          isPerso ? 'opacity-[0.12]' : 'opacity-0'
+          isPerso ? 'opacity-[0.05]' : 'opacity-0'
         }`}
       />
     </div>

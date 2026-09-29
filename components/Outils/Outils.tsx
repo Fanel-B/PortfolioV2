@@ -23,7 +23,7 @@ function Band({ tools, reverse }: { tools: string[]; reverse?: boolean }) {
             <li
               key={tool + i}
               aria-hidden={i >= tools.length}
-              className="flex items-center gap-3 whitespace-nowrap rounded-full border border-white/10 bg-pro-surface/40 px-5 py-3 font-heading text-lg text-pro-text/80 backdrop-blur-md"
+              className="flex items-center gap-3 whitespace-nowrap rounded-full border border-white/10 bg-pro-surface/40 px-5 py-3 font-heading text-lg text-pro-text/80"
             >
               <Icon className="text-pro-accent" size={20} />
               {tool}
@@ -65,7 +65,7 @@ export default function Outils() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.3 }}
               transition={{ duration: 0.6, delay: i * 0.08 }}
-              className="group bg-pro-bg/80 p-6 backdrop-blur-md transition-colors hover:bg-pro-surface/80"
+              className="group bg-pro-bg/80 p-6 transition-colors hover:bg-pro-surface/80"
             >
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-pro-text/40">
                 {String(i + 1).padStart(2, '0')} · {category.items.length} outils

@@ -10,7 +10,7 @@ import { ReactNode } from 'react';
 import { FaGithub, FaLinkedin } from '@/lib/icons';
 import { FaSpotify, FaYoutube } from '@/lib/icons';
 import { HiOutlineArrowLeft } from '@/lib/icons';
-import PhotoGroups from './PhotoGroups';
+import PhotoMosaic from './PhotoMosaic';
 import { LiveClock, NasaPhoto } from './widgets';
 
 interface Props {
@@ -37,7 +37,7 @@ function Tile({
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: false, amount: 0.2 }}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={`flex flex-col rounded-3xl border border-perso-accent/10 bg-perso-surface/70 p-6 backdrop-blur-md transition-colors hover:border-perso-accent/30 ${className}`}
+      className={`flex flex-col rounded-3xl border border-perso-accent/10 bg-perso-surface/90 p-6 transition-colors hover:border-perso-accent/30 ${className}`}
     >
       <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.25em] text-perso-accent">
         {label}
@@ -89,12 +89,12 @@ export default function Personnalite({ onClose }: Props) {
         >
           <div className="absolute inset-[12%] rounded-full bg-perso-accent/30 blur-[80px]" />
           <Image
-            src="/static/images/perso/soleil-sdo.jpg"
+            src="/static/images/perso/soleil.webp"
             alt="Le Soleil photographié en ultraviolet par le satellite SDO de la NASA"
             fill
             priority
             sizes="(min-width: 1024px) 560px, 90vw"
-            className="animate-[spin_240s_linear_infinite] object-cover mix-blend-screen [mask-image:radial-gradient(circle,black_52%,transparent_71%)]"
+            className="object-contain"
           />
           <figcaption className="absolute -bottom-2 right-0 font-mono text-[10px] uppercase tracking-[0.2em] text-perso-text/30">
             Le Soleil · NASA / SDO · 171 Å
@@ -114,7 +114,7 @@ export default function Personnalite({ onClose }: Props) {
         </Reveal>
 
         <div className="mb-24">
-          <PhotoGroups groups={personality.photoGroups} />
+          <PhotoMosaic groups={personality.photoGroups} />
         </div>
 
         <div className="grid gap-5 md:grid-cols-6 lg:grid-cols-12">

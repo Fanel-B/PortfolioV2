@@ -33,7 +33,7 @@ export default function Travail() {
           <div
             role="tablist"
             aria-label="Filtrer les projets"
-            className="flex w-fit gap-1 rounded-full border border-white/10 bg-pro-bg/60 p-1 font-mono text-sm backdrop-blur-md"
+            className="flex w-fit gap-1 rounded-full border border-white/10 bg-pro-bg/60 p-1 font-mono text-sm"
           >
             <LayoutGroup id="filters">
               {FILTERS.map((f) => (

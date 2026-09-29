@@ -21,20 +21,15 @@ import dynamic from 'next/dynamic';
 // Three.js (≈ 1,3 Mo) est chargé à part, pour que la page s'affiche sans l'attendre.
 const SkyBackground = dynamic(() => import('@/components/Sky/SkyBackground'), { ssr: false });
 
-const FLIP = { duration: 0.45, ease: [0.65, 0, 0.35, 1] };
+const SWAP = { duration: 0.22, ease: 'easeOut' };
 
 export default function Page() {
   const [side, setSide] = useState<Side>('pro');
   const [cvOpen, setCvOpen] = useState(false);
-  // Point de vue de la rotation : le milieu de l'écran, où que l'on soit dans la page.
-  const [flipOrigin, setFlipOrigin] = useState(400);
 
   const openCv = useCallback(() => setCvOpen(true), []);
   const closeCv = useCallback(() => setCvOpen(false), []);
-  const flip = useCallback(() => {
-    setFlipOrigin(window.scrollY + window.innerHeight / 2);
-    setSide((s) => (s === 'pro' ? 'perso' : 'pro'));
-  }, []);
+  const flip = useCallback(() => setSide((s) => (s === 'pro' ? 'perso' : 'pro')), []);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -44,45 +39,35 @@ export default function Page() {
       <Navbar side={side} onFlip={flip} onOpenCv={openCv} />
       {side === 'pro' && <FloatingSun onOpen={flip} />}
 
-      {/* On retourne la page comme une carte : l'ancienne face pivote, puis la nouvelle arrive. */}
-      <div style={{ perspective: 1800, perspectiveOrigin: `50% ${flipOrigin}px` }}>
-        {/* initial={false} : pas de rotation au premier affichage, seulement lors d'une bascule. */}
-        <AnimatePresence
-          initial={false}
-          mode="wait"
-          onExitComplete={() => {
-            window.scrollTo(0, 0);
-            setFlipOrigin(window.innerHeight / 2);
-          }}
+      {/* Bascule pro ↔ humain : fondu rapide (une rotation 3D de toute la page était trop lourde). */}
+      {/* initial={false} : pas d'animation au premier affichage, seulement lors d'une bascule. */}
+      <AnimatePresence initial={false} mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
+        <motion.main
+          key={side}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0, transition: SWAP }}
+          exit={{ opacity: 0, transition: SWAP }}
         >
-          <motion.main
-            key={side}
-            initial={{ rotateY: -90, opacity: 0 }}
-            animate={{ rotateY: 0, opacity: 1, transition: FLIP }}
-            exit={{ rotateY: 90, opacity: 0, transition: FLIP }}
-            style={{ transformOrigin: `50% ${flipOrigin}px` }}
-          >
-            {side === 'pro' ? (
-              <>
-                <Hero onOpenCv={openCv} />
-                <QuiJeSuis />
-                <Outils />
-                <Travail />
-                {/* Comme dans un anime : l'aperçu du prochain épisode arrive à la fin de celui-ci. */}
-                <section id="prochain-episode" className={`${container} pb-28 pt-8 md:pb-40`}>
-                  <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-pro-text/40">
-                    {"// Fin de l'épisode 01"}
-                  </p>
-                  <EpisodeTeaser onOpen={flip} />
-                </section>
-                <Footer />
-              </>
-            ) : (
-              <Personnalite onClose={flip} />
-            )}
-          </motion.main>
-        </AnimatePresence>
-      </div>
+          {side === 'pro' ? (
+            <>
+              <Hero onOpenCv={openCv} />
+              <QuiJeSuis />
+              <Outils />
+              <Travail />
+              {/* Comme dans un anime : l'aperçu du prochain épisode arrive à la fin de celui-ci. */}
+              <section id="prochain-episode" className={`${container} pb-28 pt-8 md:pb-40`}>
+                <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-pro-text/40">
+                  {"// Fin de l'épisode 01"}
+                </p>
+                <EpisodeTeaser onOpen={flip} />
+              </section>
+              <Footer />
+            </>
+          ) : (
+            <Personnalite onClose={flip} />
+          )}
+        </motion.main>
+      </AnimatePresence>
 
       <CvModal open={cvOpen} onClose={closeCv} />
     </MotionConfig>

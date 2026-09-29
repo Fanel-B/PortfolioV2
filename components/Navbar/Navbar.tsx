@@ -47,10 +47,10 @@ export default function Navbar({ side, onFlip, onOpenCv }: Props) {
     >
       <nav
         aria-label="Navigation principale"
-        className={`flex items-center justify-around gap-1 border-t px-2 pb-3 pt-2 font-mono backdrop-blur-xl md:justify-center md:rounded-full md:border md:px-2 md:py-1.5 ${
+        className={`flex items-center justify-around gap-1 border-t px-2 pb-3 pt-2 font-mono md:justify-center md:rounded-full md:border md:px-2 md:py-1.5 ${
           isPerso
-            ? 'border-perso-accent/15 bg-perso-bg/75 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
-            : 'border-white/10 bg-pro-bg/70 shadow-[0_8px_32px_rgba(0,0,0,0.45)]'
+            ? 'border-perso-accent/15 bg-perso-bg/95 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
+            : 'border-white/10 bg-pro-bg/90 shadow-[0_8px_32px_rgba(0,0,0,0.45)]'
         }`}
       >
         {isPerso ? (

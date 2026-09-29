@@ -189,14 +189,14 @@ Les couleurs sont définies dans [`tailwind.config.js`](./tailwind.config.js) et
 
 La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回予告, « prochain épisode »). Comme dans un anime, elle arrive **à la fin** : après les projets, juste avant le contact, précédée de « // Fin de l'épisode 01 ». Elle ne coupe donc pas la lecture du côté pro.
 
-- **Lignes de vitesse** de manga qui rayonnent depuis le Soleil (`repeating-conic-gradient` en rotation lente sur 60 s, et 8 s au survol).
+- **Lignes de vitesse** de manga qui rayonnent depuis le Soleil (`repeating-conic-gradient`), immobiles, qui se mettent à tourner au survol (8 s par tour).
 - **Trame manga** en points, ombre décalée pleine, façon BD.
 - Au survol : la carte se soulève, un reflet balaie le bouton, et l'onomatopée **ドン!** (« don ! ») surgit.
-- Le Soleil tourne sur lui-même (120 s par tour) ; le kanji 人間 (« l'humain ») est en contour.
+- Le kanji 人間 (« l'humain ») est en contour, à côté du Soleil.
 
 ### 8. Soleil flottant — [`FloatingSun.tsx`](./components/FloatingSun.tsx)
 
-- Un petit soleil (la même photo NASA) apparaît dans le coin inférieur droit une fois le hero dépassé. Il flotte doucement (4 s par oscillation) et tourne sur lui-même.
+- Un petit soleil (la même photo NASA) apparaît dans le coin inférieur droit une fois le hero dépassé. Il flotte doucement (4 s par oscillation).
 - À sa première apparition, une bulle « Psst… il y a un humain derrière le code → » s'affiche 4,5 s, puis seulement au survol.
 - Un clic retourne la page vers le côté humain. Il se cache quand la grande carte « Épisode 02 » est à l'écran, pour ne pas faire doublon.
 
@@ -212,16 +212,12 @@ La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回
 - **Inclinaison 3D** au survol (5° max, ressort), avec un reflet lumineux qui suit la souris.
 - Les captures sont présentées dans une **fenêtre de navigateur** (trois points + adresse du site).
 
-### 11. Bascule pro ↔ humain — [`app/page.tsx`](./app/page.tsx)
-
-- La page pivote comme une carte : la face actuelle tourne de 0 à 90° (0,45 s), puis la nouvelle arrive de −90 à 0°.
-- Le point de vue de la rotation est placé **au milieu de l'écran**, où que l'on soit dans la page, pour que l'effet reste net même tout en bas.
-- Entre les deux, on remonte en haut de la page. Au tout premier affichage, il n'y a pas de rotation (`AnimatePresence initial={false}`).
+- Un fondu court (0,22 s) avec un léger glissement ; on remonte en haut de la page entre les deux faces. (Une rotation 3D de toute la page était trop lourde pour la carte graphique.)
 
 ### 12. Côté humain — [`Personnalite/`](./components/Personnalite)
 
-- **Hero** : la phrase « En chacun de nous existe un soleil. », à côté d'une vraie photo du Soleil (satellite SDO de la NASA, ultraviolet 171 Å). Elle tourne très lentement (240 s par tour), avec un halo, et ses bords noirs sont effacés (`mix-blend-mode: screen` + masque radial).
-- **Photos par catégorie** ([`PhotoGroups.tsx`](./components/Personnalite/PhotoGroups.tsx)) : « L'astre principal » (moi), « Mes satellites » (mes amis), « La planète mère » (Bangui). Dans une rangée, chaque photo prend une largeur proportionnelle à son format : toutes ont la même hauteur et aucune n'est recadrée. Un clic ouvre la photo en grand (flèches du clavier, Échap).
+- **Hero** : la phrase « En chacun de nous existe un soleil. », à côté d'une vraie photo du Soleil (satellite SDO de la NASA, ultraviolet 171 Å). L'image est détourée à l'avance (WebP transparent), avec un halo derrière.
+- **Mosaïque de photos** ([`PhotoMosaic.tsx`](./components/Personnalite/PhotoMosaic.tsx)) : les 5 photos s'emboîtent comme des pièces de Tetris dans un bloc compact (tes deux portraits encadrent tes amis et Bangui). Les largeurs de colonnes et hauteurs de rangées sont calculées à partir du format de chaque photo, pour qu'il n'y ait ni trou ni recadrage visible. Chaque photo porte le nom de sa catégorie (« L'astre principal », « Mes satellites », « La planète mère ») ; un clic l'ouvre en grand.
 - **Tableau de bord**, en tuiles :
   - _En direct_ : ta photo, l'heure de Toulouse à la seconde ;
   - _Vu d'ici_ : la **photo astronomique du jour de la NASA** (API APOD). L'image est préchargée avant l'affichage et gardée en cache pour la session ; si l'API ne répond pas, c'est la photo du Soleil qui s'affiche ;
@@ -236,13 +232,13 @@ La porte vers le côté humain, en style carte de fin d'épisode d'anime (次回
 
 ---
 
-## Accessibilité et performance
+- **Fluidité** : pas de flou d'arrière-plan (`backdrop-filter`) au-dessus du ciel animé, pas de mode de fusion (`mix-blend-mode`) ni de rotation permanente ; le Soleil est une image WebP déjà détourée ; le viseur utilise un ressort très vif ; le ciel est dessiné sans antialiasing, à une résolution plafonnée à 1,5.
 
+- **Images** : elles sont redimensionnées et compressées à l'avance dans `public/` (photos perso ≤ 1000 px, ~100 Ko), et servies telles quelles (`images.unoptimized` dans `next.config.js`).
 - **Animations réduites** : si le système le demande (`prefers-reduced-motion`), Framer Motion coupe les mouvements (`MotionConfig reducedMotion="user"`), les étoiles s'arrêtent et les bandes de logos se figent.
 - Le curseur-viseur n'est activé qu'avec une souris ; au clavier et sur mobile, rien ne change.
 - Boutons-icônes avec `aria-label`, filtres en `role="tablist"`, fenêtre du CV en `role="dialog"`.
-- Three.js : pixel ratio plafonné à 2, ressources libérées au démontage. Seules `transform` et `opacity` sont animées.
-- Images servies par `next/image` (formats modernes, tailles adaptées).
+- Three.js : ressources libérées au démontage. Seules `transform` et `opacity` sont animées.
 
 ---
 

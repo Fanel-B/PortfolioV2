@@ -77,7 +77,7 @@ const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-        className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-pro-bg/70 backdrop-blur-md transition-[border-color,box-shadow] duration-500 hover:border-pro-accent/40 hover:shadow-glow"
+        className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-pro-bg/70 transition-[border-color,box-shadow] duration-500 hover:border-pro-accent/40 hover:shadow-glow"
       >
         <motion.div
           aria-hidden

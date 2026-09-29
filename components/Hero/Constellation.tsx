@@ -44,16 +44,6 @@ export default function Constellation() {
     <figure className="relative w-full select-none">
       <svg viewBox="0 0 215 170" className="w-full overflow-visible" role="img">
         <title>Constellation formant les initiales FB, chaque étoile est une compétence</title>
-        <defs>
-          <filter id="star-glow" x="-200%" y="-200%" width="500%" height="500%">
-            <feGaussianBlur stdDeviation="2.2" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-
         {LINKS.map(([from, to], i) => {
           const lit = active === from || active === to;
           return (
@@ -87,12 +77,19 @@ export default function Constellation() {
           >
             {/* Zone de survol plus large que l'étoile */}
             <circle cx={star.x} cy={star.y} r={9} fill="transparent" />
+            {/* Halo : un simple cercle translucide, moins coûteux qu'un filtre de flou */}
+            <circle
+              cx={star.x}
+              cy={star.y}
+              r={active === id ? 8 : star.bright ? 6.5 : 4.5}
+              fill={active === id ? '#9EE6CF' : '#8ECDF8'}
+              fillOpacity={0.18}
+            />
             <circle
               cx={star.x}
               cy={star.y}
               r={active === id ? 3.6 : star.bright ? 2.8 : 1.9}
               fill={active === id ? '#9EE6CF' : '#EAF4FF'}
-              filter="url(#star-glow)"
               className="transition-all duration-300"
             >
               <animate

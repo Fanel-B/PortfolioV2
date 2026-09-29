@@ -18,7 +18,8 @@ export default function TargetCursor({ side }: Props) {
   const [locked, setLocked] = useState(false);
   const [visible, setVisible] = useState(false);
 
-  const spring = { stiffness: 450, damping: 35, mass: 0.6 };
+  // Ressort très vif : le viseur colle à la souris, seul le verrouillage reste animé.
+  const spring = { stiffness: 1400, damping: 70, mass: 0.25 };
   const x = useSpring(-100, spring);
   const y = useSpring(-100, spring);
   const width = useSpring(IDLE_SIZE, spring);
@@ -34,6 +35,7 @@ export default function TargetCursor({ side }: Props) {
     let target: Element | null = null;
     let px = -100;
     let py = -100;
+    let shown = false;
 
     const place = () => {
       if (target && target.isConnected) {
@@ -55,7 +57,10 @@ export default function TargetCursor({ side }: Props) {
       py = e.clientY;
       dotX.set(px);
       dotY.set(py);
-      setVisible(true);
+      if (!shown) {
+        shown = true;
+        setVisible(true);
+      }
       const next = e.target instanceof Element ? e.target.closest(TARGETS) : null;
       if (next !== target) {
         target = next;
@@ -63,7 +68,10 @@ export default function TargetCursor({ side }: Props) {
       }
       place();
     };
-    const onLeave = () => setVisible(false);
+    const onLeave = () => {
+      shown = false;
+      setVisible(false);
+    };
 
     window.addEventListener('pointermove', onMove);
     window.addEventListener('scroll', place, { passive: true });
