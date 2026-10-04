@@ -183,6 +183,18 @@ export const profile = {
       image: '/static/images/projects/miage-insertion-pro.png',
       imageFit: 'contain',
     },
+    {
+      title: "Qualité des sources d'offres d'alternance IT",
+      description:
+        "Analyse de 276 offres collectées par un pipeline de veille que j'exploite sur un VPS (alertes mail LinkedIn, API France Travail, API La Bonne Alternance). Le sujet n'est pas le marché mais la qualité des sources : couverture, complétude, fiabilité. L'analyse s'ouvre sur cinq contrôles de cohérence, dont deux échouent et corrigent la lecture de la suite. 97 % des offres toulousaines dépendent d'une source unique, et 115 des 120 rejets étiquetés « inéligible » sont en fait un type de contrat jamais fourni par la source.",
+      type: 'perso',
+      categories: ['Data'],
+      stack: ['Python', 'Pandas', 'SciPy', 'Jupyter', 'Matplotlib'],
+      githubUrl: 'https://github.com/Fanel-B/eda-alternance-france-2026',
+      demoUrl: undefined,
+      image: '/static/images/projects/eda-sources-alternance.png',
+      imageFit: 'contain',
+    },
   ] as Project[],
   // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir »
   personality: {
