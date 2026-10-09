@@ -10,7 +10,7 @@
     "prepare": "husky install"
   },
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "dependencies": {
     "@vercel/analytics": "0.1.1",
