@@ -47,6 +47,35 @@ function Tile({
   );
 }
 
+// Photo du livre si elle existe, sinon une couverture dessinée façon livre de poche.
+function BookCover({ book }: { book: { title: string; author: string; cover: string } }) {
+  return (
+    <span className="relative block h-[136px] w-[88px] shrink-0 overflow-hidden rounded-[3px] shadow-[0_10px_24px_-8px_rgba(0,0,0,0.7)] ring-1 ring-black/25">
+      {isPlaceholder(book.cover) ? (
+        <span className="flex h-full flex-col justify-between bg-[#ece2cd] px-2 py-2.5 text-center">
+          <span className="font-heading text-[11px] font-bold uppercase leading-tight tracking-wide text-[#2b2620]">
+            {book.title}
+          </span>
+          <span className="text-[7px] uppercase leading-tight tracking-[0.12em] text-[#2b2620]/70">
+            {book.author}
+          </span>
+          <span className="block h-1.5 w-full rounded-sm bg-perso-accent/80" />
+        </span>
+      ) : (
+        <Image
+          src={book.cover}
+          alt={`Couverture de ${book.title}`}
+          fill
+          sizes="88px"
+          className="object-cover"
+        />
+      )}
+      {/* La tranche, pour que ça se lise comme un livre posé de face. */}
+      <span className="pointer-events-none absolute inset-y-0 left-0 w-[6px] bg-gradient-to-r from-black/35 to-transparent" />
+    </span>
+  );
+}
+
 function Soon({ children }: { children: ReactNode }) {
   return <p className="font-mono text-sm text-perso-text/60">{children}</p>;
 }
@@ -55,7 +84,7 @@ export default function Personnalite({ onClose }: Props) {
   const { personality } = profile;
   const hobbies = personality.hobbies.filter((h) => !isPlaceholder(h.title));
   const music = personality.music.filter((m) => !isPlaceholder(m.title));
-  const learning = personality.learning.filter((l) => !isPlaceholder(l));
+  const reading = personality.reading;
 
   return (
     <div className="min-h-screen pb-32 text-perso-text">
@@ -196,21 +225,19 @@ export default function Personnalite({ onClose }: Props) {
             )}
           </Tile>
 
-          <Tile label="En ce moment j'apprends" className="md:col-span-2 lg:col-span-4">
-            {learning.length ? (
-              <ul className="flex flex-wrap gap-2">
-                {learning.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-full border border-perso-accent/30 px-4 py-1.5 text-sm"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <Soon>Carnet d&apos;apprentissage à venir.</Soon>
-            )}
+          <Tile label="En ce moment je lis" className="md:col-span-2 lg:col-span-4">
+            <div className="flex items-center gap-5">
+              <BookCover book={reading} />
+              <div className="min-w-0">
+                <p className="font-heading text-lg font-bold leading-tight">{reading.title}</p>
+                <p className="mt-1 text-sm text-perso-text/60">{reading.author}</p>
+                {reading.note && (
+                  <p className="mt-3 text-sm italic leading-relaxed text-perso-text/70">
+                    {reading.note}
+                  </p>
+                )}
+              </div>
+            </div>
           </Tile>
 
           <Tile label="Hors de l'écran" className="md:col-span-2 lg:col-span-4" delay={0.08}>

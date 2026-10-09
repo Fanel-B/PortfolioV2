@@ -87,6 +87,30 @@ export default function Outils() {
             </motion.div>
           ))}
         </div>
+
+        {profile.apprentissages.length > 0 && (
+          <Reveal className="mt-6">
+            <div className="flex flex-col gap-4 rounded-3xl border border-pro-accent/20 bg-pro-surface/30 px-6 py-5 sm:flex-row sm:items-center sm:gap-6">
+              <p className="shrink-0 font-mono text-xs uppercase tracking-[0.25em] text-pro-accent">
+                En cours d&apos;apprentissage
+              </p>
+              <ul className="flex flex-wrap gap-2.5">
+                {profile.apprentissages.map((item) => {
+                  const Icon = skillIcon(item);
+                  return (
+                    <li
+                      key={item}
+                      className="flex items-center gap-2 rounded-full border border-pro-accent/30 px-4 py-1.5 text-sm text-pro-text/80"
+                    >
+                      <Icon size={15} className="shrink-0 text-pro-accent" />
+                      {item}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );

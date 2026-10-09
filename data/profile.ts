@@ -64,6 +64,15 @@ export interface MusicItem {
   youtube?: string;
 }
 
+export interface ReadingItem {
+  title: string;
+  author: string;
+  /** Photo du livre ; laisser 'COVER_ICI' tant qu'elle n'est pas prise. */
+  cover: string;
+  /** Une ligne sur ce que le livre te fait ; facultatif. */
+  note?: string;
+}
+
 export const profile = {
   name: 'Fanel Balemo',
   tagline: 'A student who codes, analyzes, and refuses to stay in one box.',
@@ -148,6 +157,8 @@ export const profile = {
       ],
     },
   ] as ToolCategory[],
+  // Affiche en bas de l'Arsenal : ce qui n'est pas encore un acquis.
+  apprentissages: ['Kotlin', 'Power BI'] as string[],
   projects: [
     {
       title: 'Biblio-Tech — Smart Library Platform',
@@ -311,8 +322,13 @@ export const profile = {
         youtube: 'https://www.youtube.com/results?search_query=Tems+Free+Mind',
       },
     ] as MusicItem[],
-    // Ce que tu apprends en ce moment (une techno, une langue, un instrument…)
-    learning: ['Kotlin', 'Power BI'] as string[],
+    // Ce que tu lis en ce moment. cover: 'COVER_ICI' tant que la photo n'est pas prise.
+    reading: {
+      title: 'Demian',
+      author: 'Hermann Hesse',
+      cover: 'COVER_ICI',
+      note: "L'histoire d'un garçon qui apprend à ne plus emprunter ses certitudes aux autres.",
+    } as ReadingItem,
   },
 };
 
