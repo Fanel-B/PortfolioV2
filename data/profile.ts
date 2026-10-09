@@ -326,7 +326,7 @@ export const profile = {
     reading: {
       title: 'Demian',
       author: 'Hermann Hesse',
-      cover: 'COVER_ICI',
+      cover: '/static/images/perso/demian.jpg',
       note: "L'histoire d'un garçon qui apprend à ne plus emprunter ses certitudes aux autres.",
     } as ReadingItem,
   },

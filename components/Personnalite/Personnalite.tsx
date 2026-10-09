@@ -50,7 +50,7 @@ function Tile({
 // Photo du livre si elle existe, sinon une couverture dessinée façon livre de poche.
 function BookCover({ book }: { book: { title: string; author: string; cover: string } }) {
   return (
-    <span className="relative block h-[136px] w-[88px] shrink-0 overflow-hidden rounded-[3px] shadow-[0_10px_24px_-8px_rgba(0,0,0,0.7)] ring-1 ring-black/25">
+    <span className="relative block h-[136px] w-[84px] shrink-0 overflow-hidden rounded-[3px] shadow-[0_10px_24px_-8px_rgba(0,0,0,0.7)] ring-1 ring-black/25">
       {isPlaceholder(book.cover) ? (
         <span className="flex h-full flex-col justify-between bg-[#ece2cd] px-2 py-2.5 text-center">
           <span className="font-heading text-[11px] font-bold uppercase leading-tight tracking-wide text-[#2b2620]">
@@ -66,7 +66,7 @@ function BookCover({ book }: { book: { title: string; author: string; cover: str
           src={book.cover}
           alt={`Couverture de ${book.title}`}
           fill
-          sizes="88px"
+          sizes="84px"
           className="object-cover"
         />
       )}
