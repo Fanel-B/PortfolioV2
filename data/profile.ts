@@ -195,6 +195,18 @@ export const profile = {
       image: '/static/images/projects/eda-sources-alternance.png',
       imageFit: 'contain',
     },
+    {
+      title: "TechScope — pilotage et qualité d'un parc IT",
+      description:
+        'Pipeline qui part de quatre sources de formats différents (JSON, SQLite, deux CSV), leur applique six contrôles qualité — champ obligatoire, unicité, intégrité référentielle, valeur invalide, cohérence, fraîcheur — puis alimente un dashboard Power BI. Chaque ligne rejetée est tracée avec sa source et la règle violée, et les indicateurs ne sont calculés que sur les données validées : sur le jeu de démonstration, 12 anomalies sont détectées et 10 lignes écartées sur 113. Le tableau de bord fait ressortir deux services sans redondance et près de 340 licences payées mais inutilisées.',
+      type: 'perso',
+      categories: ['Data'],
+      stack: ['Python', 'Pandas', 'SQL', 'SQLite', 'Power BI'],
+      githubUrl: 'https://github.com/Fanel-B/techscope',
+      demoUrl: undefined,
+      image: '/static/images/projects/techscope.png',
+      imageFit: 'contain',
+    },
   ] as Project[],
   // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir »
   personality: {
@@ -300,7 +312,7 @@ export const profile = {
       },
     ] as MusicItem[],
     // Ce que tu apprends en ce moment (une techno, une langue, un instrument…)
-    learning: ['Kotlin'] as string[],
+    learning: ['Kotlin', 'Power BI'] as string[],
   },
 };
 
