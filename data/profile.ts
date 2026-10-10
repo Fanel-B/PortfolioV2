@@ -96,9 +96,9 @@ export const profile = {
     emailAcademique: 'fanel.balemoyangbanda@toulouse.miage.fr',
   },
   bio: [
-    "Bienvenue — vous êtes sur mon coin d'internet.",
+    "Bienvenue sur mon coin d'internet.",
     "Je suis Fanel Balemo, étudiant en L3 MIAGE à l'Université de Toulouse, une formation qui allie compréhension des besoins métier et développement de solutions techniques. J'aime autant comprendre les données que construire les outils qui les exploitent : plusieurs de mes projets (API, bases de données, tableaux de bord) sont déployés en ligne.",
-    'En ce moment : je recherche une alternance dès que possible — ou, à défaut, un stage de 4 à 5 mois à partir du 29 mars 2027 — comme Développeur Full Stack ou Data Analyst, à Toulouse ou en Île-de-France.',
+    'En ce moment, je recherche une alternance dès que possible comme Développeur Full Stack ou Data Analyst, à Toulouse ou en Île-de-France. À défaut, un stage de 4 à 5 mois à partir du 29 mars 2027.',
   ],
   timeline: [
     {
@@ -205,7 +205,7 @@ export const profile = {
     {
       title: "TechScope — pilotage et qualité d'un parc IT",
       description:
-        'Pipeline qui part de quatre sources de formats différents (JSON, SQLite, deux CSV), leur applique six contrôles qualité — champ obligatoire, unicité, intégrité référentielle, valeur invalide, cohérence, fraîcheur — puis alimente un dashboard Power BI. Chaque ligne rejetée est tracée avec sa source et la règle violée, et les indicateurs ne sont calculés que sur les données validées : sur le jeu de démonstration, 12 anomalies sont détectées et 10 lignes écartées sur 113. Le tableau de bord fait ressortir deux services sans redondance et près de 340 licences payées mais inutilisées.',
+        'Pipeline qui part de quatre sources de formats différents (JSON, SQLite, deux CSV), leur applique six contrôles qualité, puis alimente un dashboard Power BI. Chaque ligne rejetée est tracée avec sa source et la règle violée, et les indicateurs ne sont calculés que sur les données validées : sur le jeu de démonstration, 12 anomalies sont détectées et 10 lignes écartées sur 113. Le tableau de bord fait ressortir deux services sans redondance et près de 340 licences payées mais inutilisées.',
       type: 'perso',
       categories: ['Data'],
       stack: ['Python', 'Pandas', 'SQL', 'SQLite', 'Power BI'],
