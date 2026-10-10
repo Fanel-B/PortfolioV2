@@ -106,7 +106,9 @@ const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
                   src={project.image}
                   alt={`Aperçu de ${project.title}`}
                   fill
-                  sizes="(min-width: 1024px) 60vw, 100vw"
+                  sizes={
+                    featured ? '(min-width: 768px) 660px, 88vw' : '(min-width: 768px) 400px, 80vw'
+                  }
                   className={`transition-transform duration-700 group-hover:scale-[1.03] ${
                     project.imageFit === 'contain'
                       ? 'object-contain p-3'

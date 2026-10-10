@@ -13,6 +13,8 @@ export interface Project {
   image?: string;
   /** 'cover' pour une capture d'écran (défaut), 'contain' pour un graphique à montrer en entier. */
   imageFit?: 'cover' | 'contain';
+  /** Projet mis en avant : carte plus large, placée en tête du carrousel. */
+  featured?: boolean;
 }
 
 export interface TimelineItem {
@@ -170,6 +172,7 @@ export const profile = {
       githubUrl: 'https://github.com/Fanel-B/bibliotheque1',
       demoUrl: 'https://bibliotheque1.vercel.app',
       image: '/static/images/projects/biblio-tech.jpg',
+      featured: true,
     },
     {
       title: 'JobBot Alternance',
@@ -217,6 +220,7 @@ export const profile = {
       demoUrl: undefined,
       image: '/static/images/projects/techscope.png',
       imageFit: 'contain',
+      featured: true,
     },
   ] as Project[],
   // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir »
