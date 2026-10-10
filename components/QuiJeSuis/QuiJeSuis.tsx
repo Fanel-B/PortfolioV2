@@ -97,7 +97,7 @@ export default function QuiJeSuis() {
                   key={job.role}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.5 }}
+                  viewport={{ once: true, amount: 0.5 }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                   className="grid gap-2 py-5 sm:grid-cols-[200px_1fr]"
                 >

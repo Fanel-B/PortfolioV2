@@ -1,9 +1,9 @@
 'use client';
 
 import { Project } from '@/data/profile';
-import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { forwardRef, MouseEvent } from 'react';
+import { forwardRef } from 'react';
 import { FaGithub } from '@/lib/icons';
 import { HiOutlineExternalLink } from '@/lib/icons';
 
@@ -12,8 +12,6 @@ const TYPE_LABEL: Record<Project['type'], string> = {
   academique: 'Projet académique',
   pro: 'Projet pro',
 };
-
-const MAX_TILT = 5;
 
 interface Props {
   project: Project;
@@ -25,80 +23,52 @@ interface Props {
 // Visuel de remplacement quand le projet n'a pas encore de capture : son numéro, en grand, dans le ciel.
 function ProjectVisual({ number }: { number: number }) {
   return (
-    <div className="grid-lines relative flex h-full min-h-[180px] items-center justify-center overflow-hidden bg-gradient-to-br from-pro-surface to-pro-bg">
-      <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-pro-accent/20 blur-3xl" />
-      <div className="absolute -bottom-16 -left-10 h-48 w-48 rounded-full bg-pro-lavande/15 blur-3xl" />
-      <span className="relative font-heading text-[7rem] font-extrabold leading-none text-transparent [-webkit-text-stroke:1.5px_rgba(142,205,248,0.6)]">
+    <div className="grid-lines relative flex h-full items-center justify-center overflow-hidden bg-gradient-to-br from-pro-surface to-pro-bg">
+      <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-pro-accent/20 blur-3xl" />
+      <span className="relative font-heading text-[4rem] font-extrabold leading-none text-transparent [-webkit-text-stroke:1.5px_rgba(142,205,248,0.6)]">
         {String(number).padStart(2, '0')}
       </span>
     </div>
   );
 }
 
+// Pas d'inclinaison 3D ni de reflet qui suit la souris : sur un rail horizontal,
+// ces effets repeignaient toute la carte à chaque mouvement et saccadaient le défilement.
 const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
   { project, number, featured, className = '' },
   ref
 ) {
-  const rotateX = useSpring(0, { stiffness: 200, damping: 20 });
-  const rotateY = useSpring(0, { stiffness: 200, damping: 20 });
-  const glareX = useMotionValue(50);
-  const glareY = useMotionValue(50);
-  const glare = useMotionTemplate`radial-gradient(circle at ${glareX}% ${glareY}%, rgba(142,205,248,0.16), transparent 55%)`;
   const isLive = Boolean(project.demoUrl);
-
-  const onMouseMove = (e: MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    rotateY.set((x - 0.5) * 2 * MAX_TILT);
-    rotateX.set((0.5 - y) * 2 * MAX_TILT);
-    glareX.set(x * 100);
-    glareY.set(y * 100);
-  };
-
-  const onMouseLeave = () => {
-    rotateX.set(0);
-    rotateY.set(0);
-  };
 
   return (
     <motion.div
       ref={ref}
-      layout
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      viewport={{ once: false, amount: 0.15 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      style={{ perspective: 1200 }}
+      exit={{ opacity: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
-      <motion.article
-        onMouseMove={onMouseMove}
-        onMouseLeave={onMouseLeave}
-        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-        className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-pro-bg/70 transition-[border-color,box-shadow] duration-500 hover:border-pro-accent/40 hover:shadow-glow"
+      <article
+        className={`group flex h-full flex-col overflow-hidden rounded-2xl border bg-pro-bg/70 transition-colors duration-300 hover:border-pro-accent/40 ${
+          featured ? 'border-pro-accent/25' : 'border-white/10'
+        }`}
       >
-        <motion.div
-          aria-hidden
-          style={{ background: glare }}
-          className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity group-hover:opacity-100"
-        />
-
         {project.image ? (
           // Capture présentée dans une fenêtre de navigateur
-          <div className="p-3 pb-0">
-            <div className="overflow-hidden rounded-t-xl border border-b-0 border-white/10 bg-pro-surface">
-              <div className="flex items-center gap-2 border-b border-white/10 px-4 py-2.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                <span className="ml-3 truncate font-mono text-[11px] text-pro-text/60">
+          <div className="p-2.5 pb-0">
+            <div className="overflow-hidden rounded-t-lg border border-b-0 border-white/10 bg-pro-surface">
+              <div className="flex items-center gap-1.5 border-b border-white/10 px-3 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-white/15" />
+                <span className="h-1.5 w-1.5 rounded-full bg-white/15" />
+                <span className="h-1.5 w-1.5 rounded-full bg-white/15" />
+                <span className="ml-2 truncate font-mono text-[9px] text-pro-text/50">
                   {(project.demoUrl ?? project.githubUrl ?? '').replace(/^https?:\/\//, '')}
                 </span>
               </div>
               <div
-                className={`relative ${featured ? 'aspect-[16/9]' : 'aspect-[16/7]'} ${
+                className={`relative aspect-[16/10] ${
                   project.imageFit === 'contain' ? 'bg-white' : ''
                 }`}
               >
@@ -106,71 +76,67 @@ const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
                   src={project.image}
                   alt={`Aperçu de ${project.title}`}
                   fill
-                  sizes={
-                    featured ? '(min-width: 768px) 660px, 88vw' : '(min-width: 768px) 400px, 80vw'
-                  }
-                  className={`transition-transform duration-700 group-hover:scale-[1.03] ${
+                  sizes="(min-width: 768px) 320px, 80vw"
+                  className={
                     project.imageFit === 'contain'
-                      ? 'object-contain p-3'
+                      ? 'object-contain p-2'
                       : 'object-cover object-top'
-                  }`}
+                  }
                 />
               </div>
             </div>
           </div>
         ) : (
-          <div className={featured ? 'aspect-[16/9]' : 'aspect-[16/7]'}>
+          <div className="aspect-[16/10] p-2.5 pb-0">
             <ProjectVisual number={number} />
           </div>
         )}
 
-        <div className="flex flex-1 flex-col p-6 md:p-8" style={{ transform: 'translateZ(30px)' }}>
-          <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-xs uppercase tracking-[0.15em]">
-            <span className="text-pro-text/60">
+        <div className="flex flex-1 flex-col p-5">
+          <div className="flex items-center justify-between gap-2 font-mono text-[10px] uppercase tracking-[0.12em]">
+            <span className="truncate text-pro-text/55">
               L-{String(number).padStart(2, '0')} · {TYPE_LABEL[project.type]}
             </span>
-            <span className={isLive ? 'text-pro-menthe' : 'text-pro-text/60'}>
-              {isLive ? '● En ligne' : '○ Code source'}
+            <span className={`shrink-0 ${isLive ? 'text-pro-menthe' : 'text-pro-text/55'}`}>
+              {isLive ? '● En ligne' : '○ Code'}
             </span>
           </div>
 
-          <h3
-            className={`mt-4 font-heading font-bold text-pro-text ${
-              featured ? 'text-3xl md:text-4xl' : 'text-2xl'
-            }`}
-          >
+          <h3 className="mt-2.5 font-heading text-lg font-bold leading-snug text-pro-text">
             {project.title}
           </h3>
-          <p
-            className={`mt-4 flex-1 text-pro-text/65 ${
-              featured ? 'text-base md:text-lg' : 'line-clamp-4 text-sm'
-            }`}
-          >
+
+          {/* Hauteur fixe : les cartes restent alignées quelle que soit la longueur du texte. */}
+          <p className="line-clamp-4 mt-2 min-h-[4.9rem] text-[13px] leading-[1.45] text-pro-text/60">
             {project.description}
           </p>
 
-          <p className="mt-5 font-mono text-xs text-pro-accent/80">{project.stack.join('  ·  ')}</p>
+          <p className="line-clamp-1 mt-3 font-mono text-[11px] text-pro-accent/80">
+            {project.stack.join('  ·  ')}
+          </p>
 
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5">
-            <ul className="flex gap-2 font-mono text-xs">
+          {/* flex-wrap : sur un écran très étroit, les liens passent sous les catégories
+              au lieu de déborder de la carte. */}
+          <div className="mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-t border-white/10 pt-3.5">
+            <ul className="flex flex-wrap gap-1.5 font-mono text-[10px]">
               {project.categories.map((category) => (
                 <li
                   key={category}
-                  className="rounded-full border border-pro-lavande/30 px-3 py-1 text-pro-lavande"
+                  className="rounded-full border border-pro-lavande/30 px-2 py-0.5 text-pro-lavande"
                 >
                   {category}
                 </li>
               ))}
             </ul>
-            <div className="relative z-20 flex gap-5 text-sm font-medium">
+            <div className="flex shrink-0 gap-3 text-xs font-medium">
               {project.githubUrl && (
                 <a
                   href={project.githubUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-pro-text/70 transition-colors hover:text-pro-accent"
+                  className="inline-flex items-center gap-1.5 text-pro-text/70 transition-colors hover:text-pro-accent"
                 >
-                  <FaGithub /> Code
+                  <FaGithub size={13} /> Code
                 </a>
               )}
               {project.demoUrl && (
@@ -178,15 +144,15 @@ const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
                   href={project.demoUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-pro-accent transition-colors hover:text-pro-text"
+                  className="inline-flex items-center gap-1.5 text-pro-accent transition-colors hover:text-pro-text"
                 >
-                  <HiOutlineExternalLink /> Voir en ligne
+                  <HiOutlineExternalLink size={13} /> Demo
                 </a>
               )}
             </div>
           </div>
         </div>
-      </motion.article>
+      </article>
     </motion.div>
   );
 });

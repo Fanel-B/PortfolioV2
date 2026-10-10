@@ -16,7 +16,7 @@ export default function SectionHeader({ index, kicker, title, children }: Props)
     <motion.header
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.4 }}
+      viewport={{ once: true, amount: 0.4 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
       <p className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-pro-accent">

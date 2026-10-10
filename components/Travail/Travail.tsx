@@ -31,6 +31,14 @@ export default function Travail() {
     setAtEnd(rail.scrollLeft >= max - 8);
   }, []);
 
+  // Au montage et au redimensionnement : sur un écran assez large pour tout afficher,
+  // il n'y a rien à faire défiler et les deux flèches doivent être éteintes.
+  useEffect(() => {
+    syncArrows();
+    window.addEventListener('resize', syncArrows);
+    return () => window.removeEventListener('resize', syncArrows);
+  }, [syncArrows]);
+
   // Au changement de filtre on revient au début, sinon on reste sur une zone vide.
   useEffect(() => {
     railRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
@@ -125,16 +133,14 @@ export default function Travail() {
         aria-label="Carrousel des projets"
         className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 py-6 [scrollbar-width:none] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-pro-accent/40 md:px-10 lg:px-16 [&::-webkit-scrollbar]:hidden"
       >
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence>
           {projects.map((project) => (
             <ProjectCard
               key={project.title}
               project={project}
               number={profile.projects.indexOf(project) + 1}
               featured={Boolean(project.featured)}
-              className={`shrink-0 snap-start ${
-                project.featured ? 'w-[min(88vw,660px)]' : 'w-[min(80vw,400px)]'
-              }`}
+              className="w-[min(80vw,320px)] shrink-0 snap-start"
             />
           ))}
         </AnimatePresence>

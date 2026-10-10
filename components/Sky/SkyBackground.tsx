@@ -186,7 +186,21 @@ export default function SkyBackground({ side }: Props) {
     };
     tick();
 
+    // Onglet masqué : inutile de rendre 60 images par seconde. getDelta() est
+    // relu au retour pour que les étoiles ne sautent pas de toute la durée d'absence.
+    const onVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(frame);
+        frame = 0;
+      } else if (!frame) {
+        clock.getDelta();
+        frame = requestAnimationFrame(tick);
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
     return () => {
+      document.removeEventListener('visibilitychange', onVisibility);
       cancelAnimationFrame(frame);
       window.removeEventListener('pointermove', onPointerMove);
       document.documentElement.removeEventListener('pointerleave', onPointerLeave);

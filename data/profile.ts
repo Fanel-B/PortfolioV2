@@ -133,7 +133,7 @@ export const profile = {
   outils: [
     {
       categorie: 'Langages',
-      items: ['Python', 'JavaScript', 'Java', 'Kotlin', 'PHP', 'HTML', 'CSS'],
+      items: ['Python', 'JavaScript', 'Java', 'PHP', 'HTML', 'CSS'],
     },
     {
       categorie: 'Frameworks & Librairies',
@@ -149,20 +149,11 @@ export const profile = {
     },
     {
       categorie: 'Outils & Méthodes',
-      items: [
-        'Git / GitHub',
-        'VS Code',
-        'Figma',
-        'Android Studio',
-        'JIRA',
-        'Google Suite',
-        'Tailwind CSS',
-        'Agile / Scrum',
-      ],
+      items: ['Git / GitHub', 'VS Code', 'JIRA', 'Google Suite', 'Tailwind CSS', 'Agile / Scrum'],
     },
   ] as ToolCategory[],
   // Affiche en bas de l'Arsenal : ce qui n'est pas encore un acquis.
-  apprentissages: ['Kotlin', 'Power BI'] as string[],
+  apprentissages: ['Kotlin', 'Android Studio', 'Figma'] as string[],
   projects: [
     {
       title: 'Biblio-Tech — Smart Library Platform',

@@ -35,7 +35,7 @@ function Tile({
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.97 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: false, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
       className={`flex flex-col rounded-3xl border border-perso-accent/10 bg-perso-surface/90 p-6 transition-colors hover:border-perso-accent/30 ${className}`}
     >

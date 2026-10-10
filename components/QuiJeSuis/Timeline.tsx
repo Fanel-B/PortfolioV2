@@ -25,7 +25,7 @@ export default function Timeline({ items }: Props) {
       <motion.span
         initial={{ scaleX: 0, scaleY: 0 }}
         whileInView={{ scaleX: 1, scaleY: 1 }}
-        viewport={{ once: false, amount: 0.5 }}
+        viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 1.4, ease: 'easeInOut' }}
         className="absolute left-[5px] top-2 h-[45%] w-px origin-top bg-gradient-to-b from-pro-accent to-pro-lavande shadow-glow md:left-0 md:top-[5px] md:h-px md:w-1/3 md:origin-left md:bg-gradient-to-r"
       />
@@ -39,7 +39,7 @@ export default function Timeline({ items }: Props) {
               key={item.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.5 }}
+              viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.6, delay: 0.3 + i * 0.25 }}
               className="relative pl-8 md:pl-0 md:pt-10"
             >

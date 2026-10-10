@@ -17,7 +17,7 @@ export default function EpisodeTeaser({ onOpen }: Props) {
       onClick={onOpen}
       initial={{ opacity: 0, y: 40, rotate: -1 }}
       whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-      viewport={{ once: false, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       aria-label="Épisode 02 : découvrir l'humain derrière le code"
       className="group relative block w-full overflow-hidden border-[3px] border-perso-text bg-perso-bg text-left shadow-[10px_10px_0_#F2B880] transition-[transform,box-shadow] duration-300 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[16px_16px_0_#F2B880] active:translate-x-0 active:translate-y-0 active:shadow-[4px_4px_0_#F2B880]"
