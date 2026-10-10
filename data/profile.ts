@@ -86,17 +86,19 @@ export const profile = {
   mobility: 'Toulouse · mobile à Paris / Île-de-France',
   formation: 'L3 MIAGE · Université de Toulouse',
   languages: 'Français (langue maternelle) · Anglais (professionnel)',
-  search:
-    'Alternance dès que possible, ou stage de 4 à 6 mois (au plus tard à partir de mars 2027)',
+  search: 'Alternance dès que possible, ou stage de 4 à 5 mois à partir du 29 mars 2027',
   contact: {
     github: 'https://github.com/Fanel-B',
     linkedin: 'https://www.linkedin.com/in/fanel-balemo-4479372aa',
+    /** Adresse principale : celle du bouton « copier » et des métadonnées du site. */
     email: 'fanel.balemo@gmail.com',
+    /** Adresse universitaire, proposée en second dans le pied de page. */
+    emailAcademique: 'fanel.balemoyangbanda@toulouse.miage.fr',
   },
   bio: [
     "Bienvenue — vous êtes sur mon coin d'internet.",
     "Je suis Fanel Balemo, étudiant en L3 MIAGE à l'Université de Toulouse, une formation qui allie compréhension des besoins métier et développement de solutions techniques. J'aime autant comprendre les données que construire les outils qui les exploitent : plusieurs de mes projets (API, bases de données, tableaux de bord) sont déployés en ligne.",
-    'En ce moment : je recherche une alternance dès que possible — ou, à défaut, un stage de 4 à 6 mois — comme Développeur Full Stack ou Data Analyst, à Toulouse ou en Île-de-France.',
+    'En ce moment : je recherche une alternance dès que possible — ou, à défaut, un stage de 4 à 5 mois à partir du 29 mars 2027 — comme Développeur Full Stack ou Data Analyst, à Toulouse ou en Île-de-France.',
   ],
   timeline: [
     {

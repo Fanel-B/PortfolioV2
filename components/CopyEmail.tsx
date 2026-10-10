@@ -9,18 +9,21 @@ interface Props {
   className?: string;
   /** Contenu du bouton ; par défaut, une icône d'enveloppe. */
   children?: ReactNode;
+  /** Adresse à copier ; par défaut l'adresse principale du profil. */
+  email?: string;
 }
 
-export default function CopyEmail({ className = '', children }: Props) {
+export default function CopyEmail({ className = '', children, email }: Props) {
   const [copied, setCopied] = useState(false);
+  const address = email ?? profile.contact.email;
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(profile.contact.email);
+      await navigator.clipboard.writeText(address);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      window.location.href = `mailto:${profile.contact.email}`;
+      window.location.href = `mailto:${address}`;
     }
   };
 
@@ -28,8 +31,8 @@ export default function CopyEmail({ className = '', children }: Props) {
     <button
       type="button"
       onClick={copy}
-      aria-label={`Copier mon email (${profile.contact.email})`}
-      title={profile.contact.email}
+      aria-label={`Copier mon email (${address})`}
+      title={address}
       className={`relative ${className}`}
     >
       {children ?? (copied ? <FaCheck size={18} /> : <FaRegEnvelope size={20} />)}

@@ -34,6 +34,23 @@ export default function Footer() {
           </span>
         </CopyEmail>
 
+        {/* Seconde adresse : celle du CV, pour les échanges passant par l'université. */}
+        <CopyEmail
+          email={profile.contact.emailAcademique}
+          className="group mt-8 block w-full text-left"
+        >
+          <span className="block font-mono text-xs uppercase tracking-[0.25em] text-pro-text/60">
+            Ou mon adresse universitaire
+          </span>
+          <span className="mt-2 flex items-center gap-3 font-mono text-sm text-pro-text/70 transition-colors [overflow-wrap:anywhere] group-hover:text-pro-accent md:text-base">
+            {profile.contact.emailAcademique}
+            <HiArrowRight
+              size={14}
+              className="hidden shrink-0 transition-transform group-hover:translate-x-2 md:block"
+            />
+          </span>
+        </CopyEmail>
+
         <div className="mt-24 flex flex-col gap-6 border-t border-white/10 pt-8 font-mono text-xs uppercase tracking-[0.2em] text-pro-text/60 md:flex-row md:items-center md:justify-between">
           <span>
             © {new Date().getFullYear()} {profile.name} · Construit sous un ciel étoilé
