@@ -37,7 +37,7 @@ On passe de l'un à l'autre en retournant la page comme une carte.
 
 ## Lancer le projet
 
-Prérequis : [Bun](https://bun.sh/) (ou Node.js 20 et npm).
+Prérequis : [Bun](https://bun.sh/) (ou Node.js 24 et npm, comme le demande `engines.node` dans `package.json`).
 
 ```bash
 git clone https://github.com/Fanel-B/PortfolioV2.git

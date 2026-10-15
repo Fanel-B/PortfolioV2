@@ -15,6 +15,8 @@ export interface Project {
   imageFit?: 'cover' | 'contain';
   /** Projet mis en avant : carte plus large, placée en tête du carrousel. */
   featured?: boolean;
+  /** Statut particulier, affiché sur la carte à la place de l'indicateur « En ligne ». */
+  status?: 'amelioration';
 }
 
 export interface TimelineItem {
@@ -168,17 +170,6 @@ export const profile = {
       featured: true,
     },
     {
-      title: 'JobBot Alternance',
-      description:
-        "Assistant de recherche d'alternance propulsé par l'API Claude (Anthropic) : génère des offres réalistes, note chaque offre sur 100 selon l'adéquation avec mon profil, adapte un CV en un clic, et centralise le suivi des candidatures avec export CSV. Intégration complète frontend → API → traitement du JSON.",
-      type: 'perso',
-      categories: ['Web', 'IA'],
-      stack: ['React', 'JavaScript', 'API Anthropic', 'Vite'],
-      githubUrl: 'https://github.com/Fanel-B/jobbot',
-      demoUrl: 'https://jobbot-orcin.vercel.app',
-      image: '/static/images/projects/jobbot.jpg',
-    },
-    {
       title: 'Insertion professionnelle des diplômés MIAGE',
       description:
         "Analyse de l'insertion professionnelle des diplômés MIAGE en France à partir des données officielles du ministère (~1 million de lignes, data.esr.gouv.fr) : nettoyage, structuration, puis statistiques et visualisations comparatives. Résultat : la ville de formation influence surtout le salaire, et la filière performe mieux que la moyenne des diplômes en informatique.",
@@ -214,6 +205,18 @@ export const profile = {
       image: '/static/images/projects/techscope.png',
       imageFit: 'contain',
       featured: true,
+    },
+    {
+      title: 'JobBot Alternance',
+      description:
+        "Prototype React branché sur l'API Anthropic : l'IA inventait des offres d'alternance, les notait sur 100 selon mon profil et adaptait un CV en un clic. Les offres n'ont jamais été collectées depuis de vraies sources, c'était un terrain d'essai sur l'enchaînement frontend → API → traitement du JSON. Le site affiche aujourd'hui une page de maintenance, et une version s'appuyant sur des APIs officielles est en préparation.",
+      type: 'perso',
+      categories: ['Web', 'IA'],
+      stack: ['React', 'JavaScript', 'API Anthropic', 'Vite'],
+      githubUrl: 'https://github.com/Fanel-B/jobbot',
+      demoUrl: 'https://jobbot-orcin.vercel.app',
+      image: '/static/images/projects/jobbot.jpg',
+      status: 'amelioration',
     },
   ] as Project[],
   // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir »

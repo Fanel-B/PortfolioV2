@@ -39,6 +39,9 @@ const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
   ref
 ) {
   const isLive = Boolean(project.demoUrl);
+  // Un projet en amélioration reste en ligne, mais le vert de « En ligne » laisserait
+  // croire qu'il est pleinement fonctionnel.
+  const isImproving = project.status === 'amelioration';
 
   return (
     <motion.div
@@ -97,8 +100,12 @@ const ProjectCard = forwardRef<HTMLDivElement, Props>(function ProjectCard(
             <span className="truncate text-pro-text/55">
               L-{String(number).padStart(2, '0')} · {TYPE_LABEL[project.type]}
             </span>
-            <span className={`shrink-0 ${isLive ? 'text-pro-menthe' : 'text-pro-text/55'}`}>
-              {isLive ? '● En ligne' : '○ Code'}
+            <span
+              className={`shrink-0 ${
+                isImproving ? 'text-pro-lavande' : isLive ? 'text-pro-menthe' : 'text-pro-text/55'
+              }`}
+            >
+              {isImproving ? '◐ En amélioration' : isLive ? '● En ligne' : '○ Code'}
             </span>
           </div>
 
