@@ -1,5 +1,6 @@
 'use client';
 
+import CarteDuCiel from '@/components/CarteDuCiel/CarteDuCiel';
 import CvModal from '@/components/CvModal';
 import FloatingSun from '@/components/FloatingSun';
 import Footer from '@/components/Footer';
@@ -54,6 +55,7 @@ export default function Page() {
               <QuiJeSuis />
               <Outils />
               <Travail />
+              <CarteDuCiel />
               {/* Comme dans un anime : l'aperçu du prochain épisode arrive à la fin de celui-ci. */}
               <section id="prochain-episode" className={`${container} pb-28 pt-8 md:pb-40`}>
                 <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-pro-text/60">
