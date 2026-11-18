@@ -2,8 +2,10 @@
 
 import { Project } from '@/data/profile';
 import { motion } from 'framer-motion';
+import { statusOf } from '@/lib/projectStatus';
+import Link from 'next/link';
 import { useEffect, useRef } from 'react';
-import { FaGithub, HiOutlineExternalLink, HiX } from '@/lib/icons';
+import { FaGithub, HiArrowRight, HiOutlineExternalLink, HiX } from '@/lib/icons';
 
 interface Props {
   project: Project;
@@ -12,18 +14,6 @@ interface Props {
 }
 
 export const PANEL_ID = 'carte-du-ciel-panneau';
-
-// Même logique que la carte projet : un projet en amélioration n'est pas affiché « en ligne »,
-// même s'il a une démo, pour ne pas laisser croire qu'il est pleinement fonctionnel.
-export function statusOf(project: Project) {
-  if (project.status === 'amelioration') {
-    return { label: 'en amélioration', symbol: '◐', color: 'text-pro-lavande' };
-  }
-  if (project.demoUrl) {
-    return { label: 'en ligne', symbol: '●', color: 'text-pro-menthe' };
-  }
-  return { label: 'code source', symbol: '○', color: 'text-pro-text/55' };
-}
 
 // Fiche d'un projet, ouverte au clic sur son étoile.
 export default function ProjectPanel({ project, number, onClose }: Props) {
@@ -108,17 +98,13 @@ export default function ProjectPanel({ project, number, onClose }: Props) {
             <HiOutlineExternalLink size={14} /> Démo
           </a>
         )}
-        {/* Les pages projet arrivent à l'étape suivante : le bouton est visible mais inactif. */}
-        <button
-          type="button"
-          disabled
-          className="inline-flex cursor-not-allowed items-center gap-2 rounded-full border border-dashed border-white/15 px-4 py-2 text-pro-text/45"
+        <Link
+          href={`/projets/${project.slug}`}
+          className="group inline-flex items-center gap-2 rounded-full border border-pro-menthe/40 px-4 py-2 text-pro-menthe transition-colors hover:bg-pro-menthe hover:text-pro-bg"
         >
-          Voir l&apos;étude de cas
-          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-pro-lavande/80">
-            bientôt
-          </span>
-        </button>
+          Voir le projet
+          <HiArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+        </Link>
       </div>
     </motion.div>
   );

@@ -2,6 +2,8 @@ export type ProjectType = 'perso' | 'academique' | 'pro';
 export type ProjectCategory = 'Web' | 'Data' | 'IA';
 
 export interface Project {
+  /** Identifiant dans l'adresse de la page projet : /projets/[slug]. */
+  slug: string;
   title: string;
   description: string;
   type: ProjectType;
@@ -158,7 +160,8 @@ export const profile = {
   apprentissages: ['Kotlin', 'Android Studio', 'Figma'] as string[],
   projects: [
     {
-      title: 'Biblio-Tech — Smart Library Platform',
+      slug: 'biblio-tech',
+      title: 'Biblio-Tech : Smart Library Platform',
       description:
         "Plateforme de bibliothèque complète, développée à partir d'un cahier des charges fonctionnel : catalogue, emprunts, réservations de salles, recommandations et tableaux de bord analytiques en SQL natif. API REST Express et base PostgreSQL en architecture en couches, authentification JWT / bcrypt avec gestion des rôles, et une couche IoT simulée (capteurs, alertes, automatisations SI → ALORS) pilotable en temps réel.",
       type: 'academique',
@@ -167,9 +170,9 @@ export const profile = {
       githubUrl: 'https://github.com/Fanel-B/bibliotheque1',
       demoUrl: 'https://bibliotheque1.vercel.app',
       image: '/static/images/projects/biblio-tech.jpg',
-      featured: true,
     },
     {
+      slug: 'miage-insertion-pro',
       title: 'Insertion professionnelle des diplômés MIAGE',
       description:
         "Analyse de l'insertion professionnelle des diplômés MIAGE en France à partir des données officielles du ministère (~1 million de lignes, data.esr.gouv.fr) : nettoyage, structuration, puis statistiques et visualisations comparatives. Résultat : la ville de formation influence surtout le salaire, et la filière performe mieux que la moyenne des diplômes en informatique.",
@@ -182,6 +185,7 @@ export const profile = {
       imageFit: 'contain',
     },
     {
+      slug: 'sources-alternance',
       title: "Qualité des sources d'offres d'alternance IT",
       description:
         "Analyse de 276 offres collectées par un pipeline de veille que j'exploite sur un VPS (alertes mail LinkedIn, API France Travail, API La Bonne Alternance). Le sujet n'est pas le marché mais la qualité des sources : couverture, complétude, fiabilité. L'analyse s'ouvre sur cinq contrôles de cohérence, dont deux échouent et corrigent la lecture de la suite. 97 % des offres toulousaines dépendent d'une source unique, et 115 des 120 rejets étiquetés « inéligible » sont en fait un type de contrat jamais fourni par la source.",
@@ -194,7 +198,8 @@ export const profile = {
       imageFit: 'contain',
     },
     {
-      title: "TechScope — pilotage et qualité d'un parc IT",
+      slug: 'techscope',
+      title: "TechScope : pilotage et qualité d'un parc IT",
       description:
         'Pipeline qui part de quatre sources de formats différents (JSON, SQLite, deux CSV), leur applique six contrôles qualité, puis alimente un dashboard Power BI. Chaque ligne rejetée est tracée avec sa source et la règle violée, et les indicateurs ne sont calculés que sur les données validées : sur le jeu de démonstration, 12 anomalies sont détectées et 10 lignes écartées sur 113. Le tableau de bord fait ressortir deux services sans redondance et près de 340 licences payées mais inutilisées.',
       type: 'perso',
@@ -207,6 +212,7 @@ export const profile = {
       featured: true,
     },
     {
+      slug: 'jobbot',
       title: 'JobBot Alternance',
       description:
         "Prototype React branché sur l'API Anthropic : l'IA inventait des offres d'alternance, les notait sur 100 selon mon profil et adaptait un CV en un clic. Les offres n'ont jamais été collectées depuis de vraies sources, c'était un terrain d'essai sur l'enchaînement frontend → API → traitement du JSON. Le site affiche aujourd'hui une page de maintenance, et une version s'appuyant sur des APIs officielles est en préparation.",
@@ -217,6 +223,7 @@ export const profile = {
       demoUrl: 'https://jobbot-orcin.vercel.app',
       image: '/static/images/projects/jobbot.jpg',
       status: 'amelioration',
+      featured: true,
     },
   ] as Project[],
   // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir »

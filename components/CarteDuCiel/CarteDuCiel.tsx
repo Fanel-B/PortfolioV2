@@ -1,11 +1,12 @@
 'use client';
 
 import SectionHeader from '@/components/SectionHeader';
-import { profile } from '@/data/profile';
+import { profile, ProjectCategory } from '@/data/profile';
+import { statusOf } from '@/lib/projectStatus';
 import { container } from '@/lib/ui';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import ProjectPanel, { PANEL_ID, statusOf } from './ProjectPanel';
+import ProjectPanel, { PANEL_ID } from './ProjectPanel';
 
 // Repère du dessin : les positions ci-dessous sont exprimées dans ce cadre.
 const VIEW = { width: 300, height: 180 };
@@ -28,9 +29,14 @@ const LINKS: [number, number][] = [
   [3, 4],
 ];
 
+type Filter = 'Tous' | ProjectCategory;
+const FILTERS: Filter[] = ['Tous', 'Web', 'Data', 'IA'];
+
 const MINT = '#9EE6CF';
 const ACCENT = '#8ECDF8';
 const STAR = '#EAF4FF';
+// Opacité d'une étoile écartée par le filtre : encore visible, mais en retrait.
+const DIMMED = 0.2;
 
 // Seuls les projets qui ont une position sont dessinés ; la liste mobile les montre tous.
 const projects = profile.projects;
@@ -50,10 +56,12 @@ function useIsDesktop() {
   return desktop;
 }
 
+// Section Lancements : les projets dessinés en constellation.
 export default function CarteDuCiel() {
   // hovered : étoile survolée ou ciblée au clavier. selected : étoile dont la fiche est ouverte.
   const [hovered, setHovered] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
+  const [filter, setFilter] = useState<Filter>('Tous');
   const isDesktop = useIsDesktop();
 
   // Le serveur ne connaît pas la préférence du visiteur. On la lit seulement après le chargement,
@@ -69,6 +77,11 @@ export default function CarteDuCiel() {
 
   const lit = hovered ?? selected;
   const legendProject = lit !== null ? projects[lit] : null;
+
+  // Un projet hors filtre reste affiché, en retrait. Survolé ou ouvert, il reprend tout son éclat.
+  const matches = (i: number) => filter === 'Tous' || projects[i].categories.includes(filter);
+  const dimmed = (i: number) => !matches(i) && lit !== i;
+  const visibleCount = projects.filter((_, i) => matches(i)).length;
 
   const open = (index: number, trigger: HTMLElement) => {
     triggerRef.current = trigger;
@@ -106,20 +119,50 @@ export default function CarteDuCiel() {
   );
 
   return (
-    <section id="carte-du-ciel" className="scroll-mt-24 py-20 md:py-28">
+    <section id="lancements" className="scroll-mt-24 py-28 md:py-40">
       <div className={container}>
-        <SectionHeader
-          index="03 bis"
-          kicker="Carte du ciel"
-          title={
-            <>
-              Tous mes projets, <br className="hidden md:block" />
-              <span className="text-pro-accent">reliés dans le même ciel.</span>
-            </>
-          }
-        >
-          Chaque étoile est un projet. Les plus brillantes sont ceux que je mets en avant.
-        </SectionHeader>
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+          <SectionHeader
+            index="03"
+            kicker="Lancements"
+            title={
+              <>
+                Les projets que j&apos;ai <span className="text-pro-accent">mis en orbite.</span>
+              </>
+            }
+          />
+
+          {/* data-carte-trigger : changer de filtre ne ferme pas la fiche ouverte. */}
+          <div
+            role="group"
+            aria-label="Filtrer les projets"
+            data-carte-trigger
+            className="flex w-fit gap-1 rounded-full border border-white/10 bg-pro-bg/60 p-1 font-mono text-sm"
+          >
+            <LayoutGroup id="filters">
+              {FILTERS.map((f) => (
+                <button
+                  key={f}
+                  type="button"
+                  aria-pressed={filter === f}
+                  onClick={() => setFilter(f)}
+                  className={`relative rounded-full px-5 py-2 transition-colors ${
+                    filter === f ? 'text-pro-bg' : 'text-pro-text/60 hover:text-pro-text'
+                  }`}
+                >
+                  {filter === f && (
+                    <motion.span
+                      layoutId="filter-pill"
+                      className="absolute inset-0 rounded-full bg-pro-accent shadow-glow"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative">{f}</span>
+                </button>
+              ))}
+            </LayoutGroup>
+          </div>
+        </div>
 
         <div className="mt-14 grid grid-cols-1 items-start gap-10 md:grid-cols-12 md:gap-12">
           <figure className="relative mx-auto w-full max-w-sm select-none md:col-span-7 md:max-w-none">
@@ -132,6 +175,8 @@ export default function CarteDuCiel() {
                 {LINKS.filter(([from, to]) => from < starCount && to < starCount).map(
                   ([from, to], i) => {
                     const on = lit === from || lit === to;
+                    // Un trait s'efface dès qu'une de ses deux étoiles est écartée par le filtre.
+                    const faded = dimmed(from) || dimmed(to);
                     const a = POSITIONS[from];
                     const b = POSITIONS[to];
                     return (
@@ -143,7 +188,8 @@ export default function CarteDuCiel() {
                         y2={b.y}
                         stroke={ACCENT}
                         strokeWidth={on ? 0.9 : 0.5}
-                        strokeOpacity={on ? 0.9 : 0.35}
+                        strokeOpacity={on ? 0.9 : faded ? 0.1 : 0.35}
+                        style={{ transition: 'stroke-opacity 0.3s ease-out' }}
                         initial={{ pathLength: 0 }}
                         whileInView={{ pathLength: 1 }}
                         viewport={{ once: true, amount: 0.4 }}
@@ -162,43 +208,49 @@ export default function CarteDuCiel() {
                   const big = Boolean(project.featured);
                   const on = lit === i;
                   return (
-                    <motion.g
-                      key={project.title}
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true, amount: 0.4 }}
-                      transition={
-                        reduceMotion
-                          ? { duration: 0 }
-                          : { delay: 0.2 + i * 0.08, type: 'spring', stiffness: 300, damping: 15 }
-                      }
-                      style={{ transformOrigin: `${x}px ${y}px` }}
+                    // Groupe extérieur : atténuation par le filtre. Groupe intérieur : apparition.
+                    <g
+                      key={project.slug}
+                      opacity={dimmed(i) ? DIMMED : 1}
+                      style={{ transition: 'opacity 0.3s ease-out' }}
                     >
-                      {/* Halo : un simple cercle translucide, moins coûteux qu'un filtre de flou */}
-                      <circle
-                        cx={x}
-                        cy={y}
-                        r={on ? (big ? 10 : 7.5) : big ? 8 : 5}
-                        fill={on ? MINT : ACCENT}
-                        fillOpacity={big ? 0.22 : 0.16}
-                      />
-                      <circle
-                        cx={x}
-                        cy={y}
-                        r={on ? (big ? 4.2 : 3.2) : big ? 3.4 : 2}
-                        fill={on ? MINT : STAR}
+                      <motion.g
+                        initial={{ opacity: 0, scale: 0 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true, amount: 0.4 }}
+                        transition={
+                          reduceMotion
+                            ? { duration: 0 }
+                            : { delay: 0.2 + i * 0.08, type: 'spring', stiffness: 300, damping: 15 }
+                        }
+                        style={{ transformOrigin: `${x}px ${y}px` }}
                       >
-                        {/* Scintillement : coupé quand l'utilisateur demande moins d'animations. */}
-                        {!reduceMotion && (
-                          <animate
-                            attributeName="opacity"
-                            values="1;0.55;1"
-                            dur={`${2.5 + (i % 5) * 0.7}s`}
-                            repeatCount="indefinite"
-                          />
-                        )}
-                      </circle>
-                    </motion.g>
+                        {/* Halo : un simple cercle translucide, moins coûteux qu'un filtre de flou */}
+                        <circle
+                          cx={x}
+                          cy={y}
+                          r={on ? (big ? 10 : 7.5) : big ? 8 : 5}
+                          fill={on ? MINT : ACCENT}
+                          fillOpacity={big ? 0.22 : 0.16}
+                        />
+                        <circle
+                          cx={x}
+                          cy={y}
+                          r={on ? (big ? 4.2 : 3.2) : big ? 3.4 : 2}
+                          fill={on ? MINT : STAR}
+                        >
+                          {/* Scintillement : coupé quand l'utilisateur demande moins d'animations. */}
+                          {!reduceMotion && (
+                            <animate
+                              attributeName="opacity"
+                              values="1;0.55;1"
+                              dur={`${2.5 + (i % 5) * 0.7}s`}
+                              repeatCount="indefinite"
+                            />
+                          )}
+                        </circle>
+                      </motion.g>
+                    </g>
                   );
                 })}
               </svg>
@@ -207,7 +259,7 @@ export default function CarteDuCiel() {
                   focus clavier, Entrée et Espace fonctionnent sans code en plus. */}
               {projects.slice(0, starCount).map((project, i) => (
                 <button
-                  key={project.title}
+                  key={project.slug}
                   type="button"
                   data-cursor
                   data-carte-trigger
@@ -245,7 +297,8 @@ export default function CarteDuCiel() {
               ) : (
                 <span className="flex flex-wrap justify-between gap-x-4 gap-y-1 text-pro-text/60">
                   <span>
-                    Carte du ciel · {projects.length} projet{projects.length > 1 ? 's' : ''}
+                    {visibleCount} projet{visibleCount > 1 ? 's' : ''}
+                    {filter !== 'Tous' && ` · ${filter}`}
                   </span>
                   <span className="text-pro-accent/70">
                     <span className="hidden md:inline">Survolez ou cliquez une étoile</span>
@@ -275,12 +328,18 @@ export default function CarteDuCiel() {
             </AnimatePresence>
           </div>
 
-          {/* Mobile : au doigt, le survol n'existe pas. Une liste simple, avec la fiche sous le projet choisi. */}
+          {/* Mobile : au doigt, le survol n'existe pas. Une liste simple ; la fiche s'ouvre sous
+              le projet choisi, avec le lien vers sa page. */}
           <ol className="divide-y divide-white/10 border-y border-white/10 md:hidden">
             {projects.map((project, i) => {
               const status = statusOf(project);
               return (
-                <li key={project.title}>
+                <li
+                  key={project.slug}
+                  className={`transition-opacity duration-300 ${
+                    matches(i) || selected === i ? '' : 'opacity-40'
+                  }`}
+                >
                   <button
                     type="button"
                     data-carte-trigger

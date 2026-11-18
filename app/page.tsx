@@ -13,7 +13,6 @@ import QuiJeSuis from '@/components/QuiJeSuis/QuiJeSuis';
 import ScrollProgress from '@/components/ScrollProgress';
 import type { Side } from '@/components/Sky/SkyBackground';
 import TargetCursor from '@/components/TargetCursor';
-import Travail from '@/components/Travail/Travail';
 import { container } from '@/lib/ui';
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { useCallback, useState } from 'react';
@@ -54,7 +53,6 @@ export default function Page() {
               <Hero onOpenCv={openCv} />
               <QuiJeSuis />
               <Outils />
-              <Travail />
               <CarteDuCiel />
               {/* Comme dans un anime : l'aperçu du prochain épisode arrive à la fin de celui-ci. */}
               <section id="prochain-episode" className={`${container} pb-28 pt-8 md:pb-40`}>
