@@ -1,12 +1,13 @@
 import ProjetBackdrop from '@/components/Projet/ProjetBackdrop';
+import RetourLancements, { RetourLancementsLink } from '@/components/Projet/RetourLancements';
 import { profile } from '@/data/profile';
-import { FaGithub, HiOutlineArrowLeft, HiOutlineExternalLink } from '@/lib/icons';
+import { FaGithub, HiOutlineExternalLink } from '@/lib/icons';
 import { statusOf } from '@/lib/projectStatus';
 import { container } from '@/lib/ui';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
 interface Props {
   params: { slug: string };
@@ -45,12 +46,10 @@ export default function ProjetPage({ params }: Props) {
       <main className={`${container} pb-28 pt-12 md:pt-20`}>
         {/* Largeur de lecture : environ 70 caractères par ligne pour la description. */}
         <div className="max-w-4xl">
-          <Link
-            href="/#lancements"
-            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-pro-text/60 transition-colors hover:text-pro-accent"
-          >
-            <HiOutlineArrowLeft size={14} /> Retour aux lancements
-          </Link>
+          {/* En attendant que le navigateur lise le parcours, le lien ramène sur « Tout ». */}
+          <Suspense fallback={<RetourLancementsLink />}>
+            <RetourLancements />
+          </Suspense>
 
           <header className="mt-12">
             <p className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.2em]">

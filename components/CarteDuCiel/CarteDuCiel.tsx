@@ -2,10 +2,12 @@
 
 import SectionHeader from '@/components/SectionHeader';
 import { profile, ProjectCategory } from '@/data/profile';
+import { isVedette, parseParcours, PARCOURS_CHOICES, ParcoursChoice } from '@/lib/parcours';
 import { statusOf } from '@/lib/projectStatus';
 import { container } from '@/lib/ui';
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'framer-motion';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import ProjectPanel, { PANEL_ID } from './ProjectPanel';
 
 // Repère du dessin : les positions ci-dessous sont exprimées dans ce cadre.
@@ -37,6 +39,8 @@ const ACCENT = '#8ECDF8';
 const STAR = '#EAF4FF';
 // Opacité d'une étoile écartée par le filtre : encore visible, mais en retrait.
 const DIMMED = 0.2;
+// Passage d'un parcours à l'autre : taille et éclat des étoiles changent en douceur.
+const PARCOURS_DURATION = 0.6;
 
 // Seuls les projets qui ont une position sont dessinés ; la liste mobile les montre tous.
 const projects = profile.projects;
@@ -57,7 +61,58 @@ function useIsDesktop() {
 }
 
 // Section Lancements : les projets dessinés en constellation.
+// Le parcours choisi vit dans l'adresse (/?parcours=data), pour qu'un lien partagé l'ouvre tel quel.
 export default function CarteDuCiel() {
+  // Pendant la génération statique de la page, l'adresse n'existe pas encore : Next affiche
+  // le contenu de secours (la section sur « Tout »), puis le navigateur lit l'adresse.
+  return (
+    <Suspense fallback={<Lancements parcours="tout" />}>
+      <LancementsSelonAdresse />
+    </Suspense>
+  );
+}
+
+function LancementsSelonAdresse() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const fromUrl = parseParcours(searchParams.get('parcours'));
+
+  // Copie locale : le clic change l'affichage tout de suite, sans attendre la navigation.
+  // Elle suit l'adresse quand celle-ci change (bouton Précédent, lien partagé).
+  const [parcours, setParcours] = useState<ParcoursChoice>(fromUrl);
+  useEffect(() => setParcours(fromUrl), [fromUrl]);
+
+  const change = (choice: ParcoursChoice) => {
+    setParcours(choice);
+    const params = new URLSearchParams(searchParams.toString());
+    if (choice === 'tout') params.delete('parcours');
+    else params.set('parcours', choice);
+    const query = params.toString();
+    // replace et non push : changer de parcours n'ajoute pas d'étape au bouton Précédent.
+    router.replace(query ? `${pathname}?${query}` : pathname);
+  };
+
+  // Arrivée par un lien avec un parcours : on descend jusqu'à la section, une seule fois.
+  useEffect(() => {
+    if (fromUrl === 'tout') return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document
+      .getElementById('lancements')
+      ?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return <Lancements parcours={parcours} onParcoursChange={change} />;
+}
+
+interface LancementsProps {
+  parcours: ParcoursChoice;
+  /** Absent dans le contenu de secours : le sélecteur reste inactif le temps du chargement. */
+  onParcoursChange?: (choice: ParcoursChoice) => void;
+}
+
+function Lancements({ parcours, onParcoursChange }: LancementsProps) {
   // hovered : étoile survolée ou ciblée au clavier. selected : étoile dont la fiche est ouverte.
   const [hovered, setHovered] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
@@ -82,6 +137,12 @@ export default function CarteDuCiel() {
   const matches = (i: number) => filter === 'Tous' || projects[i].categories.includes(filter);
   const dimmed = (i: number) => !matches(i) && lit !== i;
   const visibleCount = projects.filter((_, i) => matches(i)).length;
+  const vedette = (i: number) => isVedette(projects[i], parcours);
+
+  // Liste mobile : les vedettes du parcours en tête, puis l'ordre du fichier.
+  const mobileOrder = projects
+    .map((_, i) => i)
+    .sort((a, b) => Number(vedette(b)) - Number(vedette(a)));
 
   const open = (index: number, trigger: HTMLElement) => {
     triggerRef.current = trigger;
@@ -114,7 +175,12 @@ export default function CarteDuCiel() {
 
   const panel = (index: number) => (
     <div ref={panelRef}>
-      <ProjectPanel project={projects[index]} number={index + 1} onClose={() => close(true)} />
+      <ProjectPanel
+        project={projects[index]}
+        number={index + 1}
+        parcours={parcours}
+        onClose={() => close(true)}
+      />
     </div>
   );
 
@@ -132,35 +198,76 @@ export default function CarteDuCiel() {
             }
           />
 
-          {/* data-carte-trigger : changer de filtre ne ferme pas la fiche ouverte. */}
-          <div
-            role="group"
-            aria-label="Filtrer les projets"
-            data-carte-trigger
-            className="flex w-fit gap-1 rounded-full border border-white/10 bg-pro-bg/60 p-1 font-mono text-sm"
-          >
-            <LayoutGroup id="filters">
-              {FILTERS.map((f) => (
-                <button
-                  key={f}
-                  type="button"
-                  aria-pressed={filter === f}
-                  onClick={() => setFilter(f)}
-                  className={`relative rounded-full px-5 py-2 transition-colors ${
-                    filter === f ? 'text-pro-bg' : 'text-pro-text/60 hover:text-pro-text'
-                  }`}
-                >
-                  {filter === f && (
-                    <motion.span
-                      layoutId="filter-pill"
-                      className="absolute inset-0 rounded-full bg-pro-accent shadow-glow"
-                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative">{f}</span>
-                </button>
-              ))}
-            </LayoutGroup>
+          {/* data-carte-trigger : changer de parcours ou de filtre ne ferme pas la fiche ouverte. */}
+          <div className="flex flex-col gap-3 lg:items-end">
+            <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-3">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-pro-text/45 sm:w-16 lg:text-right">
+                Parcours
+              </span>
+              <div
+                role="group"
+                aria-label="Choisir un parcours"
+                data-carte-trigger
+                className="flex w-fit gap-1 rounded-full border border-white/10 bg-pro-bg/60 p-1 font-mono text-sm"
+              >
+                <LayoutGroup id="parcours">
+                  {PARCOURS_CHOICES.map(({ value, label }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      aria-pressed={parcours === value}
+                      onClick={() => onParcoursChange?.(value)}
+                      className={`relative rounded-full px-5 py-2 transition-colors ${
+                        parcours === value ? 'text-pro-bg' : 'text-pro-text/60 hover:text-pro-text'
+                      }`}
+                    >
+                      {parcours === value && (
+                        <motion.span
+                          layoutId="parcours-pill"
+                          className="absolute inset-0 rounded-full bg-pro-accent shadow-glow"
+                          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                        />
+                      )}
+                      <span className="relative">{label}</span>
+                    </button>
+                  ))}
+                </LayoutGroup>
+              </div>
+            </div>
+            <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-3">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-pro-text/45 sm:w-16 lg:text-right">
+                Filtre
+              </span>
+              <div
+                role="group"
+                aria-label="Filtrer les projets"
+                data-carte-trigger
+                className="flex w-fit gap-1 rounded-full border border-white/10 bg-pro-bg/60 p-1 font-mono text-sm"
+              >
+                <LayoutGroup id="filters">
+                  {FILTERS.map((f) => (
+                    <button
+                      key={f}
+                      type="button"
+                      aria-pressed={filter === f}
+                      onClick={() => setFilter(f)}
+                      className={`relative rounded-full px-5 py-2 transition-colors ${
+                        filter === f ? 'text-pro-bg' : 'text-pro-text/60 hover:text-pro-text'
+                      }`}
+                    >
+                      {filter === f && (
+                        <motion.span
+                          layoutId="filter-pill"
+                          className="absolute inset-0 rounded-full bg-pro-accent shadow-glow"
+                          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                        />
+                      )}
+                      <span className="relative">{f}</span>
+                    </button>
+                  ))}
+                </LayoutGroup>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -205,8 +312,11 @@ export default function CarteDuCiel() {
 
                 {projects.slice(0, starCount).map((project, i) => {
                   const { x, y } = POSITIONS[i];
-                  const big = Boolean(project.featured);
+                  const big = vedette(i);
                   const on = lit === i;
+                  const grow = reduceMotion
+                    ? { duration: 0 }
+                    : { duration: PARCOURS_DURATION, ease: [0.22, 1, 0.36, 1] };
                   return (
                     // Groupe extérieur : atténuation par le filtre. Groupe intérieur : apparition.
                     <g
@@ -225,30 +335,43 @@ export default function CarteDuCiel() {
                         }
                         style={{ transformOrigin: `${x}px ${y}px` }}
                       >
-                        {/* Halo : un simple cercle translucide, moins coûteux qu'un filtre de flou */}
-                        <circle
-                          cx={x}
-                          cy={y}
-                          r={on ? (big ? 10 : 7.5) : big ? 8 : 5}
-                          fill={on ? MINT : ACCENT}
-                          fillOpacity={big ? 0.22 : 0.16}
-                        />
-                        <circle
-                          cx={x}
-                          cy={y}
-                          r={on ? (big ? 4.2 : 3.2) : big ? 3.4 : 2}
-                          fill={on ? MINT : STAR}
+                        {/* Survol : léger grossissement, plus rapide que le changement de parcours. */}
+                        <g
+                          style={{
+                            transform: `scale(${on ? (big ? 1.2 : 1.5) : 1})`,
+                            transformOrigin: `${x}px ${y}px`,
+                            transition: reduceMotion ? 'none' : 'transform 0.25s ease-out',
+                          }}
                         >
-                          {/* Scintillement : coupé quand l'utilisateur demande moins d'animations. */}
-                          {!reduceMotion && (
-                            <animate
-                              attributeName="opacity"
-                              values="1;0.55;1"
-                              dur={`${2.5 + (i % 5) * 0.7}s`}
-                              repeatCount="indefinite"
-                            />
-                          )}
-                        </circle>
+                          {/* Halo : un simple cercle translucide, moins coûteux qu'un filtre de flou.
+                            Taille et éclat suivent le parcours : les vedettes grossissent et brillent. */}
+                          <motion.circle
+                            cx={x}
+                            cy={y}
+                            fill={on ? MINT : ACCENT}
+                            initial={false}
+                            animate={{ r: big ? 9 : 5, fillOpacity: big ? 0.28 : 0.14 }}
+                            transition={grow}
+                          />
+                          <motion.circle
+                            cx={x}
+                            cy={y}
+                            fill={on ? MINT : STAR}
+                            initial={false}
+                            animate={{ r: big ? 3.6 : 2 }}
+                            transition={grow}
+                          >
+                            {/* Scintillement : coupé quand l'utilisateur demande moins d'animations. */}
+                            {!reduceMotion && (
+                              <animate
+                                attributeName="opacity"
+                                values="1;0.55;1"
+                                dur={`${2.5 + (i % 5) * 0.7}s`}
+                                repeatCount="indefinite"
+                              />
+                            )}
+                          </motion.circle>
+                        </g>
                       </motion.g>
                     </g>
                   );
@@ -331,11 +454,15 @@ export default function CarteDuCiel() {
           {/* Mobile : au doigt, le survol n'existe pas. Une liste simple ; la fiche s'ouvre sous
               le projet choisi, avec le lien vers sa page. */}
           <ol className="divide-y divide-white/10 border-y border-white/10 md:hidden">
-            {projects.map((project, i) => {
+            {mobileOrder.map((i) => {
+              const project = projects[i];
               const status = statusOf(project);
               return (
-                <li
+                // layout="position" : au changement de parcours, les lignes glissent à leur place.
+                <motion.li
                   key={project.slug}
+                  layout="position"
+                  transition={reduceMotion ? { duration: 0 } : { duration: PARCOURS_DURATION }}
                   className={`transition-opacity duration-300 ${
                     matches(i) || selected === i ? '' : 'opacity-40'
                   }`}
@@ -364,7 +491,7 @@ export default function CarteDuCiel() {
                     </span>
                   </button>
                   {!isDesktop && selected === i && <div className="pb-5">{panel(i)}</div>}
-                </li>
+                </motion.li>
               );
             })}
           </ol>

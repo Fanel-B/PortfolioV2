@@ -1,5 +1,7 @@
 export type ProjectType = 'perso' | 'academique' | 'pro';
 export type ProjectCategory = 'Web' | 'Data' | 'IA';
+/** Parcours de lecture proposés au visiteur dans la section Lancements. */
+export type Parcours = 'data' | 'dev';
 
 export interface Project {
   /** Identifiant dans l'adresse de la page projet : /projets/[slug]. */
@@ -15,8 +17,8 @@ export interface Project {
   image?: string;
   /** 'cover' pour une capture d'écran (défaut), 'contain' pour un graphique à montrer en entier. */
   imageFit?: 'cover' | 'contain';
-  /** Projet mis en avant : carte plus large, placée en tête du carrousel. */
-  featured?: boolean;
+  /** Parcours où le projet est vedette : étoile plus grosse et en tête de la liste mobile. */
+  parcours?: Parcours[];
   /** Statut particulier, affiché sur la carte à la place de l'indicateur « En ligne ». */
   status?: 'amelioration';
 }
@@ -170,6 +172,7 @@ export const profile = {
       githubUrl: 'https://github.com/Fanel-B/bibliotheque1',
       demoUrl: 'https://bibliotheque1.vercel.app',
       image: '/static/images/projects/biblio-tech.jpg',
+      parcours: ['dev'],
     },
     {
       slug: 'miage-insertion-pro',
@@ -183,6 +186,7 @@ export const profile = {
       demoUrl: undefined,
       image: '/static/images/projects/miage-insertion-pro.png',
       imageFit: 'contain',
+      parcours: ['data'],
     },
     {
       slug: 'sources-alternance',
@@ -209,7 +213,7 @@ export const profile = {
       demoUrl: undefined,
       image: '/static/images/projects/techscope.png',
       imageFit: 'contain',
-      featured: true,
+      parcours: ['data'],
     },
     {
       slug: 'jobbot',
@@ -223,7 +227,7 @@ export const profile = {
       demoUrl: 'https://jobbot-orcin.vercel.app',
       image: '/static/images/projects/jobbot.jpg',
       status: 'amelioration',
-      featured: true,
+      parcours: ['dev'],
     },
   ] as Project[],
   // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir »

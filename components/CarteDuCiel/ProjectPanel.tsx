@@ -2,6 +2,7 @@
 
 import { Project } from '@/data/profile';
 import { motion } from 'framer-motion';
+import { parcoursQuery, ParcoursChoice } from '@/lib/parcours';
 import { statusOf } from '@/lib/projectStatus';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
@@ -10,13 +11,15 @@ import { FaGithub, HiArrowRight, HiOutlineExternalLink, HiX } from '@/lib/icons'
 interface Props {
   project: Project;
   number: number;
+  /** Transmis à la page projet, pour que son lien de retour revienne sur le même parcours. */
+  parcours: ParcoursChoice;
   onClose: () => void;
 }
 
 export const PANEL_ID = 'carte-du-ciel-panneau';
 
 // Fiche d'un projet, ouverte au clic sur son étoile.
-export default function ProjectPanel({ project, number, onClose }: Props) {
+export default function ProjectPanel({ project, number, parcours, onClose }: Props) {
   const status = statusOf(project);
   const titleRef = useRef<HTMLHeadingElement>(null);
 
@@ -99,7 +102,7 @@ export default function ProjectPanel({ project, number, onClose }: Props) {
           </a>
         )}
         <Link
-          href={`/projets/${project.slug}`}
+          href={`/projets/${project.slug}${parcoursQuery(parcours)}`}
           className="group inline-flex items-center gap-2 rounded-full border border-pro-menthe/40 px-4 py-2 text-pro-menthe transition-colors hover:bg-pro-menthe hover:text-pro-bg"
         >
           Voir le projet

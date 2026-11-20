@@ -21,7 +21,7 @@ export default function Travail() {
   const projects = profile.projects
     .filter((project) => filter === 'Tous' || project.categories.includes(filter))
     .slice()
-    .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
+    .sort((a, b) => Number(Boolean(b.parcours?.length)) - Number(Boolean(a.parcours?.length)));
 
   const syncArrows = useCallback(() => {
     const rail = railRef.current;
@@ -139,7 +139,7 @@ export default function Travail() {
               key={project.title}
               project={project}
               number={profile.projects.indexOf(project) + 1}
-              featured={Boolean(project.featured)}
+              featured={Boolean(project.parcours?.length)}
               className="w-[min(80vw,320px)] shrink-0 snap-start"
             />
           ))}
