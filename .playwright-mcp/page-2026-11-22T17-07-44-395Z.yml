@@ -1,0 +1,27 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - link "Retour aux lancements" [ref=e4] [cursor=pointer]:
+      - /url: /#lancements
+    - generic [ref=e7]:
+      - paragraph [ref=e8]: Projet · Data · ○ code source
+      - heading "TechScope" [level=1] [ref=e9]
+      - paragraph [ref=e10]: Pilotage et qualité d'un parc IT
+    - article [ref=e11]:
+      - figure [ref=e12]:
+        - generic [ref=e13]: github.com/Fanel-B/techscope
+        - 'img "Aperçu de TechScope : pilotage et qualité d''un parc IT" [ref=e20]'
+      - generic [ref=e21]:
+        - heading "Le projet" [level=2] [ref=e22]
+        - paragraph [ref=e23]: "Pipeline qui part de quatre sources de formats différents (JSON, SQLite, deux CSV), leur applique six contrôles qualité, puis alimente un dashboard Power BI. Chaque ligne rejetée est tracée avec sa source et la règle violée, et les indicateurs ne sont calculés que sur les données validées : sur le jeu de démonstration, 12 anomalies sont détectées et 10 lignes écartées sur 113. Le tableau de bord fait ressortir deux services sans redondance et près de 340 licences payées mais inutilisées."
+        - heading "Stack" [level=2] [ref=e24]
+        - list [ref=e25]:
+          - listitem [ref=e26]: Python
+          - listitem [ref=e27]: Pandas
+          - listitem [ref=e28]: SQL
+          - listitem [ref=e29]: SQLite
+          - listitem [ref=e30]: Power BI
+        - link "GitHub" [ref=e32] [cursor=pointer]:
+          - /url: https://github.com/Fanel-B/techscope
+        - complementary [ref=e35]:
+          - paragraph [ref=e36]: Étude de cas en préparation
+          - paragraph [ref=e37]: Le contexte, l'architecture, les choix techniques et les limites de ce projet seront détaillés ici prochainement.

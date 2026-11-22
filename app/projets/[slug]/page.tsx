@@ -7,7 +7,7 @@ import { container } from '@/lib/ui';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { Fragment, Suspense } from 'react';
+import { CSSProperties, Fragment, Suspense } from 'react';
 
 interface Props {
   params: { slug: string };
@@ -23,7 +23,7 @@ function splitTitle(title: string) {
   return { main, sub: sub ? sub.charAt(0).toUpperCase() + sub.slice(1) : null };
 }
 
-// Taille du grand titre : 48 px sur mobile, 80 px sur ordinateur, réduite si le mot le plus long
+// Taille du grand titre sur ordinateur, en capitales : 80 px, réduite si le mot le plus long
 // ne tient pas sur la largeur (Syne en capitales est très large : « TECHSCOPE » à 48 px dépasse
 // un écran de 375 px). 1.22 em par lettre : la plus large mesurée dans le navigateur, avec une marge.
 const LETTER_WIDTH = 1.22;
@@ -53,6 +53,83 @@ function titleSize(title: string) {
   );
   const divisor = (longest * LETTER_WIDTH).toFixed(2);
   return `min(var(--titre-max), calc(min(100vw - var(--marge), 60rem) / ${divisor}))`;
+}
+
+// Mobile : titre en casse normale, bien plus étroit qu'en capitales. Largeur de chaque caractère
+// en Syne 800, en em, mesurée dans le navigateur. Absent de la table : 1 em (minuscule) ou 1,2 em.
+const SYNE_800: Record<string, number> = {
+  a: 1.063,
+  b: 1.098,
+  c: 0.994,
+  d: 1.098,
+  e: 0.994,
+  f: 0.674,
+  g: 0.969,
+  h: 1.008,
+  i: 0.364,
+  j: 0.364,
+  k: 0.942,
+  l: 0.36,
+  m: 1.654,
+  n: 0.998,
+  o: 1.016,
+  p: 1.063,
+  q: 1.098,
+  r: 0.563,
+  s: 0.842,
+  t: 0.628,
+  u: 0.998,
+  v: 0.918,
+  w: 1.462,
+  x: 0.98,
+  y: 0.93,
+  z: 0.896,
+  A: 1.16,
+  B: 1.14,
+  C: 1.316,
+  D: 1.302,
+  E: 1.14,
+  F: 1.128,
+  G: 1.34,
+  H: 1.28,
+  I: 0.42,
+  J: 1.004,
+  K: 1.215,
+  L: 0.943,
+  M: 1.58,
+  N: 1.3,
+  O: 1.33,
+  P: 1.177,
+  Q: 1.33,
+  R: 1.232,
+  S: 1.056,
+  T: 1.1,
+  U: 1.289,
+  V: 1.16,
+  W: 1.882,
+  X: 1.14,
+  Y: 1.07,
+  Z: 1.2,
+  '-': 0.59,
+  "'": 0.3,
+  '’': 0.303,
+  '.': 0.354,
+  ':': 0.354,
+  ',': 0.303,
+};
+
+function widthEm(word: string) {
+  return [...word].reduce((sum, char) => {
+    const base = char.normalize('NFD')[0]; // é a la largeur de e
+    return sum + (SYNE_800[base] ?? (base === base.toLowerCase() ? 1 : 1.2));
+  }, 0);
+}
+
+// Plus grande taille, plafonnée à 48 px, à laquelle le mot le plus long tient sur une ligne
+// de l'écran (moins les 2 × 24 px de marge). 2 % de marge pour les arrondis de rendu.
+function mobileTitleSize(title: string) {
+  const widest = Math.max(...title.split(' ').map(widthEm));
+  return `min(3rem, calc((100vw - 3rem) / ${(widest * 1.02).toFixed(2)}))`;
 }
 
 // Les chiffres de la description ressortent en bleu profond : ce sont les résultats du projet.
@@ -120,8 +197,14 @@ export default function ProjetPage({ params }: Props) {
               Projet · {project.categories.join(' · ')} · {status.symbol} {status.label}
             </p>
             <h1
-              style={{ fontSize: titleSize(main) }}
-              className="mt-5 font-heading font-extrabold uppercase leading-[0.95] text-pro-accent [--marge:3rem] [text-shadow:0_0_28px_rgba(142,205,248,0.5)] [--titre-max:3rem] md:[--titre-max:5rem] md:[--marge:6rem] lg:[--marge:10rem]"
+              // Deux tailles calculées : en casse normale sous 768 px, en capitales au-dessus.
+              style={
+                {
+                  '--titre-mobile': mobileTitleSize(main),
+                  '--titre-ordi': titleSize(main),
+                } as CSSProperties
+              }
+              className="mt-5 font-heading font-extrabold leading-[0.95] text-pro-accent [font-size:var(--titre-mobile)] [text-shadow:0_0_28px_rgba(142,205,248,0.5)] md:uppercase md:[--marge:6rem] md:[--titre-max:5rem] md:[font-size:var(--titre-ordi)] lg:[--marge:10rem]"
             >
               {hyphenate(main)}
             </h1>
