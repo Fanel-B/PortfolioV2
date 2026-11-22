@@ -31,6 +31,31 @@ module.exports = {
           accent2: '#E8A0BF',
           text: '#F3E9DC',
         },
+        // Pages projet : la feuille blanc cassé posée sur le ciel
+        papier: {
+          fond: '#F4EFE6',
+          surface: '#EBE4D7',
+          puce: '#E8E0D2',
+          texte: '#2B303B',
+          texteDoux: '#3D4250',
+          encre: '#0A0E1A',
+          accent: '#1D5C96',
+        },
+        // Pages projet : textes de l'en-tête, posés sur le ciel au-dessus de la feuille
+        nuit: {
+          brume: '#A9B4C6',
+          creme: '#F2EEE6',
+        },
+      },
+      // Apparition de la feuille : elle monte de 24 px en s'affichant
+      keyframes: {
+        feuille: {
+          from: { opacity: '0', transform: 'translateY(24px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        feuille: 'feuille 0.8s cubic-bezier(0.16, 1, 0.3, 1) both',
       },
       // Paliers d'opacité en plus de ceux de Tailwind (utilisés par ex. dans text-pro-text/65)
       opacity: {
@@ -44,6 +69,7 @@ module.exports = {
       boxShadow: {
         glow: '0 0 24px rgba(142, 205, 248, 0.35)',
         'glow-lg': '0 0 48px rgba(142, 205, 248, 0.45)',
+        feuille: '0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(142, 205, 248, 0.18)',
       },
     },
   },

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
 const className =
-  'inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-pro-text/60 transition-colors hover:text-pro-accent';
+  'inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-pro-accent transition-colors hover:text-nuit-creme';
 
 // Lien de retour vers la section Lancements, sur le parcours d'où vient le visiteur :
 // /projets/techscope?parcours=data ramène à /?parcours=data#lancements.

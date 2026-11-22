@@ -17,6 +17,8 @@ export default function TargetCursor({ side }: Props) {
   const [enabled, setEnabled] = useState(false);
   const [locked, setLocked] = useState(false);
   const [visible, setVisible] = useState(false);
+  // Vrai au-dessus d'une surface claire (la feuille des pages projet) : le bleu ciel n'y ressort pas.
+  const [onPaper, setOnPaper] = useState(false);
 
   // Ressort très vif : le viseur colle à la souris, seul le verrouillage reste animé.
   const spring = { stiffness: 1400, damping: 70, mass: 0.25 };
@@ -61,6 +63,9 @@ export default function TargetCursor({ side }: Props) {
         shown = true;
         setVisible(true);
       }
+      setOnPaper(
+        e.target instanceof Element && Boolean(e.target.closest('[data-cursor-surface="papier"]'))
+      );
       const next = e.target instanceof Element ? e.target.closest(TARGETS) : null;
       if (next !== target) {
         target = next;
@@ -86,11 +91,16 @@ export default function TargetCursor({ side }: Props) {
 
   if (!enabled) return null;
 
-  const color = side === 'perso' ? 'border-perso-accent' : 'border-pro-accent';
-  const glow =
-    side === 'perso'
-      ? 'drop-shadow-[0_0_6px_rgba(242,184,128,0.8)]'
-      : 'drop-shadow-[0_0_6px_rgba(142,205,248,0.8)]';
+  const color = onPaper
+    ? 'border-papier-accent'
+    : side === 'perso'
+    ? 'border-perso-accent'
+    : 'border-pro-accent';
+  const glow = onPaper
+    ? 'drop-shadow-[0_0_4px_rgba(29,92,150,0.35)]'
+    : side === 'perso'
+    ? 'drop-shadow-[0_0_6px_rgba(242,184,128,0.8)]'
+    : 'drop-shadow-[0_0_6px_rgba(142,205,248,0.8)]';
   const corner = `absolute h-2.5 w-2.5 ${color}`;
 
   return (
@@ -115,7 +125,7 @@ export default function TargetCursor({ side }: Props) {
       <motion.span
         style={{ x: dotX, y: dotY }}
         className={`absolute -left-[2px] -top-[2px] h-1 w-1 rounded-full ${
-          side === 'perso' ? 'bg-perso-accent' : 'bg-pro-accent'
+          onPaper ? 'bg-papier-accent' : side === 'perso' ? 'bg-perso-accent' : 'bg-pro-accent'
         } ${glow}`}
       />
     </div>
