@@ -38,3 +38,6 @@ yarn-error.log*
 
 # notes personnelles (non publiées)
 /notes/
+
+# captures et journaux de l'outil de test Playwright
+.playwright-mcp/
