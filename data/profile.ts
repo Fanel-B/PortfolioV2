@@ -245,10 +245,10 @@ export const profile = {
       slug: 'jobbot',
       title: 'JobBot Alternance',
       description:
-        "Prototype React branché sur l'API Anthropic : l'IA inventait des offres d'alternance, les notait sur 100 selon mon profil et adaptait un CV en un clic. Les offres n'ont jamais été collectées depuis de vraies sources, c'était un terrain d'essai sur l'enchaînement frontend → API → traitement du JSON. Le site affiche aujourd'hui une page de maintenance, et une version s'appuyant sur des APIs officielles est en préparation.",
+        'Site de recherche de stages : un collecteur Python récupère de vraies offres, stockées dans PostgreSQL et servies par un site Next.js en ligne. Le score personnalisé selon le profil est en cours.',
       type: 'perso',
       categories: ['Web', 'IA'],
-      stack: ['React', 'JavaScript', 'API Anthropic', 'Vite'],
+      stack: ['Next.js', 'Tailwind CSS', 'PostgreSQL', 'Python'],
       githubUrl: 'https://github.com/Fanel-B/jobbot',
       demoUrl: 'https://jobbot-orcin.vercel.app',
       image: '/static/images/projects/jobbot.jpg',
