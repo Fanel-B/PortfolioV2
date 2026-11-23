@@ -2,7 +2,7 @@
 
 import { profile, Project } from '@/data/profile';
 import { HiOutlineArrowLeft, HiOutlineExternalLink } from '@/lib/icons';
-import { isVedette, ParcoursChoice } from '@/lib/parcours';
+import { isVedette, parcoursQuery, ParcoursChoice } from '@/lib/parcours';
 import { useParcoursAdresse } from '@/lib/useParcoursAdresse';
 import { useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
@@ -126,8 +126,9 @@ function Liste({ parcours, onParcoursChange }: ListeProps) {
   return (
     <>
       <header>
+        {/* Retour sur la section Lancements, avec le parcours en cours s'il y en a un. */}
         <Link
-          href="/"
+          href={`/${parcoursQuery(parcours)}#lancements`}
           className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-pro-accent transition-colors hover:text-nuit-creme"
         >
           <HiOutlineArrowLeft size={14} /> Retour à l&apos;accueil
