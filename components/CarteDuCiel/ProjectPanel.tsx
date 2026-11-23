@@ -11,7 +11,7 @@ import { FaGithub, HiArrowRight, HiOutlineExternalLink, HiX } from '@/lib/icons'
 interface Props {
   project: Project;
   number: number;
-  /** Transmis à la page projet, pour que son lien de retour revienne sur le même parcours. */
+  /** Transmis à la page /projets, qui s'ouvre sur le même parcours. */
   parcours: ParcoursChoice;
   onClose: () => void;
 }
@@ -102,7 +102,7 @@ export default function ProjectPanel({ project, number, parcours, onClose }: Pro
           </a>
         )}
         <Link
-          href={`/projets/${project.slug}${parcoursQuery(parcours)}`}
+          href={`/projets${parcoursQuery(parcours)}#${project.slug}`}
           className="group inline-flex items-center gap-2 rounded-full border border-pro-menthe/40 px-4 py-2 text-pro-menthe transition-colors hover:bg-pro-menthe hover:text-pro-bg"
         >
           Voir le projet

@@ -21,6 +21,14 @@ export interface Project {
   parcours?: Parcours[];
   /** Statut particulier, affiché sur la carte à la place de l'indicateur « En ligne ». */
   status?: 'amelioration';
+  /** Page /projets, feuille ouverte : ligne de repères (équipe, durée, stack). */
+  reperes?: string;
+  /** Page /projets : bloc « Le problème ». */
+  probleme?: string;
+  /** Page /projets : bloc « Ce que j'ai fait ». */
+  fait?: string;
+  /** Page /projets : bloc « La suite ». Vide : le bloc n'est pas affiché. */
+  suite?: string;
 }
 
 export interface TimelineItem {
@@ -173,6 +181,12 @@ export const profile = {
       demoUrl: 'https://bibliotheque1.vercel.app',
       image: '/static/images/projects/biblio-tech.jpg',
       parcours: ['dev'],
+      reperes:
+        "Projet d'équipe (2025), reconstruit seul en sept. 2026 · Next.js, Express, PostgreSQL, JWT",
+      probleme:
+        "Un projet d'école de bibliothèque connectée, fait en équipe, que j'ai repris seul pour le reconstruire avec une stack moderne et un vrai déploiement.",
+      fait: 'Catalogue, emprunts et réservations avec une authentification JWT, une API Express sur PostgreSQL, une couche IoT simulée (capteurs), et un déploiement en ligne.',
+      suite: '',
     },
     {
       slug: 'miage-insertion-pro',
@@ -187,6 +201,12 @@ export const profile = {
       image: '/static/images/projects/miage-insertion-pro.png',
       imageFit: 'contain',
       parcours: ['data'],
+      reperes: 'Solo · sept. 2026 · Python, Pandas, SQL',
+      probleme:
+        "Je voulais savoir si les diplômés MIAGE de Toulouse s'insèrent aussi bien qu'ailleurs, et comment la MIAGE se situe face aux autres filières.",
+      fait: "J'ai nettoyé et croisé les données officielles d'insertion du ministère (data.esr.gouv.fr), puis comparé les villes et les filières dans une analyse illustrée.",
+      suite:
+        "Pondérer les moyennes par l'effectif de chaque diplôme, pour fiabiliser les villes à petit échantillon comme Lyon.",
     },
     {
       slug: 'sources-alternance',
@@ -214,6 +234,12 @@ export const profile = {
       image: '/static/images/projects/techscope.png',
       imageFit: 'contain',
       parcours: ['data'],
+      reperes: 'Solo · environ 2 semaines (oct. 2026) · Python, Pandas, SQL, Power BI',
+      probleme:
+        "Les données d'un parc informatique arrivent de quatre sources aux formats différents, avec des erreurs. Calculer des indicateurs directement dessus donne des chiffres faux.",
+      fait: 'Un pipeline Python et SQL qui applique six contrôles qualité, trace chaque ligne rejetée avec sa source et la règle violée, puis alimente un dashboard Power BI calculé seulement sur les données validées.',
+      suite:
+        'Rendre le seuil de faible usage réglable directement dans le dashboard, et retoucher sa première page.',
     },
     {
       slug: 'jobbot',
@@ -228,6 +254,11 @@ export const profile = {
       image: '/static/images/projects/jobbot.jpg',
       status: 'amelioration',
       parcours: ['dev'],
+      reperes: 'Solo · V1 en avril 2026, V2 depuis mi-octobre 2026 · Next.js, PostgreSQL, Python',
+      probleme:
+        'Trier les offres de stage à la main prend un temps fou. Ma première version affichait en plus des offres générées par IA, pas de vraies offres.',
+      fait: "J'ai tout reconstruit : un collecteur Python récupère de vraies offres de stage, elles sont stockées dans PostgreSQL et servies par un site Next.js en ligne. Le score personnalisé selon le profil est en cours.",
+      suite: "Finir le score personnalisé selon le profil, puis rouvrir les offres d'alternance.",
     },
   ] as Project[],
   // Côté humain : les valeurs « …_ICI » s'affichent comme « à venir »
