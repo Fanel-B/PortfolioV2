@@ -5,6 +5,7 @@ import {
   AnimatePresence,
   motion,
   useMotionValue,
+  useReducedMotion,
   useSpring,
   useTransform,
   useVelocity,
@@ -19,17 +20,16 @@ const OFFSET = 28;
 const MAX_TILT = 6;
 
 interface Props {
-  /** Projet dont le titre est survolé, ou null : la fenêtre disparaît. */
+  /** Projet dont la ligne est survolée, ou null : la fenêtre disparaît. */
   project: Project | null;
 }
 
-// Vrai seulement avec une souris, sans demande de mouvement réduit.
+// Vrai dès qu'une souris ou un pavé tactile est branché, même sur un PC à écran tactile
+// (« any- » : n'importe quel pointeur disponible, pas seulement le principal).
 function useApercuActif() {
   const [actif, setActif] = useState(false);
   useEffect(() => {
-    const query = window.matchMedia(
-      '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
-    );
+    const query = window.matchMedia('(any-hover: hover) and (any-pointer: fine)');
     const update = () => setActif(query.matches);
     update();
     query.addEventListener('change', update);
@@ -38,9 +38,12 @@ function useApercuActif() {
   return actif;
 }
 
-// Fenêtre de capture qui suit la souris au survol des titres de projets fermés.
+// Fenêtre de capture qui suit la souris au survol des lignes de projets fermées.
 export default function ApercuCurseur({ project }: Props) {
   const actif = useApercuActif();
+  // Mouvement réduit : la fenêtre s'affiche quand même, mais collée à la souris,
+  // sans ressort, sans inclinaison et sans fondu.
+  const reduce = Boolean(useReducedMotion());
 
   // Position visée : mise à jour à chaque mouvement de souris, sans rendu React.
   const mouseX = useMotionValue(-1000);
@@ -92,10 +95,14 @@ export default function ApercuCurseur({ project }: Props) {
   return (
     <motion.div
       aria-hidden
-      style={{ x, y, rotate, width: WIDTH, height: HEIGHT }}
+      style={
+        reduce
+          ? { x: mouseX, y: mouseY, rotate: 0, width: WIDTH, height: HEIGHT }
+          : { x, y, rotate, width: WIDTH, height: HEIGHT }
+      }
       initial={false}
-      animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.92 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
+      animate={{ opacity: visible ? 1 : 0, scale: visible || reduce ? 1 : 0.92 }}
+      transition={reduce ? { duration: 0 } : { duration: 0.2, ease: 'easeOut' }}
       className="pointer-events-none fixed left-0 top-0 z-[150] overflow-hidden rounded-xl bg-papier-encre p-1.5 shadow-feuille"
     >
       {/* Seule l'image change d'un titre à l'autre : fondu croisé rapide. */}
@@ -106,7 +113,7 @@ export default function ApercuCurseur({ project }: Props) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
+            transition={{ duration: reduce ? 0 : 0.15 }}
             className={`absolute inset-1.5 overflow-hidden rounded-lg ${
               shown.imageFit === 'contain' ? 'bg-white' : ''
             }`}

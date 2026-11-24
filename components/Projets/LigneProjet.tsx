@@ -13,7 +13,7 @@ interface Props {
   /** Vrai : ouverture et fermeture sans animation (mouvement réduit, arrivée par une ancre). */
   instant: boolean;
   onToggle: () => void;
-  /** Survol du titre, pour l'aperçu qui suit la souris (seulement si la ligne est fermée). */
+  /** Survol de la ligne, pour l'aperçu qui suit la souris (seulement si la ligne est fermée). */
   onTitleHover: (hovering: boolean) => void;
 }
 
@@ -43,6 +43,9 @@ export default function LigneProjet({
           aria-expanded={open}
           aria-controls={panelId}
           onClick={onToggle}
+          // Toute la ligne (numéro, titre, statut) déclenche l'aperçu qui suit la souris.
+          onPointerEnter={() => onTitleHover(true)}
+          onPointerLeave={() => onTitleHover(false)}
           className="group grid w-full grid-cols-[auto_1fr_auto] items-center gap-x-4 gap-y-3 py-6 text-left md:grid-cols-[3.5rem_1fr_auto_auto] md:gap-x-6 md:py-8"
         >
           <span className="font-mono text-xs tracking-[0.2em] text-nuit-brume">
@@ -50,8 +53,6 @@ export default function LigneProjet({
           </span>
           {/* Mobile : titre sur sa propre ligne, sous le numéro et le statut. */}
           <span
-            onPointerEnter={() => onTitleHover(true)}
-            onPointerLeave={() => onTitleHover(false)}
             className={`order-last col-span-3 font-heading text-[1.625rem] font-extrabold leading-[1.05] transition-colors sm:text-4xl md:order-none md:col-span-1 md:text-5xl ${
               open ? 'text-pro-accent' : 'text-nuit-creme group-hover:text-pro-accent'
             }`}
